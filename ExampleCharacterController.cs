@@ -14,17 +14,27 @@ public class ExampleCharacterController : MonoBehaviour {
     // Make sure we never dim the screen
 	  Screen.sleepTimeout = SleepTimeout.NeverSleep;
     cardboard = new CardboardInput();
-    cardboard.OnMagnetClicked += OnCardboardClick;
+    cardboard.OnMagnetDown += CardboardDown;
+    cardboard.OnMagnetUp += CardboardUp;
+    cardboard.OnMagnetClicked += CardboardClick;
 
     diveCameraTransform = this.transform.GetChild(0);
 	}
 
-  public void OnCardboardClick(object sender, CardboardEvent cardboardEvent) {
-    ChangeSphereColor();
+  public void CardboardDown(object sender, CardboardEvent cardboardEvent) {
+    ChangeSphereColor("SphereDown");
   }
 
-  public void ChangeSphereColor() {
-    GameObject sphere = GameObject.Find("Sphere");
+  public void CardboardUp(object sender, CardboardEvent cardboardEvent) {
+    ChangeSphereColor("SphereUp");
+  }
+
+  public void CardboardClick(object sender, CardboardEvent cardboardEvent) {
+    ChangeSphereColor("SphereClick");
+  }
+
+  public void ChangeSphereColor(string name) {
+    GameObject sphere = GameObject.Find(name);
     sphere.renderer.material.color = new Color(Random.value, Random.value, Random.value);
   }
 

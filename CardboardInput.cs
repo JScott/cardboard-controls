@@ -125,7 +125,7 @@ public class CardboardInput {
   }
 
   private void ReportDown(Vector3 compass) {
-    if (downReported == false && compass.z > 150) {
+    if (downReported == false && compass.z > 100) {
       Debug.Log("DOWN: "+compass);
       OnMagnetDown(this, new CardboardEvent());
       downReported = true;
@@ -147,7 +147,6 @@ public class CardboardInput {
     bool withinClickThreshold = (Time.time - clickStartTime) <= clickSpeedThreshold;
     if (withinClickThreshold) {
       if(clickReported == false) {
-        Debug.Log("CLICK");
         click = true;
         OnMagnetClicked(this, new CardboardEvent());
       }
