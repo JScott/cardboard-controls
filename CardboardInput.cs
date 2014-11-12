@@ -79,8 +79,8 @@ public class CardboardInput {
     // Note that init is platform specific to unity.
     compassMagnitude = Input.compass.rawVector.magnitude;
     compassBaseLine = Input.compass.rawVector.magnitude;
-    tiltOffsetBaseLine = Input.acceleration.magnitude;
     tiltOffsetMagnitude = Input.acceleration.magnitude;
+    tiltOffsetBaseLine = Input.acceleration.magnitude;
   }
 
   public float ImpulseFilter(float from_value, float to_value, int filter) {
@@ -101,19 +101,18 @@ public class CardboardInput {
     compassBaseLine = this.ImpulseFilter(compassBaseLine, compass.magnitude, slowImpulseFilter);
 
     bool notJostled = tiltOffsetMagnitude < 0.2;
-    bool magnetMovedDown = (compassMagnitude / compassBaseLine) > 1.1;
-    bool magnetMovedUp = (compassMagnitude / compassBaseLine) < 0.9;
+    bool magnetMovedDown = (compassMagnitude / compassBaseLine) > 1.11;
+    bool magnetMovedUp = (compassMagnitude / compassBaseLine) < 0.94;
     bool magnetMoved = magnetMovedUp || magnetMovedDown;
+    
+    //Debug.Log(compassMagnitude/compassBaseLine);
 
     if (notJostled) {
-      if (magnetMovedDown) ReportDown(compass);
+      if (magnetMovedDown) ReportDown();
       else downReported = false;
 
       if (magnetMovedUp) ReportUp();
-      else {
-        upReported = false;
-        clickReported = false;
-      }
+      else upReported = false;
 
       if (magnetMoved) {
         OnMagnetMoved(this, new CardboardEvent());
@@ -121,8 +120,9 @@ public class CardboardInput {
     }
   }
 
-  private void ReportDown(Vector3 compass) {
-    if (downReported == false && compass.z > 100) { // random int is measuring speed
+  private void ReportDown() {
+    if (downReported == false) {
+      if (Debug.isDebugBuild) Debug.Log(" *** Magnet Down *** "+(compassMagnitude/compassBaseLine));
       OnMagnetDown(this, new CardboardEvent());
       downReported = true;
       magnetHeld = true;
@@ -132,22 +132,26 @@ public class CardboardInput {
 
   private void ReportUp() {
     if (upReported == false) {
+      if (Debug.isDebugBuild) Debug.Log(" *** Magnet Up *** "+(compassMagnitude/compassBaseLine));
       OnMagnetUp(this, new CardboardEvent());
-      CheckForClick();
       upReported = true;
       magnetHeld = false;
+      CheckForClick();
     }
   }
 
   private void CheckForClick() {
     bool withinClickThreshold = SecondsMagnetHeld() <= clickSpeedThreshold;
     clickStartTime = 0f;
-    if (withinClickThreshold) {
-      if(clickReported == false) {
-        click = true;
-        OnMagnetClicked(this, new CardboardEvent());
-      }
-      clickReported = true;
+    if (withinClickThreshold) ReportClick();
+    else clickReported = false;
+  }
+
+  private void ReportClick() {
+    if(clickReported == false) {
+      if (Debug.isDebugBuild) Debug.Log(" *** Magnet Click *** ");
+      OnMagnetClicked(this, new CardboardEvent());
+      click = true;
     }
   }
 
