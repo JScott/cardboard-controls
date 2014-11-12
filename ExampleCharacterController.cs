@@ -33,6 +33,15 @@ public class ExampleCharacterController : MonoBehaviour {
 
   public void CardboardClick(object sender, CardboardEvent cardboardEvent) {
     ChangeSphereColor("SphereClick");
+
+    RaycastHit hit;
+    Ray ray = new Ray(diveCameraTransform.position, diveCameraTransform.forward);
+    if (Physics.Raycast(ray, out hit, 10f)) {
+      GameObject obj = hit.collider.gameObject;
+      if (obj.layer == LayerMask.NameToLayer("Interactable")) {
+        Object.Destroy(obj);
+      }
+    }
   }
 
   public void ChangeSphereColor(string name) {

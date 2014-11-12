@@ -104,7 +104,6 @@ public class CardboardInput {
     bool magnetMovedDown = (compassMagnitude / compassBaseLine) > 1.1;
     bool magnetMovedUp = (compassMagnitude / compassBaseLine) < 0.9;
     bool magnetMoved = magnetMovedUp || magnetMovedDown;
-    Debug.Log("UPDATING: "+notJostled+"/"+magnetMovedDown+"/"+magnetMovedUp);
 
     if (notJostled) {
       if (magnetMovedDown) ReportDown(compass);
@@ -128,7 +127,6 @@ public class CardboardInput {
       downReported = true;
       magnetHeld = true;
       clickStartTime = Time.time;
-      Debug.Log("DOWN");
     }
   }
 
@@ -138,7 +136,6 @@ public class CardboardInput {
       CheckForClick();
       upReported = true;
       magnetHeld = false;
-      Debug.Log("UP");
     }
   }
 
@@ -149,7 +146,6 @@ public class CardboardInput {
       if(clickReported == false) {
         click = true;
         OnMagnetClicked(this, new CardboardEvent());
-        Debug.Log("CLICK");
       }
       clickReported = true;
     }
