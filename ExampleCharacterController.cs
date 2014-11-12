@@ -39,6 +39,7 @@ public class ExampleCharacterController : MonoBehaviour {
     if (Physics.Raycast(ray, out hit, 10f)) {
       GameObject obj = hit.collider.gameObject;
       if (obj.layer == LayerMask.NameToLayer("Interactable")) {
+        GameObject.Find("star_chimes").audio.Play();
         Object.Destroy(obj);
       }
     }
