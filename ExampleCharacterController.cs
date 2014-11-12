@@ -54,5 +54,8 @@ public class ExampleCharacterController : MonoBehaviour {
 
     CharacterController controller = GetComponent<CharacterController>();
     controller.Move(moveDirection * Time.deltaTime);
+
+    Debug.Log("SECONDS HELD: "+cardboard.SecondsMagnetHeld());
+    Debug.Log("MAGNET HELD : "+cardboard.IsMagnetHeld());
 	}
 }

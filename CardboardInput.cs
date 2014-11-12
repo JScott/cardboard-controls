@@ -64,6 +64,8 @@ public class CardboardInput {
   bool clickReported = false;
   bool click = false;
 
+  private bool magnetHeld = false;
+
   public delegate void MagnetAction(object sender, CardboardEvent cardboardEvent);
 
   public MagnetAction OnMagnetDown = delegate {};
@@ -104,8 +106,6 @@ public class CardboardInput {
     bool magnetMoved = magnetMovedUp || magnetMovedDown;
 
     if (notJostled) {
-      //Debug.Log(compassMagnitude / compassBaseLine);
-
       if (magnetMovedDown) ReportDown(compass);
       else downReported = false;
 
@@ -115,36 +115,33 @@ public class CardboardInput {
         clickReported = false;
       }
 
-      //CheckForDown(magnetMovedDown, compass);
-      //CheckForUp(magnetMovedUp);
       if (magnetMoved) {
         OnMagnetMoved(this, new CardboardEvent());
       }
-
     }
   }
 
   private void ReportDown(Vector3 compass) {
-    if (downReported == false && compass.z > 100) {
-      Debug.Log("DOWN: "+compass);
+    if (downReported == false && compass.z > 100) { // random int is measuring speed
       OnMagnetDown(this, new CardboardEvent());
       downReported = true;
+      magnetHeld = true;
       clickStartTime = Time.time;
     }
   }
 
   private void ReportUp() {
     if (upReported == false) {
-      Debug.Log("UP");
       OnMagnetUp(this, new CardboardEvent());
       CheckForClick();
       upReported = true;
+      magnetHeld = false;
     }
   }
 
   private void CheckForClick() {
-    Debug.Log("CLICK SPEED: "+(Time.time - clickStartTime));
-    bool withinClickThreshold = (Time.time - clickStartTime) <= clickSpeedThreshold;
+    bool withinClickThreshold = SecondsMagnetHeld() <= clickSpeedThreshold;
+    clickStartTime = 0f;
     if (withinClickThreshold) {
       if(clickReported == false) {
         click = true;
@@ -152,6 +149,15 @@ public class CardboardInput {
       }
       clickReported = true;
     }
+  }
+
+  public float SecondsMagnetHeld() {
+    if (clickStartTime == 0f) return 0f;
+    return Time.time - clickStartTime;
+  }
+
+  public bool IsMagnetHeld() {
+    return magnetHeld;
   }
 
   public bool WasClicked()  {
