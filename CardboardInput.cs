@@ -60,7 +60,7 @@ public class CardboardInput {
   private float clickStartTime = 0f;
 
   bool upReported = false;
-  bool downReported = false;
+  bool downReported = true; // down is triggered once as it finds baselines
   bool clickReported = false;
   bool click = false;
 
@@ -102,8 +102,9 @@ public class CardboardInput {
 
     bool notJostled = tiltOffsetMagnitude < 0.2;
     bool magnetMovedDown = (compassMagnitude / compassBaseLine) > 1.1;
-    bool magnetMovedUp = (compassMagnitude / compassBaseLine) < 0.7;
+    bool magnetMovedUp = (compassMagnitude / compassBaseLine) < 0.9;
     bool magnetMoved = magnetMovedUp || magnetMovedDown;
+    Debug.Log("UPDATING: "+notJostled+"/"+magnetMovedDown+"/"+magnetMovedUp);
 
     if (notJostled) {
       if (magnetMovedDown) ReportDown(compass);
@@ -127,6 +128,7 @@ public class CardboardInput {
       downReported = true;
       magnetHeld = true;
       clickStartTime = Time.time;
+      Debug.Log("DOWN");
     }
   }
 
@@ -136,6 +138,7 @@ public class CardboardInput {
       CheckForClick();
       upReported = true;
       magnetHeld = false;
+      Debug.Log("UP");
     }
   }
 
@@ -146,6 +149,7 @@ public class CardboardInput {
       if(clickReported == false) {
         click = true;
         OnMagnetClicked(this, new CardboardEvent());
+        Debug.Log("CLICK");
       }
       clickReported = true;
     }

@@ -1,0 +1,172 @@
+# Blender3D MTL File: princess peaches castle (outside).blend
+# Material Count: 16
+newmtl Material.136_princess_peaches_cast
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.796875 0.796875 0.796875
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd princess peaches castle (outside)_grp.png
+
+
+newmtl Material.101_princess_peaches_cast
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.612500 0.612500 0.650000
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd princess peaches castle (outside)_grp.png
+
+
+newmtl Material.104_princess_peaches_cast
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.453125 0.453125 0.515625
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd princess peaches castle (outside)_grp.png
+
+
+newmtl Material.096
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.662500 0.000000 0.000000
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+
+newmtl Material.105_princess_peaches_cast
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.796875 0.796875 0.796875
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd princess peaches castle (outside)_grp.png
+
+
+newmtl Material.126_princess_peaches_cast
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.796875 0.796875 0.796875
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd princess peaches castle (outside)_grp.png
+
+
+newmtl Material.100
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.318750 0.000000 0.000000
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+
+newmtl Material.135_princess_peaches_cast
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.796875 0.796875 0.796875
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd princess peaches castle (outside)_grp.png
+
+
+newmtl Material.099
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.556250 0.000000 0.000000
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+
+newmtl Material.102_princess_peaches_cast
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.487500 0.487500 0.543750
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd princess peaches castle (outside)_grp.png
+
+
+newmtl Material.103_princess_peaches_cast
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.796875 0.796875 0.796875
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd princess peaches castle (outside)_grp.png
+
+
+newmtl Material.106_princess_peaches_cast
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.796875 0.796875 0.796875
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd princess peaches castle (outside)_grp.png
+
+
+newmtl Material.098
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.778125 0.000000 0.000000
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+
+newmtl Material.104
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.453125 0.453125 0.515625
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd 1FEE462_c.bmp
+
+
+newmtl Material.095
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.662500 0.662500 0.662500
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+
+newmtl Material.097
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.753125 0.000000 0.000000
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+

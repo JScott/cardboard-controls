@@ -9,15 +9,17 @@ public class ExampleCharacterController : MonoBehaviour {
   public float gravity = 1.0f;
   private Transform diveCameraTransform;
   private Vector3 moveDirection = Vector3.zero;
+  private CharacterController controller;
 
 	void Start () {
-    // Make sure we never dim the screen
 	  Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
     cardboard = new CardboardInput();
     cardboard.OnMagnetDown += CardboardDown;
     cardboard.OnMagnetUp += CardboardUp;
     cardboard.OnMagnetClicked += CardboardClick;
 
+    controller = GetComponent<CharacterController>();
     diveCameraTransform = this.transform.GetChild(0);
 	}
 
@@ -40,22 +42,23 @@ public class ExampleCharacterController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+    MoveCharacter();
+	}
+
+  void MoveCharacter() {
     cardboard.Update(Input.acceleration, Input.compass.rawVector);
 
-    moveDirection = diveCameraTransform.forward * Input.GetAxis("Vertical");
-    moveDirection.y = 0;
-
-    moveDirection = transform.TransformDirection(moveDirection);
-    moveDirection *= speed;
-    if (Input.GetButton("Jump")) {
-      moveDirection.y = jumpSpeed;
+    if (!cardboard.IsMagnetHeld()) {
+      moveDirection = Vector3.zero;
     }
+    else if (cardboard.SecondsMagnetHeld() > 0.5f) {
+      moveDirection = diveCameraTransform.forward;
+      moveDirection = transform.TransformDirection(moveDirection);
+      moveDirection.y = 0;
+      moveDirection *= speed;
+    }
+
     moveDirection.y -= gravity * Time.deltaTime;
-
-    CharacterController controller = GetComponent<CharacterController>();
     controller.Move(moveDirection * Time.deltaTime);
-
-    Debug.Log("SECONDS HELD: "+cardboard.SecondsMagnetHeld());
-    Debug.Log("MAGNET HELD : "+cardboard.IsMagnetHeld());
-	}
+  }
 }
