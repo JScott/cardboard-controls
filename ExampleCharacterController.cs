@@ -12,7 +12,9 @@ public class ExampleCharacterController : MonoBehaviour {
   private CharacterController controller;
 
 	void Start () {
+    // These can probably go somewhere better
 	  Screen.sleepTimeout = SleepTimeout.NeverSleep;
+    //Screen.orientation = ScreenOrientation.LandscapeLeft;
 
     cardboard = new CardboardInput();
     cardboard.OnMagnetDown += CardboardDown;

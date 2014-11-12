@@ -6,13 +6,13 @@ using System;
 
 
 
-//Dive Head Tracking
-// copyright by Shoogee GmbH & Co. KG Refer to LICENCE.txt
+//Dive Head Tracking 
+// copyright by Shoogee GmbH & Co. KG Refer to LICENCE.txt 
 
 
 //[ExecuteInEditMode]
 public class OpenDiveSensor : MonoBehaviour {
-
+	
 	// This is used for rotating the camera with another object
 	//for example tilting the camera while going along a racetrack or rollercoaster
 	public bool add_rotation_gameobject=false;
@@ -30,7 +30,7 @@ public class OpenDiveSensor : MonoBehaviour {
 	//public float max_offcenter_warp=0.1f;
 	public Camera cameraleft;
 	public Camera cameraright;
-
+	
 	public float zoom=0.1f;
 	private float IPDCorrection=0.0f;
 	private float aspectRatio;
@@ -57,13 +57,13 @@ public class OpenDiveSensor : MonoBehaviour {
 #if UNITY_EDITOR
 	private float sensitivityX = 15F;
 	private float sensitivityY = 15F;
-
+	
 	private float minimumX = -360F;
 	private float maximumX = 360F;
-
+	
 	private float minimumY = -90F;
 	private float maximumY = 90F;
-
+	
 	float rotationY = 0F;
 
 
@@ -84,7 +84,7 @@ public class OpenDiveSensor : MonoBehaviour {
 	[DllImport("divesensor")]   private static extern void dive_command(string command);
 
 
-
+   
    #elif UNITY_IPHONE
 	[DllImport("__Internal")]	private static extern void initialize_sensors();
 	[DllImport("__Internal")]	private static extern float get_q0();
@@ -93,9 +93,9 @@ public class OpenDiveSensor : MonoBehaviour {
 	[DllImport("__Internal")]	private static extern float get_q3();
 	[DllImport("__Internal")]	private static extern void DiveUpdateGyroData();
     [DllImport("__Internal")]	private static extern int get_q(ref float q0,ref float q1,ref float q2,ref float q3);
-
-
-#endif
+	
+	
+#endif 	
 
 
 	public static void divecommand(string command){
@@ -109,16 +109,16 @@ public class OpenDiveSensor : MonoBehaviour {
 
 	public static void setFullscreen(){
 		#if UNITY_EDITOR
-
+		
 		#elif UNITY_ANDROID
 		String answer;
 		answer= javadiveplugininstance.Call<string>("setFullscreen");
 
-
+		
 		#elif UNITY_IPHONE
-
-		#endif
-
+		
+		#endif 	
+		
 		return;
 	}
 
@@ -127,6 +127,13 @@ public class OpenDiveSensor : MonoBehaviour {
 
 
 	void Start () {
+
+
+	
+
+
+
+
 		rot=Quaternion.identity;
 	    // Disable screen dimming
      	Screen.sleepTimeout = SleepTimeout.NeverSleep;
@@ -163,7 +170,7 @@ public class OpenDiveSensor : MonoBehaviour {
 		if (answer=="Tablet"){
 				is_tablet=1;
 			Debug.Log("Dive Unity Tablet Mode activated");
-
+		
 		}
 		else{
 			Debug.Log("Dive Phone Mode activated "+answer);
@@ -201,22 +208,22 @@ public class OpenDiveSensor : MonoBehaviour {
 			Debug.Log ("Is tablet, using tabletcorrection");
 			IPDCorrection=tabletcorrection;
 		}
-		else
+		else 
 		{
 			IPDCorrection=IPDCorrection;
 
 		}
 
-		//setIPDCorrection(IPDCorrection);
+		//setIPDCorrection(IPDCorrection); 
 
 
 	}
 
 
-
+	
 	void Update () {
 		aspectRatio=(Screen.height*2.0f)/Screen.width;
-		setIPDCorrection(IPDCorrection);
+		setIPDCorrection(IPDCorrection); 
 
 		//Debug.Log ("Divecamera"+cameraleft.aspect+"1/asp "+1/cameraleft.aspect+" Screen Width/Height "+ aspectRatio);
 
@@ -227,12 +234,12 @@ public class OpenDiveSensor : MonoBehaviour {
 
 	#elif UNITY_ANDROID
 		time_since_last_fullscreen+=Time.deltaTime;
-
+		
 		if (time_since_last_fullscreen >8){
 			setFullscreen ();
 			time_since_last_fullscreen=0;
 
-
+			
 		}
 
 		get_q(ref q0,ref q1,ref q2,ref q3);
@@ -240,7 +247,7 @@ public class OpenDiveSensor : MonoBehaviour {
 		rot.x=-q2;rot.y=q3;rot.z=-q1;rot.w=q0;
 
 
-
+		
 		if (add_rotation_gameobject){
 			transform.rotation =rotation_gameobject.transform.rotation* rot;
 		}
@@ -248,7 +255,7 @@ public class OpenDiveSensor : MonoBehaviour {
 		{
 			transform.rotation = rot;
 			if (is_tablet==1)transform.rotation=rot*Quaternion.AngleAxis(90,Vector3.forward);
-
+			
 		}
 
 
@@ -263,7 +270,7 @@ public class OpenDiveSensor : MonoBehaviour {
 		transform.rotation = rot;
 
 
-
+		
 		if (add_rotation_gameobject){
 			transform.rotation =rotation_gameobject.transform.rotation* rot;
 		}
@@ -271,28 +278,28 @@ public class OpenDiveSensor : MonoBehaviour {
 		{
 			transform.rotation = rot;
 			if (is_tablet==1)transform.rotation=rot*Quaternion.AngleAxis(90,Vector3.forward);
-
+			
 		}
 
 
 #endif
 
 
-
+	
 
 
 #if UNITY_EDITOR
 
 		if (emulateMouseInEditor){
-
+			
 
 			if (axes == RotationAxes.MouseXAndY)
 			{
 				float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivityX;
-
+				
 				rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
 				rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
-
+				
 				transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
 			}
 			else if (axes == RotationAxes.MouseX)
@@ -303,7 +310,7 @@ public class OpenDiveSensor : MonoBehaviour {
 			{
 				rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
 				rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
-
+				
 				transform.localEulerAngles = new Vector3(-rotationY, transform.localEulerAngles.y, 0);
 			}
 		}
@@ -312,10 +319,10 @@ public class OpenDiveSensor : MonoBehaviour {
 
 
 	}
-
+	
 	void OnGUI ()
 	{
-
+	
 	/*	if (GUI.Button(new Rect(Screen.width/4-150, Screen.height-100, 300,100), "+IPD")){
 			Debug.Log("Clicked the button with an image");
 			IPDCorrection=IPDCorrection+0.01f;
@@ -358,7 +365,7 @@ public class OpenDiveSensor : MonoBehaviour {
 		cameraleft.projectionMatrix = PerspectiveOffCenter((-zoom+correction)*(znear/0.1f), (zoom+correction)*(znear/0.1f), -zoom*(znear/0.1f)*aspectRatio, zoom*(znear/0.1f)*aspectRatio, znear, zfar);;
 		cameraright.projectionMatrix = PerspectiveOffCenter((-zoom-correction)*(znear/0.1f), (zoom-correction)*(znear/0.1f), -zoom*(znear/0.1f)*aspectRatio, zoom*(znear/0.1f)*aspectRatio, znear, zfar);;
 		}
-
+	
 	static Matrix4x4 PerspectiveOffCenter(float left, float right, float bottom, float top, float near, float far) {
 		float x = 2.0F * near / (right - left);
 		float y = 2.0F * near / (top - bottom);
@@ -386,5 +393,5 @@ public class OpenDiveSensor : MonoBehaviour {
 		m[3, 3] = 0;
 		return m;
 	}
-
+	
 }
