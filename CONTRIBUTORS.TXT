@@ -1,7 +1,11 @@
 Dive
-  The Dive library is the driver for dealing with the gyroscope and stereoscopic view.
-  Dive has a custom usage license which mandates showing its splash screen in your application.
+  https://www.durovis.com/sdk.html
+  Custom usage license which mandates showing its splash screen in your application
 
 Andrew Whyte, Secret Ingredient Games
-  Andrew's code was used as a base for creating CardboardInput.cs
-  MIT license, taken from http://www.andrewnoske.com/wiki/Unity_-_Detecting_Google_Cardboard_Click
+  http://www.andrewnoske.com/wiki/Unity_-_Detecting_Google_Cardboard_Click
+  MIT license
+
+Justin Scott
+  https://github.com/JScott
+  MIT license
