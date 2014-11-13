@@ -1,6 +1,6 @@
 # What can CardboardSDK do for me?
 
-CardboardSDK excels at capturing the relevant device input for using a Google Cardboard. It gives you a wide range of events and data which is important for a device with constrained input methods.
+CardboardSDK excels at capturing the relevant device input for using a Google Cardboard. It gives you a wide range of events and data which are important given the constrained input options.
 
 Simply put, CardboardSDK enables you to create cool VR games for a wide audience.
 
