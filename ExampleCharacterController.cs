@@ -47,7 +47,7 @@ public class ExampleCharacterController : MonoBehaviour {
 	}
 
   void UpdateInput() {
-    cardboard.Update(Input.acceleration, Input.compass.rawVector);
+    cardboard.Update();
 
     TextMesh textMesh = GameObject.Find("SphereDown/Counter").GetComponent<TextMesh>();
     if (!cardboard.IsMagnetHeld() ) {

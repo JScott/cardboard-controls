@@ -44,7 +44,7 @@ public class CastleCharacterController : MonoBehaviour {
 	}
 
   void UpdateInput() {
-    cardboard.Update(Input.acceleration, Input.compass.rawVector);
+    cardboard.Update();
 
     if (!cardboard.IsMagnetHeld()) {
       moveDirection = Vector3.zero;

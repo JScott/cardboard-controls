@@ -45,15 +45,15 @@ public class CardboardInput {
   //  without device this is the essence of a cardboard magnet click.
   private Vector3 lastTiltVector;
   public float tiltOffsetBaseLine = 0f;
-  public float compassBaseLine = 0f;
+  public float magneticFieldBaseLine = 0f;
 
   public float tiltOffsetMagnitude = 0f;
-  public float compassMagnitude = 0f;
+  public float magneticFieldMagnitude = 0f;
 
   // Finite Impulse Response filters
   private int slowImpulseFilter = 25;
-  private int fastCompassImpulseFilter = 3;
-  private int fastTiltOffsetImpulseFilter = 5;  // Clicking the magnet tends to tilt the device slightly.
+  private int fastMagnetImpulseFilter = 3;
+  private int fastTiltImpulseFilter = 5;  // Clicking the magnet tends to tilt the device slightly.
 
 
   public float clickSpeedThreshold = 0.4f;
@@ -75,8 +75,8 @@ public class CardboardInput {
 
   public CardboardInput() {
     Input.compass.enabled = true;
-    compassMagnitude = Input.compass.rawVector.magnitude;
-    compassBaseLine = Input.compass.rawVector.magnitude;
+    magneticFieldMagnitude = Input.compass.rawVector.magnitude;
+    magneticFieldBaseLine = Input.compass.rawVector.magnitude;
     tiltOffsetMagnitude = Input.acceleration.magnitude;
     tiltOffsetBaseLine = Input.acceleration.magnitude;
   }
@@ -85,22 +85,21 @@ public class CardboardInput {
     return ((filter-1) * from_value + to_value) / filter;
   }
 
-  public void Update(Vector3 acc,  Vector3 compass) {
-    // We are interested in the change of the tilt, not the actual tilt
-    Vector3 tiltNow = acc;
-    Vector3 motionVec3 = TiltNow - lastTiltVector;
-    lastTiltVector = TiltNow;
+  public void Update() {
+    Vector3 magneticField = Input.compass.rawVector;
+    Vector3 tiltNow = Input.acceleration;
+    Vector3 tiltOffset = tiltNow - lastTiltVector;
+    lastTiltVector = tiltNow;
 
     // Update our magnitudes and baselines through the appropriate impulse filters
-    tiltOffsetMagnitude = this.ImpulseFilter(tiltOffsetMagnitude, motionVec3.magnitude, fastTiltOffsetImpulseFilter);
-    tiltOffsetBaseLine = this.ImpulseFilter(tiltOffsetBaseLine, motionVec3.magnitude, slowImpulseFilter);
-
-    compassMagnitude = this.ImpulseFilter(compassMagnitude, compass.magnitude, fastCompassImpulseFilter);
-    compassBaseLine = this.ImpulseFilter(compassBaseLine, compass.magnitude, slowImpulseFilter);
+    tiltOffsetMagnitude = ImpulseFilter(tiltOffsetMagnitude, tiltOffset.magnitude, fastTiltImpulseFilter);
+    tiltOffsetBaseLine = ImpulseFilter(tiltOffsetBaseLine, tiltOffset.magnitude, slowImpulseFilter);
+    magneticFieldMagnitude = ImpulseFilter(magneticFieldMagnitude, magneticField.magnitude, fastMagnetImpulseFilter);
+    magneticFieldBaseLine = ImpulseFilter(magneticFieldBaseLine, magneticField.magnitude, slowImpulseFilter);
 
     bool notJostled = tiltOffsetMagnitude < 0.2;
-    bool magnetMovedDown = (compassMagnitude / compassBaseLine) > 1.11;
-    bool magnetMovedUp = (compassMagnitude / compassBaseLine) < 0.94;
+    bool magnetMovedDown = (magneticFieldMagnitude / magneticFieldBaseLine) > 1.11;
+    bool magnetMovedUp = (magneticFieldMagnitude / magneticFieldBaseLine) < 0.94;
     bool magnetMoved = magnetMovedUp || magnetMovedDown;
     
     if (notJostled) {
@@ -118,7 +117,7 @@ public class CardboardInput {
 
   private void ReportDown() {
     if (downReported == false) {
-      if (Debug.isDebugBuild) Debug.Log(" *** Magnet Down *** "+(compassMagnitude/compassBaseLine));
+      if (Debug.isDebugBuild) Debug.Log(" *** Magnet Down *** "+(magneticFieldMagnitude/magneticFieldBaseLine));
       OnMagnetDown(this, new CardboardEvent());
       downReported = true;
       magnetHeld = true;
@@ -128,7 +127,7 @@ public class CardboardInput {
 
   private void ReportUp() {
     if (upReported == false) {
-      if (Debug.isDebugBuild) Debug.Log(" *** Magnet Up *** "+(compassMagnitude/compassBaseLine));
+      if (Debug.isDebugBuild) Debug.Log(" *** Magnet Up *** "+(magneticFieldMagnitude/magneticFieldBaseLine));
       OnMagnetUp(this, new CardboardEvent());
       upReported = true;
       magnetHeld = false;
