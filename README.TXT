@@ -2,7 +2,7 @@ CardboardSDK handles the relevant device input for using a Google Cardboard.
 
 -----
 
-See the comments in CardboardInput.cs for details on how to utilize the class.
+See the comments in ExampleCharacterController.cs for details on how to utilize the class.
 
 Here's a cheat-sheet:
 

@@ -15,8 +15,10 @@ Copy over these directories:
 
 Then replace your current main camera with the Dive/Dive_Camera prefab. Be sure to also set the default orientation to Landscape Left in the Player Settings.
 
+Check out ExampleCharacterController.cs for examples on using CardboardInput with your existing scenes.
+
 
 
 # Can I release my own game using CardboardSDK?
 
-Yes. But read CONTRIBUTORS.TXT first as it contains an overview of the licenses for the libraries used. Dive in particular has an interesting requirement.
+Yes. Read CONTRIBUTORS.TXT first as it contains an overview of the licenses for the libraries used. Dive in particular has an interesting requirement.
