@@ -91,7 +91,7 @@ public class CardboardInput {
 
     bool notJostled = tiltOffsetMagnitude < 0.2;
     bool magnetMovedDown = (magneticFieldMagnitude / magneticFieldBaseLine) > 1.11;
-    bool magnetMovedUp = (magneticFieldMagnitude / magneticFieldBaseLine) < 0.94;
+    bool magnetMovedUp = (magneticFieldMagnitude / magneticFieldBaseLine) < 0.97;
     bool magnetMoved = magnetMovedUp || magnetMovedDown;
     
     if (notJostled) {
