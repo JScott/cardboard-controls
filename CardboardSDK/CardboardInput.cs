@@ -35,43 +35,33 @@ using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
-//public static XmlDocument XmlDoc;
-//public static XmlNodeList xnl;
-//public TextAsset TA;
-
 public class CardboardInput {
-  //  Concept: two FIR filters,  running on Magnetics and tilt.
-  //  If the tilt hasn't changed, but the compass has, then the magnetic field moved
-  //  without device this is the essence of a cardboard magnet click.
   private Vector3 lastTiltVector;
-  public float tiltOffsetBaseLine = 0f;
-  public float magneticFieldBaseLine = 0f;
+  private float tiltOffsetBaseLine = 0f;
+  private float magneticFieldBaseLine = 0f;
 
-  public float tiltOffsetMagnitude = 0f;
-  public float magneticFieldMagnitude = 0f;
+  private float tiltOffsetMagnitude = 0f;
+  private float magneticFieldMagnitude = 0f;
 
-  // Finite Impulse Response filters
   private int slowImpulseFilter = 25;
   private int fastMagnetImpulseFilter = 3;
   private int fastTiltImpulseFilter = 5;  // Clicking the magnet tends to tilt the device slightly.
 
-
   public float clickSpeedThreshold = 0.4f;
   private float clickStartTime = 0f;
 
-  bool upReported = false;
-  bool downReported = true; // down is triggered once as it finds baselines
-  bool clickReported = false;
-  bool click = false;
+  private bool upReported = false;
+  private bool downReported = true; // down is triggered once as it finds baselines
+  private bool clickReported = false;
+  private bool click = false;
 
   private bool magnetHeld = false;
 
-  public delegate void MagnetAction(object sender, CardboardEvent cardboardEvent);
-
-  public MagnetAction OnMagnetDown = delegate {};
-  public MagnetAction OnMagnetUp = delegate {};
-  public MagnetAction OnMagnetMoved = delegate {};
-  public MagnetAction OnMagnetClicked = delegate {};
+  public delegate void CardboardAction(object sender, CardboardEvent cardboardEvent);
+  public CardboardAction OnMagnetDown = delegate {};
+  public CardboardAction OnMagnetUp = delegate {};
+  public CardboardAction OnMagnetMoved = delegate {};
+  public CardboardAction OnMagnetClicked = delegate {};
 
   public CardboardInput() {
     Input.compass.enabled = true;
@@ -81,7 +71,7 @@ public class CardboardInput {
     tiltOffsetBaseLine = Input.acceleration.magnitude;
   }
 
-  public float ImpulseFilter(float from_value, float to_value, int filter) {
+  private float ImpulseFilter(float from_value, float to_value, int filter) {
     return ((filter-1) * from_value + to_value) / filter;
   }
 
@@ -91,7 +81,9 @@ public class CardboardInput {
     Vector3 tiltOffset = tiltNow - lastTiltVector;
     lastTiltVector = tiltNow;
 
-    // Update our magnitudes and baselines through the appropriate impulse filters
+    // Apply Finite Impulse Response (FIR) filters
+    // If the tilt hasn't changed, but the compass has, then the magnetic field moved
+    // without device this is the essence of a cardboard magnet click.
     tiltOffsetMagnitude = ImpulseFilter(tiltOffsetMagnitude, tiltOffset.magnitude, fastTiltImpulseFilter);
     tiltOffsetBaseLine = ImpulseFilter(tiltOffsetBaseLine, tiltOffset.magnitude, slowImpulseFilter);
     magneticFieldMagnitude = ImpulseFilter(magneticFieldMagnitude, magneticField.magnitude, fastMagnetImpulseFilter);
@@ -163,7 +155,8 @@ public class CardboardInput {
     if(click == true) {
       click = false;
       return true;
-    } else {
+    }
+    else {
       return false;
     }
   }
