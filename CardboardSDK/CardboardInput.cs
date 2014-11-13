@@ -75,8 +75,6 @@ public class CardboardInput {
 
   public CardboardInput() {
     Input.compass.enabled = true;
-
-    // Note that init is platform specific to unity.
     compassMagnitude = Input.compass.rawVector.magnitude;
     compassBaseLine = Input.compass.rawVector.magnitude;
     tiltOffsetMagnitude = Input.acceleration.magnitude;
@@ -89,7 +87,7 @@ public class CardboardInput {
 
   public void Update(Vector3 acc,  Vector3 compass) {
     // We are interested in the change of the tilt, not the actual tilt
-    Vector3 TiltNow = acc;
+    Vector3 tiltNow = acc;
     Vector3 motionVec3 = TiltNow - lastTiltVector;
     lastTiltVector = TiltNow;
 
@@ -105,8 +103,6 @@ public class CardboardInput {
     bool magnetMovedUp = (compassMagnitude / compassBaseLine) < 0.94;
     bool magnetMoved = magnetMovedUp || magnetMovedDown;
     
-    //Debug.Log(compassMagnitude/compassBaseLine);
-
     if (notJostled) {
       if (magnetMovedDown) ReportDown();
       else downReported = false;

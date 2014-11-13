@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ExampleCharacterController : MonoBehaviour {
+public class CastleCharacterController : MonoBehaviour {
   private static CardboardInput cardboard;
 
   public float speed = 1.0f;
@@ -31,9 +31,6 @@ public class ExampleCharacterController : MonoBehaviour {
 
   public void CardboardClick(object sender, CardboardEvent cardboardEvent) {
     ChangeSphereColor("SphereClick");
-    TextMesh textMesh = GameObject.Find("SphereClick/Counter").GetComponent<TextMesh>();
-    int increment = int.Parse(textMesh.text) + 1;
-    textMesh.text = increment.ToString();
   }
 
   public void ChangeSphereColor(string name) {
@@ -49,13 +46,14 @@ public class ExampleCharacterController : MonoBehaviour {
   void UpdateInput() {
     cardboard.Update(Input.acceleration, Input.compass.rawVector);
 
-    TextMesh textMesh = GameObject.Find("SphereDown/Counter").GetComponent<TextMesh>();
-    if (!cardboard.IsMagnetHeld() ) {
-      textMesh.renderer.enabled = Time.time % 1 < 0.5;
+    if (!cardboard.IsMagnetHeld()) {
+      moveDirection = Vector3.zero;
     }
-    else {
-      textMesh.renderer.enabled = true;
-      textMesh.text = cardboard.SecondsMagnetHeld().ToString("#.##");
+    else if (cardboard.SecondsMagnetHeld() > 0.5f) {
+      moveDirection = diveCameraTransform.forward;
+      moveDirection = transform.TransformDirection(moveDirection);
+      moveDirection.y = 0;
+      moveDirection *= speed;
     }
   }
 
