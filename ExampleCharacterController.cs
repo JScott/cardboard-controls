@@ -4,9 +4,6 @@ using System.Collections;
 public class ExampleCharacterController : MonoBehaviour {
   private static CardboardInput cardboard;
 
-  public float speed = 1.0f;
-  public float jumpSpeed = 1.0f;
-  public float gravity = 1.0f;
   private Vector3 moveDirection = Vector3.zero;
   private CharacterController controller;
 
@@ -63,12 +60,7 @@ public class ExampleCharacterController : MonoBehaviour {
   /*
   During our game we can utilize data from CardboardInput.
   */
-	void Update () {
-    UpdateInput();
-    UpdateScene();
-	}
-
-  void UpdateInput() {
+  void Update() {
     TextMesh textMesh = GameObject.Find("SphereDown/Counter").GetComponent<TextMesh>();
 
     // Be sure to update CardboardInput during your cycle
@@ -89,10 +81,5 @@ public class ExampleCharacterController : MonoBehaviour {
     // Not shown here is the WasClicked method.
     // This tells you if magnet was clicked
     // since the last time the method was called.
-  }
-
-  void UpdateScene() {
-    moveDirection.y -= gravity * Time.deltaTime;
-    controller.Move(moveDirection * Time.deltaTime);
   }
 }
