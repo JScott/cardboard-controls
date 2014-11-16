@@ -13,29 +13,21 @@ public class CastleCharacterController : MonoBehaviour {
 
 	void Start () {
     cardboard = new CardboardInput();
-    cardboard.OnMagnetDown += CardboardDown;
-    cardboard.OnMagnetUp += CardboardUp;
-    cardboard.OnMagnetClicked += CardboardClick;
-
+    cardboard.OnMagnetClicked += Interact;
     controller = GetComponent<CharacterController>();
     diveCameraTransform = this.transform.GetChild(0);
 	}
 
-  public void CardboardDown(object sender, CardboardEvent cardboardEvent) {
-    ChangeSphereColor("SphereDown");
-  }
-
-  public void CardboardUp(object sender, CardboardEvent cardboardEvent) {
-    ChangeSphereColor("SphereUp");
-  }
-
-  public void CardboardClick(object sender, CardboardEvent cardboardEvent) {
-    ChangeSphereColor("SphereClick");
-  }
-
-  public void ChangeSphereColor(string name) {
-    GameObject sphere = GameObject.Find(name);
-    sphere.renderer.material.color = new Color(Random.value, Random.value, Random.value);
+  public void Interact(object sender, CardboardEvent cardboardEvent) {
+    RaycastHit hit;
+    Ray ray = new Ray(diveCameraTransform.position, diveCameraTransform.forward);
+    if (Physics.Raycast(ray, out hit, 10f)) {
+      GameObject obj = hit.collider.gameObject;
+      if (obj.layer == LayerMask.NameToLayer("Interactable")) {
+        GameObject.Find("star_chimes").audio.Play();
+        Object.Destroy(obj);
+      }
+    }
   }
 
 	void Update () {
