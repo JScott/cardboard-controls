@@ -13,6 +13,9 @@ public class ExampleCharacterController : MonoBehaviour {
     /*
     Start by declaring an instance of CardboardInput.
     This is a good point to pass your methods to its delegates.
+    
+    Unity provides a good primer on delegates here:
+    http://unity3d.com/learn/tutorials/modules/intermediate/scripting/delegates
     */
     cardboard = new CardboardInput();
 
