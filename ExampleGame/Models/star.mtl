@@ -1,0 +1,24 @@
+# Blender3D MTL File: star.blend
+# Material Count: 2
+newmtl Material.063_3ED452ED_c.bmp
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.196875 0.196875 0.196875
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd 3ED452ED_c.bmp
+
+
+newmtl Material.065_713E77D_c.bmp
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.796875 0.796875 0.796875
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd texture.png
+
+
