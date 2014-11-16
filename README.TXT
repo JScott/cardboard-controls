@@ -1,6 +1,4 @@
-CardboardSDK handles the capture of relevant device input for using a Google Cardboard. It gives you a wide range of events and data which are important given the constrained input options.
-
-Simply put, CardboardSDK enables you to create cool, accessible VR games.
+Cardboard SDK handles relevant device input for using a Google Cardboard. It gives you a wide range of events and data which expand your creative opportunities with this accessible VR platform.
 
 
 ----- Usage
