@@ -30,9 +30,13 @@ See the comments in ExampleCharacterController.cs for details on how to utilize 
 
 ----- Roadmap
 
+In no particular order:
+- Vibration feedback
 - Better debug tools
+- Event data
 - Tap/tilt input via accelerometer
 - Screen compression filter
+- Camera input
 
 
 ----- Licensing
