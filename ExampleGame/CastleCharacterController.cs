@@ -24,7 +24,8 @@ public class CastleCharacterController : MonoBehaviour {
     if (Physics.Raycast(ray, out hit, 10f)) {
       GameObject obj = hit.collider.gameObject;
       if (obj.layer == LayerMask.NameToLayer("Interactable")) {
-        GameObject.Find("star_chimes").audio.Play();
+        GameObject.Find("star/victory").audio.Play();
+        GameObject.Find("star/star_chimes").audio.Stop();
         Object.Destroy(obj);
       }
     }
