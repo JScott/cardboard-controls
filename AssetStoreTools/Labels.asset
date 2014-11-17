@@ -11,4 +11,12 @@ MonoBehaviour:
   m_Script: {fileID: -547254688, guid: 11188de2b6632fa4486c470af4b55fa0, type: 3}
   m_Name: Labels
   m_EditorClassIdentifier: 
-  m_Labels: []
+  m_Labels:
+  - google
+  - cardboard
+  - vr
+  - virtualreality
+  - dive
+  - durovis
+  - example
+  - demo
