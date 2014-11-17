@@ -32,7 +32,7 @@ See the comments in ExampleCharacterController.cs for details on how to utilize 
 
 In no particular order:
 - Vibration feedback
-- Better debug tools
+- Better debug tools and tests
 - Event data
 - Tap/tilt input via accelerometer
 - Screen compression filter
