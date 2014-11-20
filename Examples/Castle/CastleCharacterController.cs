@@ -52,4 +52,8 @@ public class CastleCharacterController : MonoBehaviour {
     moveDirection.y -= gravity * Time.deltaTime;
     controller.Move(moveDirection * Time.deltaTime);
   }
+
+  void OnDestroy() {
+    cardboard.OnMagnetClicked -= Interact;
+  }
 }
