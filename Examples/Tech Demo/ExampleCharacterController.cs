@@ -11,14 +11,13 @@ public class ExampleCharacterController : MonoBehaviour {
     controller = GetComponent<CharacterController>();
 
     /*
-    Start by declaring an instance of CardboardInput.
-    This is a good point to pass your methods to its delegates.
+    Start by getting the script off CardboardInputManager.
+    This is a good place to pass your methods to its delegates.
     
     Unity provides a good primer on delegates here:
     http://unity3d.com/learn/tutorials/modules/intermediate/scripting/delegates
     */
-    cardboard = new CardboardInput();
-
+    cardboard = GameObject.Find("CardboardInputManager").GetComponent<CardboardInput>();
     cardboard.OnMagnetDown += CardboardDown;  // When the magnet goes down
     cardboard.OnMagnetUp += CardboardUp;      // When the magnet comes back up
 
@@ -66,9 +65,6 @@ public class ExampleCharacterController : MonoBehaviour {
   void Update() {
     TextMesh textMesh = GameObject.Find("SphereDown/Counter").GetComponent<TextMesh>();
 
-    // Be sure to update CardboardInput during your cycle
-    cardboard.Update();
-
     // IsMagnetHeld is true when the magnet has gone down but not back up yet.    
     if (!cardboard.IsMagnetHeld() ) {
       textMesh.renderer.enabled = Time.time % 1 < 0.5;
@@ -84,5 +80,15 @@ public class ExampleCharacterController : MonoBehaviour {
     // Not shown here is the WasClicked method.
     // This tells you if magnet was clicked
     // since the last time the method was called.
+  }
+
+  /*
+  Be sure to unsubscribe before this object is destroyed
+  so the garbage collector can clean up the object.
+  */
+  void OnDestroy() {
+    cardboard.OnMagnetDown -= CardboardDown;
+    cardboard.OnMagnetUp -= CardboardUp;
+    cardboard.OnMagnetClicked -= CardboardClick;
   }
 }
