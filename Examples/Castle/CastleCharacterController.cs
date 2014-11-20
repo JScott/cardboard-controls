@@ -12,7 +12,7 @@ public class CastleCharacterController : MonoBehaviour {
   private CharacterController controller;
 
 	void Start () {
-    cardboard = new CardboardInput();
+    cardboard = GameObject.Find("CardboardInputManager").GetComponent<CardboardInput>();
     cardboard.OnMagnetClicked += Interact;
     controller = GetComponent<CharacterController>();
     diveCameraTransform = this.transform.GetChild(0);
@@ -32,17 +32,15 @@ public class CastleCharacterController : MonoBehaviour {
   }
 
 	void Update () {
-    UpdateInput();
+    CheckInput();
     UpdateScene();
 	}
 
-  void UpdateInput() {
-    cardboard.Update();
-
+  void CheckInput() {
     if (!cardboard.IsMagnetHeld()) {
       moveDirection = Vector3.zero;
     }
-    else if (cardboard.SecondsMagnetHeld() > 0.5f) {
+    else if (cardboard.SecondsMagnetHeld() > cardboard.clickSpeedThreshold) {
       moveDirection = diveCameraTransform.forward;
       moveDirection = transform.TransformDirection(moveDirection);
       moveDirection.y = 0;
