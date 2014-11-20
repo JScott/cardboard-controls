@@ -35,7 +35,7 @@ using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
-public class CardboardInput {
+public class CardboardInput : MonoBehaviour {
   private Vector3 lastTiltVector;
   private float tiltOffsetBaseLine = 0f;
   private float magneticFieldBaseLine = 0f;
@@ -63,7 +63,7 @@ public class CardboardInput {
   public CardboardAction OnMagnetMoved = delegate {};
   public CardboardAction OnMagnetClicked = delegate {};
 
-  public CardboardInput() {
+  public void Start() {
     Input.compass.enabled = true;
     magneticFieldMagnitude = Input.compass.rawVector.magnitude;
     magneticFieldBaseLine = Input.compass.rawVector.magnitude;
@@ -71,7 +71,7 @@ public class CardboardInput {
     tiltOffsetBaseLine = Input.acceleration.magnitude;
   }
 
-  private float ImpulseFilter(float from_value, float to_value, int filter) {
+  public float ImpulseFilter(float from_value, float to_value, int filter) {
     return ((filter-1) * from_value + to_value) / filter;
   }
 
@@ -111,7 +111,7 @@ public class CardboardInput {
     }
   }
 
-  private void ReportDown() {
+  public void ReportDown() {
     if (downReported == false) {
       if (Debug.isDebugBuild) Debug.Log(" *** Magnet Down *** "+(magneticFieldMagnitude/magneticFieldBaseLine));
       OnMagnetDown(this, new CardboardEvent());
@@ -121,7 +121,7 @@ public class CardboardInput {
     }
   }
 
-  private void ReportUp() {
+  public void ReportUp() {
     if (upReported == false) {
       if (Debug.isDebugBuild) Debug.Log(" *** Magnet Up *** "+(magneticFieldMagnitude/magneticFieldBaseLine));
       OnMagnetUp(this, new CardboardEvent());
@@ -131,14 +131,14 @@ public class CardboardInput {
     }
   }
 
-  private void CheckForClick() {
+  public void CheckForClick() {
     bool withinClickThreshold = SecondsMagnetHeld() <= clickSpeedThreshold;
     clickStartTime = 0f;
     if (withinClickThreshold) ReportClick();
     else clickReported = false;
   }
 
-  private void ReportClick() {
+  public void ReportClick() {
     if(clickReported == false) {
       if (Debug.isDebugBuild) Debug.Log(" *** Magnet Click *** ");
       OnMagnetClicked(this, new CardboardEvent());
