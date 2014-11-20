@@ -92,6 +92,10 @@ public class CardboardInput {
     bool notJostled = tiltOffsetMagnitude < 0.2;
     bool magnetMovedDown = (magneticFieldMagnitude / magneticFieldBaseLine) > 1.11;
     bool magnetMovedUp = (magneticFieldMagnitude / magneticFieldBaseLine) < 0.97;
+    if (Debug.isDebugBuild) {
+      magnetMovedDown = magnetMovedDown || Input.GetButtonDown("Jump");
+      magnetMovedUp = magnetMovedUp || Input.GetButtonUp("Jump");
+    }
     bool magnetMoved = magnetMovedUp || magnetMovedDown;
     
     if (notJostled) {
