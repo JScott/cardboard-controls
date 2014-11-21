@@ -8,24 +8,14 @@ To pull this into your existing project, copy over the following folders:
 - Dive
 - CardboardSDK
 
-Then replace your main camera with the Dive/Dive_Camera prefab. Also be sure to set the default orientation to Landscape Left in the Player Settings.
+Then:
+- Replace your main camera with the Dive/Dive_Camera prefab
+- Add CardboardInputManager to your scene
 
 
 ----- Example Code
 
-See the comments in ExampleCharacterController.cs for details on how to utilize the CardboardInput class. Here's a cheat-sheet:
-
-  class CardboardInput
-    float clickSpeedThreshold
-    delegate void CardboardAction(object sender, CardboardEvent cardboardEvent)
-      OnMagnetDown
-      OnMagnetUp
-      OnMagnetMoved
-      OnMagnetClick
-    void Update()
-    float SecondsMagnetHeld()
-    bool IsMagnetHeld()
-    bool WasClicked()
+Examples/TechDemo has a scene that shows off the capabilities and use of CardboardSDK. It's README and code explain the API.
 
 
 ----- Roadmap
@@ -33,10 +23,9 @@ See the comments in ExampleCharacterController.cs for details on how to utilize 
 In no particular order:
 - Vibration feedback
 - Better debug tools and tests
-- Event data
 - Tap/tilt input via accelerometer
 - Screen compression filter
-- Camera input
+- Phone camera input
 
 
 ----- Licensing
