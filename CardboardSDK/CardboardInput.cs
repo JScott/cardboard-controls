@@ -57,10 +57,13 @@ public class CardboardInput : MonoBehaviour {
 
   private bool magnetHeld = false;
 
+  public bool vibrateOnDown = false;
+  public bool vibrateOnUp = false;
+  public bool vibrateOnClick = true;
+
   public delegate void CardboardAction(object sender, CardboardEvent cardboardEvent);
   public CardboardAction OnMagnetDown = delegate {};
   public CardboardAction OnMagnetUp = delegate {};
-  public CardboardAction OnMagnetMoved = delegate {};
   public CardboardAction OnMagnetClicked = delegate {};
 
   public void Start() {
@@ -89,14 +92,13 @@ public class CardboardInput : MonoBehaviour {
     magneticFieldMagnitude = ImpulseFilter(magneticFieldMagnitude, magneticField.magnitude, fastMagnetImpulseFilter);
     magneticFieldBaseLine = ImpulseFilter(magneticFieldBaseLine, magneticField.magnitude, slowImpulseFilter);
 
-    bool notJostled = tiltOffsetMagnitude < 0.2;
+    bool notJostled = tiltOffsetMagnitude < 0.1;
     bool magnetMovedDown = (magneticFieldMagnitude / magneticFieldBaseLine) > 1.11;
     bool magnetMovedUp = (magneticFieldMagnitude / magneticFieldBaseLine) < 0.97;
     if (Debug.isDebugBuild) {
       magnetMovedDown = magnetMovedDown || Input.GetButtonDown("Jump");
       magnetMovedUp = magnetMovedUp || Input.GetButtonUp("Jump");
     }
-    bool magnetMoved = magnetMovedUp || magnetMovedDown;
     
     if (notJostled) {
       if (magnetMovedDown) ReportDown();
@@ -104,17 +106,14 @@ public class CardboardInput : MonoBehaviour {
 
       if (magnetMovedUp) ReportUp();
       else upReported = false;
-
-      if (magnetMoved) {
-        OnMagnetMoved(this, new CardboardEvent());
-      }
     }
   }
 
   public void ReportDown() {
     if (downReported == false) {
-      if (Debug.isDebugBuild) Debug.Log(" *** Magnet Down *** "+(magneticFieldMagnitude/magneticFieldBaseLine));
+      if (Debug.isDebugBuild) Debug.Log(" *** Magnet Down *** ");
       OnMagnetDown(this, new CardboardEvent());
+      if (vibrateOnDown) Vibrate();
       downReported = true;
       magnetHeld = true;
       clickStartTime = Time.time;
@@ -123,8 +122,9 @@ public class CardboardInput : MonoBehaviour {
 
   public void ReportUp() {
     if (upReported == false) {
-      if (Debug.isDebugBuild) Debug.Log(" *** Magnet Up *** "+(magneticFieldMagnitude/magneticFieldBaseLine));
+      if (Debug.isDebugBuild) Debug.Log(" *** Magnet Up *** ");
       OnMagnetUp(this, new CardboardEvent());
+      if (vibrateOnUp) Vibrate();
       upReported = true;
       magnetHeld = false;
       CheckForClick();
@@ -142,8 +142,13 @@ public class CardboardInput : MonoBehaviour {
     if(clickReported == false) {
       if (Debug.isDebugBuild) Debug.Log(" *** Magnet Click *** ");
       OnMagnetClicked(this, new CardboardEvent());
+      if (vibrateOnClick) Vibrate();
       click = true;
     }
+  }
+
+  public void Vibrate() {
+    Handheld.Vibrate();
   }
 
   public float SecondsMagnetHeld() {

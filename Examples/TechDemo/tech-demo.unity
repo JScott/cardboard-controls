@@ -181,6 +181,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clickSpeedThreshold: .400000006
+  vibrateOnDown: 0
+  vibrateOnUp: 0
+  vibrateOnClick: 1
 --- !u!4 &147994843
 Transform:
   m_ObjectHideFlags: 0
@@ -329,6 +332,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 11400000, guid: 56066970be3a8c348ada96b52b52c000, type: 2}
+      propertyPath: vibrateOn.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 56066970be3a8c348ada96b52b52c000, type: 2}
       propertyPath: m_LocalPosition.x
       value: .474334717
@@ -356,6 +363,18 @@ Prefab:
     - target: {fileID: 400000, guid: 56066970be3a8c348ada96b52b52c000, type: 2}
       propertyPath: m_LocalRotation.w
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 56066970be3a8c348ada96b52b52c000, type: 2}
+      propertyPath: vibrateOnClick
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 56066970be3a8c348ada96b52b52c000, type: 2}
+      propertyPath: vibrateOnUp
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 56066970be3a8c348ada96b52b52c000, type: 2}
+      propertyPath: vibrateOnDown
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 56066970be3a8c348ada96b52b52c000, type: 2}

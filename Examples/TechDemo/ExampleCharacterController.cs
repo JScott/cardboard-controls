@@ -66,7 +66,7 @@ public class ExampleCharacterController : MonoBehaviour {
     TextMesh textMesh = GameObject.Find("SphereDown/Counter").GetComponent<TextMesh>();
 
     // IsMagnetHeld is true when the magnet has gone down but not back up yet.    
-    if (!cardboard.IsMagnetHeld() ) {
+    if ( !cardboard.IsMagnetHeld() ) {
       textMesh.renderer.enabled = Time.time % 1 < 0.5;
     }
     else {
