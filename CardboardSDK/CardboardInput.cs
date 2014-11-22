@@ -57,9 +57,9 @@ public class CardboardInput : MonoBehaviour {
 
   private bool magnetHeld = false;
 
-  public bool vibrateOnDown = false;
-  public bool vibrateOnUp = false;
-  public bool vibrateOnClick = true;
+  public bool vibrateOnMagnetDown = false;
+  public bool vibrateOnMagnetUp = false;
+  public bool vibrateOnMagnetClicked = true;
 
   public delegate void CardboardAction(object sender, CardboardEvent cardboardEvent);
   public CardboardAction OnMagnetDown = delegate {};
@@ -92,7 +92,7 @@ public class CardboardInput : MonoBehaviour {
     magneticFieldMagnitude = ImpulseFilter(magneticFieldMagnitude, magneticField.magnitude, fastMagnetImpulseFilter);
     magneticFieldBaseLine = ImpulseFilter(magneticFieldBaseLine, magneticField.magnitude, slowImpulseFilter);
 
-    bool notJostled = tiltOffsetMagnitude < 0.1;
+    bool notJostled = tiltOffsetMagnitude < 0.2;
     bool magnetMovedDown = (magneticFieldMagnitude / magneticFieldBaseLine) > 1.11;
     bool magnetMovedUp = (magneticFieldMagnitude / magneticFieldBaseLine) < 0.97;
     if (Debug.isDebugBuild) {
@@ -113,7 +113,7 @@ public class CardboardInput : MonoBehaviour {
     if (downReported == false) {
       if (Debug.isDebugBuild) Debug.Log(" *** Magnet Down *** ");
       OnMagnetDown(this, new CardboardEvent());
-      if (vibrateOnDown) Vibrate();
+      if (vibrateOnMagnetDown) Vibrate();
       downReported = true;
       magnetHeld = true;
       clickStartTime = Time.time;
@@ -124,7 +124,7 @@ public class CardboardInput : MonoBehaviour {
     if (upReported == false) {
       if (Debug.isDebugBuild) Debug.Log(" *** Magnet Up *** ");
       OnMagnetUp(this, new CardboardEvent());
-      if (vibrateOnUp) Vibrate();
+      if (vibrateOnMagnetUp) Vibrate();
       upReported = true;
       magnetHeld = false;
       CheckForClick();
@@ -142,7 +142,7 @@ public class CardboardInput : MonoBehaviour {
     if(clickReported == false) {
       if (Debug.isDebugBuild) Debug.Log(" *** Magnet Click *** ");
       OnMagnetClicked(this, new CardboardEvent());
-      if (vibrateOnClick) Vibrate();
+      if (vibrateOnMagnetClicked) Vibrate();
       click = true;
     }
   }

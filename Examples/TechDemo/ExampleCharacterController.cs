@@ -7,6 +7,8 @@ public class ExampleCharacterController : MonoBehaviour {
   private Vector3 moveDirection = Vector3.zero;
   private CharacterController controller;
 
+  private bool vibrateTriggered = false;
+
 	void Start () {
     controller = GetComponent<CharacterController>();
 
@@ -66,8 +68,9 @@ public class ExampleCharacterController : MonoBehaviour {
     TextMesh textMesh = GameObject.Find("SphereDown/Counter").GetComponent<TextMesh>();
 
     // IsMagnetHeld is true when the magnet has gone down but not back up yet.    
-    if ( !cardboard.IsMagnetHeld() ) {
+    if (!cardboard.IsMagnetHeld()) {
       textMesh.renderer.enabled = Time.time % 1 < 0.5;
+      vibrateTriggered = false;
     }
     else {
       textMesh.renderer.enabled = true;
@@ -75,6 +78,17 @@ public class ExampleCharacterController : MonoBehaviour {
       // SecondsMagnetHeld is the number of seconds we've held the magnet down.
       // It stops when when the magnet goes up and resets when the magnet goes down.
       textMesh.text = cardboard.SecondsMagnetHeld().ToString("#.##");
+
+      // CardboardSDK has built-in triggers vibrations to provide feedback.
+      // You can toggle them via the Unity Inspector or manually trigger your
+      // own vibration events, as seen here.
+      if (cardboard.SecondsMagnetHeld() > 2 && !vibrateTriggered) {
+        cardboard.Vibrate();
+        vibrateTriggered = true;
+        // Unfortunately, magnet input is briefly ignored during vibrations.
+        // This is because the small physical movement jostles the accelerometer.
+        // Because of this, we suggest limiting usage to OnMagnetClicked.
+      }
     }
 
     // Not shown here is the WasClicked method.
