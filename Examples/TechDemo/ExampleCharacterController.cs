@@ -87,7 +87,7 @@ public class ExampleCharacterController : MonoBehaviour {
         vibrateTriggered = true;
         // Unfortunately, magnet input is briefly ignored during vibrations.
         // This is because the small physical movement jostles the accelerometer.
-        // Because of this, we suggest limiting usage to OnMagnetClicked.
+        // You may want to limit usage to click-driven or non-magnet events.
       }
     }
 

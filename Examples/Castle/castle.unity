@@ -113,6 +113,10 @@ Prefab:
       propertyPath: clickSpeedThreshold
       value: .400000006
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 56066970be3a8c348ada96b52b52c000, type: 2}
+      propertyPath: vibrateOnMagnetClicked
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 56066970be3a8c348ada96b52b52c000, type: 2}
   m_RootGameObject: {fileID: 633138978}
@@ -293,6 +297,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clickSpeedThreshold: .400000006
+  vibrateOnMagnetDown: 0
+  vibrateOnMagnetUp: 0
+  vibrateOnMagnetClicked: 0
 --- !u!4 &633138980
 Transform:
   m_ObjectHideFlags: 0

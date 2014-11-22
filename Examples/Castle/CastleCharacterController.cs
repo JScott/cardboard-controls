@@ -28,7 +28,9 @@ public class CastleCharacterController : MonoBehaviour {
         GameObject.Find("star/star_chimes").audio.Stop();
         Object.Destroy(obj);
       }
+      else cardboard.Vibrate();
     }
+    else cardboard.Vibrate();
   }
 
 	void Update () {
