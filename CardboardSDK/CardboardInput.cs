@@ -38,22 +38,11 @@ using System.Linq;
 
 public class CardboardInput : MonoBehaviour {
   private Vector3 lastTiltVector;
-  private float tiltOffsetBaseLine = 0f;
   private float magneticFieldBaseLine = 0f;
-  private float rotationRateBaseLine = 0f;
 
   private float tiltOffsetMagnitude = 0f;
   private float magneticFieldMagnitude = 0f;
   private float rotationRateMagnitude = 0f;
-
-  private const int debugArrayLength = 20;
-  private int debugIndex = 0;
-  private float[] tiltOffsets = new float[debugArrayLength];
-  private float[] magneticFields = new float[debugArrayLength];
-  private float[] accelerationRatios = new float[debugArrayLength];
-  private float[] magneticRatios = new float[debugArrayLength];
-  private float[] gyros = new float[debugArrayLength];
-  private float[] gyroRatios = new float[debugArrayLength];
 
   private int slowImpulseFilter = 25;
   private int fastMagnetImpulseFilter = 3;
@@ -67,7 +56,6 @@ public class CardboardInput : MonoBehaviour {
   private bool upReported = false;
   private bool downReported = true; // down is triggered once as it finds baselines
   private bool clickReported = false;
-  private bool click = false;
   private bool magnetWentDown = false;
 
   // Magnet state
@@ -91,12 +79,10 @@ public class CardboardInput : MonoBehaviour {
   public void Start() {
     Input.compass.enabled = true;
     Input.gyro.enabled = true;
+    tiltOffsetMagnitude = Input.acceleration.magnitude;
+    rotationRateMagnitude = Input.gyro.rotationRate.magnitude;
     magneticFieldMagnitude = Input.compass.rawVector.magnitude;
     magneticFieldBaseLine = Input.compass.rawVector.magnitude;
-    tiltOffsetMagnitude = Input.acceleration.magnitude;
-    tiltOffsetBaseLine = Input.acceleration.magnitude;
-    rotationRateMagnitude = Input.gyro.rotationRate.magnitude;
-    rotationRateBaseLine = Input.gyro.rotationRate.magnitude;
   }
 
   public float ImpulseFilter(float from_value, float to_value, int filter) {
@@ -114,15 +100,10 @@ public class CardboardInput : MonoBehaviour {
     // If the tilt hasn't changed, but the compass has, then the magnetic field moved
     // without device this is the essence of a cardboard magnet click.
     tiltOffsetMagnitude = ImpulseFilter(tiltOffsetMagnitude, tiltOffset.magnitude, fastTiltImpulseFilter);
-    tiltOffsetBaseLine = ImpulseFilter(tiltOffsetBaseLine, tiltOffset.magnitude, slowImpulseFilter);
+    rotationRateMagnitude = ImpulseFilter(rotationRateMagnitude, rotationRate.magnitude, fastRotationImpulseFilter);
     magneticFieldMagnitude = ImpulseFilter(magneticFieldMagnitude, magneticField.magnitude, fastMagnetImpulseFilter);
     magneticFieldBaseLine = ImpulseFilter(magneticFieldBaseLine, magneticField.magnitude, slowImpulseFilter);
-    rotationRateMagnitude = ImpulseFilter(rotationRateMagnitude, rotationRate.magnitude, fastRotationImpulseFilter);
-    rotationRateBaseLine = ImpulseFilter(rotationRateBaseLine, rotationRate.magnitude, slowImpulseFilter);
-
     float magneticFieldRatio = (magneticFieldMagnitude / magneticFieldBaseLine);
-    float tiltOffsetRatio = (tiltOffsetMagnitude / tiltOffsetBaseLine);
-    float rotationRateRatio = (rotationRateMagnitude / rotationRateBaseLine);
 
     notJostled = tiltOffsetMagnitude < 0.2;
     notRotatedQuickly = rotationRateMagnitude < 3.0;
@@ -137,45 +118,45 @@ public class CardboardInput : MonoBehaviour {
       else upReported = false;
     }
 
-    if (verboseDebug) Debug.Log(MagnetStateChart());
+    if (Debug.isDebugBuild && verboseDebug) Debug.Log(MagnetStateChart());
   }
 
   public string MagnetStateChart() {
-    string debug = "";
-    debug += "Magnet Readings\n";
-    debug += notJostled ? "***** steady " : "!!!!! jostled ";
+    string chart = "";
+    chart += "Magnet Readings\n";
+    chart += notJostled ? "***** steady " : "!!!!! jostled ";
     if (notJostled) {
-      debug += magnetMovedDown ? "vvv " : "    ";
-      debug += magnetMovedUp ? "^^^ " : "    ";
+      chart += magnetMovedDown ? "vvv " : "    ";
+      chart += magnetMovedUp ? "^^^ " : "    ";
     }
-    debug += "\nMagnet State\n";
-    debug += downReported ? "D " : "x ";
-    debug += magnetWentDown ? "d " : "_ ";
-    debug += upReported ? "U " : "x ";
-    debug += clickReported ? "C " : "x ";
-    debug += "\n";
-    return debug;
+    chart += "\nMagnet State\n";
+    chart += downReported ? "D " : "x ";
+    chart += magnetWentDown ? "d " : "_ ";
+    chart += upReported ? "U " : "x ";
+    chart += clickReported ? "C " : "x ";
+    chart += "\n";
+    return chart;
   }
 
   public void ReportDown() {
     if (downReported == false) {
       if (Debug.isDebugBuild) Debug.Log(" *** Magnet Down *** ");
-      OnMagnetDown(this, new CardboardEvent());
-      if (vibrateOnMagnetDown) Vibrate();
       downReported = true;
       magnetHeld = true;
       clickStartTime = Time.time;
       magnetWentDown = true;
+      OnMagnetDown(this, new CardboardEvent());
+      if (vibrateOnMagnetDown) Vibrate();
     }
   }
 
   public void ReportUp() {
     if (upReported == false) {
       if (Debug.isDebugBuild) Debug.Log(" *** Magnet Up *** ");
-      OnMagnetUp(this, new CardboardEvent());
-      if (vibrateOnMagnetUp) Vibrate();
       upReported = true;
       magnetHeld = false;
+      OnMagnetUp(this, new CardboardEvent());
+      if (vibrateOnMagnetUp) Vibrate();
       if (magnetWentDown) CheckForClick();
       magnetWentDown = false;
     }
@@ -193,7 +174,6 @@ public class CardboardInput : MonoBehaviour {
       if (Debug.isDebugBuild) Debug.Log(" *** Magnet Click *** ");
       OnMagnetClicked(this, new CardboardEvent());
       if (vibrateOnMagnetClicked) Vibrate();
-      click = true;
     }
   }
 
@@ -208,15 +188,5 @@ public class CardboardInput : MonoBehaviour {
 
   public bool IsMagnetHeld() {
     return magnetHeld;
-  }
-
-  public bool WasClicked()  {
-    if(click == true) {
-      click = false;
-      return true;
-    }
-    else {
-      return false;
-    }
   }
 }
