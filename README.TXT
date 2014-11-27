@@ -21,7 +21,6 @@ Examples/TechDemo has a scene that shows off the capabilities and use of Cardboa
 ----- Roadmap
 
 In no particular order:
-- Vibration feedback
 - Better debug tools and tests
 - Tap/tilt input via accelerometer
 - Screen compression filter
