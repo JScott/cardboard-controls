@@ -42,10 +42,10 @@ public class CardboardManager : MonoBehaviour {
     input.Update();
 
     if (!input.Jostled()) { // && !input.RotatedQuickly()) {
-      if (!input.MagnetMovedDown()) ReportDown();
+      if (input.MagnetMovedDown()) ReportDown();
       else downReported = false;
 
-      if (!input.MagnetMovedUp()) ReportUp();
+      if (input.MagnetMovedUp()) ReportUp();
       else upReported = false;
     }
 
