@@ -67,11 +67,11 @@ public class CardboardInput {
 		return rotationRateMagnitude >= 3.0;
 	}
 
-	public bool MagnetMovedUp() {
+	public bool MagnetMovedDown() {
 		return magneticFieldRatio > 1.11;
 	}
 
-	public bool MagnetMovedDown() {
+	public bool MagnetMovedUp() {
 		return magneticFieldRatio < 0.97;
 	}
 
