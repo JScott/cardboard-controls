@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class ExampleCharacterController : MonoBehaviour {
-  private static CardboardInput cardboard;
+  private static CardboardManager cardboard;
 
   private Vector3 moveDirection = Vector3.zero;
   private CharacterController controller;
@@ -19,7 +19,7 @@ public class ExampleCharacterController : MonoBehaviour {
     Unity provides a good primer on delegates here:
     http://unity3d.com/learn/tutorials/modules/intermediate/scripting/delegates
     */
-    cardboard = GameObject.Find("CardboardInputManager").GetComponent<CardboardInput>();
+    cardboard = GameObject.Find("CardboardInputManager").GetComponent<CardboardManager>();
     cardboard.OnMagnetDown += CardboardDown;  // When the magnet goes down
     cardboard.OnMagnetUp += CardboardUp;      // When the magnet comes back up
 

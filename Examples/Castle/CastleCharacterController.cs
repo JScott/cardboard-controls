@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class CastleCharacterController : MonoBehaviour {
-  private static CardboardInput cardboard;
+  private static CardboardManager cardboard;
 
   public float speed = 1.0f;
   public float jumpSpeed = 1.0f;
@@ -11,8 +11,8 @@ public class CastleCharacterController : MonoBehaviour {
   private Vector3 moveDirection = Vector3.zero;
   private CharacterController controller;
 
-	void Start () {
-    cardboard = GameObject.Find("CardboardInputManager").GetComponent<CardboardInput>();
+	public void Start () {
+    cardboard = GameObject.Find("CardboardInputManager").GetComponent<CardboardManager>();
     cardboard.OnMagnetClicked += Interact;
     controller = GetComponent<CharacterController>();
     diveCameraTransform = this.transform.GetChild(0);

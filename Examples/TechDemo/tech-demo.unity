@@ -184,6 +184,7 @@ MonoBehaviour:
   vibrateOnMagnetDown: 0
   vibrateOnMagnetUp: 0
   vibrateOnMagnetClicked: 1
+  verboseDebug: 1
 --- !u!4 &147994843
 Transform:
   m_ObjectHideFlags: 0
@@ -380,6 +381,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 56066970be3a8c348ada96b52b52c000, type: 2}
       propertyPath: vibrateOnMagnetClicked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 56066970be3a8c348ada96b52b52c000, type: 2}
+      propertyPath: verboseDebug
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
