@@ -56,7 +56,7 @@ public class CardboardManager : MonoBehaviour {
   }
 
   public void ReportDown() {
-    if (downReported == false) {
+    if (!downReported) {
       OnMagnetDown(this, new CardboardEvent());
       if (Debug.isDebugBuild) Debug.Log(" *** Magnet Down *** ");
       if (vibrateOnMagnetDown) Vibrate();
@@ -65,7 +65,7 @@ public class CardboardManager : MonoBehaviour {
   }
 
   public void ReportUp() {
-    if (upReported == false) {
+    if (!upReported) {
       OnMagnetUp(this, new CardboardEvent());
       if (Debug.isDebugBuild) Debug.Log(" *** Magnet Up *** ");
       if (vibrateOnMagnetUp) Vibrate();
