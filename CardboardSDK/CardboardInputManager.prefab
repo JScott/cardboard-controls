@@ -27,6 +27,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+  m_RootOrder: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39,6 +40,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clickSpeedThreshold: .400000006
+  vibrateOnMagnetDown: 0
+  vibrateOnMagnetUp: 0
+  vibrateOnMagnetClicked: 1
+  debugChartsInConsole: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

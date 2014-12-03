@@ -184,7 +184,7 @@ MonoBehaviour:
   vibrateOnMagnetDown: 0
   vibrateOnMagnetUp: 0
   vibrateOnMagnetClicked: 1
-  verboseDebug: 1
+  debugChartsInConsole: 0
 --- !u!4 &147994843
 Transform:
   m_ObjectHideFlags: 0

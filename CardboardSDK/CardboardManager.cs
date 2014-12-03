@@ -18,7 +18,7 @@ public class CardboardManager : MonoBehaviour {
   private bool upReported = false;
   private bool downReported = true; // down is triggered once as it finds baselines
   private bool clickReported = false;
-  private bool magnetWentDown = false;
+  private bool magnetWasDown = false;
 
   private bool magnetHeld = false;
 
@@ -27,7 +27,7 @@ public class CardboardManager : MonoBehaviour {
   public bool vibrateOnMagnetClicked = true;
 
 
-  public bool verboseDebug = false;
+  public bool debugChartsInConsole = false;
 
   public delegate void CardboardAction(object sender, CardboardEvent cardboardEvent);
   public CardboardAction OnMagnetDown = delegate {};
@@ -49,7 +49,7 @@ public class CardboardManager : MonoBehaviour {
       else upReported = false;
     }
 
-    if (Debug.isDebugBuild && verboseDebug) {
+    if (Debug.isDebugBuild && debugChartsInConsole) {
       string charts = input.MagnetReadingsChart() + "\n" + MagnetStateChart();
       Debug.Log(charts);
     }
@@ -57,25 +57,36 @@ public class CardboardManager : MonoBehaviour {
 
   public void ReportDown() {
     if (downReported == false) {
-      if (Debug.isDebugBuild) Debug.Log(" *** Magnet Down *** ");
-      downReported = true;
-      magnetHeld = true;
-      clickStartTime = Time.time;
-      magnetWentDown = true;
       OnMagnetDown(this, new CardboardEvent());
+      if (Debug.isDebugBuild) Debug.Log(" *** Magnet Down *** ");
       if (vibrateOnMagnetDown) Vibrate();
+      SetMagnetFlagsForGoing("down");
     }
   }
 
   public void ReportUp() {
     if (upReported == false) {
-      if (Debug.isDebugBuild) Debug.Log(" *** Magnet Up *** ");
-      upReported = true;
-      magnetHeld = false;
       OnMagnetUp(this, new CardboardEvent());
+      if (Debug.isDebugBuild) Debug.Log(" *** Magnet Up *** ");
       if (vibrateOnMagnetUp) Vibrate();
-      if (magnetWentDown) CheckForClick();
-      magnetWentDown = false;
+      if (magnetWasDown) CheckForClick();
+      SetMagnetFlagsForGoing("up");
+    }
+  }
+
+  public void SetMagnetFlagsForGoing(string state) {
+    switch (state) {
+      case "down":
+        downReported = true;
+        magnetHeld = true;
+        clickStartTime = Time.time;
+        magnetWasDown = true;
+        break;
+      case "up":
+        upReported = true;
+        magnetHeld = false;
+        magnetWasDown = false;
+        break;
     }
   }
 
@@ -83,15 +94,12 @@ public class CardboardManager : MonoBehaviour {
     bool withinClickThreshold = SecondsMagnetHeld() <= clickSpeedThreshold;
     clickStartTime = 0f;
     if (withinClickThreshold) ReportClick();
-    else clickReported = false;
   }
 
   public void ReportClick() {
-    if(clickReported == false) {
-      if (Debug.isDebugBuild) Debug.Log(" *** Magnet Click *** ");
-      OnMagnetClicked(this, new CardboardEvent());
-      if (vibrateOnMagnetClicked) Vibrate();
-    }
+    OnMagnetClicked(this, new CardboardEvent());
+    if (Debug.isDebugBuild) Debug.Log(" *** Magnet Click *** ");
+    if (vibrateOnMagnetClicked) Vibrate();
   }
 
   public void Vibrate() {
@@ -111,7 +119,7 @@ public class CardboardManager : MonoBehaviour {
     string chart = "";
     chart += "Magnet State\n";
     chart += downReported ? "D " : "x ";
-    chart += magnetWentDown ? "d " : "_ ";
+    chart += magnetWasDown ? "d " : "_ ";
     chart += upReported ? "U " : "x ";
     chart += clickReported ? "C " : "x ";
     chart += "\n";
