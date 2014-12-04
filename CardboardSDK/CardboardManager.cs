@@ -74,8 +74,8 @@ public class CardboardManager : MonoBehaviour {
     }
   }
 
-  public void SetMagnetFlagsForGoing(string state) {
-    switch (state) {
+  public void SetMagnetFlagsForGoing(string direction) {
+    switch (direction) {
       case "down":
         downReported = true;
         magnetHeld = true;
