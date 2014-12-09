@@ -34,7 +34,7 @@ public class CardboardManager : MonoBehaviour {
   public CardboardAction OnMagnetDown = delegate {};
   public CardboardAction OnMagnetUp = delegate {};
   public CardboardAction OnMagnetClicked = delegate {};
-  public CardboardAction OnOrientationTilt = delegate { };
+  public CardboardAction OnOrientationTilt = delegate {};
 
   public void Start() {
     input = new CardboardInput();
