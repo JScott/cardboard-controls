@@ -19,17 +19,14 @@ public class CardboardManager : MonoBehaviour {
   private bool downReported = true; // down is triggered once as it finds baselines
   private bool clickReported = false;
   private bool magnetWasDown = false;
+  private bool tiltReported = false; // triggered at the start
 
   private bool magnetHeld = false;
 
   public bool vibrateOnMagnetDown = false;
   public bool vibrateOnMagnetUp = false;
   public bool vibrateOnMagnetClicked = true;
-
-  // Orientation readings
-  private bool orientationResetReported = true; // triggered at the start
-  
-  public bool vibrateOnOrientationReset = true;
+  public bool vibrateOnOrientationTilt = true;
 
   public bool debugChartsInConsole = false;
 
@@ -37,7 +34,7 @@ public class CardboardManager : MonoBehaviour {
   public CardboardAction OnMagnetDown = delegate {};
   public CardboardAction OnMagnetUp = delegate {};
   public CardboardAction OnMagnetClicked = delegate {};
-  public CardboardAction OnOrientationReset = delegate { };
+  public CardboardAction OnOrientationTilt = delegate { };
 
   public void Start() {
     input = new CardboardInput();
@@ -54,13 +51,12 @@ public class CardboardManager : MonoBehaviour {
       else upReported = false;
     } 
 
-    // We can always assume application are default to landscape left
     if (input.OrientationTilted()) {
-      if (!orientationResetReported) ReportOrientationReset();
+      if (!tiltReported) ReportTilt();
     }
-    else if (orientationResetReported) {
+    else if (tiltReported) {
       if (Input.deviceOrientation == DeviceOrientation.LandscapeLeft)
-        orientationResetReported = false;
+        tiltReported = false;
     }
 
     if (Debug.isDebugBuild && debugChartsInConsole) {
@@ -116,6 +112,15 @@ public class CardboardManager : MonoBehaviour {
     if (vibrateOnMagnetClicked) Vibrate();
   }
 
+  public void ReportTilt() {
+    if (!tiltReported) {
+      OnOrientationTilt(this, new CardboardEvent());
+      if (Debug.isDebugBuild) Debug.Log(" *** Orientation Tilt *** ");
+      if (vibrateOnOrientationTilt) Vibrate();
+      tiltReported = true;
+    }
+  }
+
   public void Vibrate() {
     Handheld.Vibrate();
   }
@@ -138,14 +143,5 @@ public class CardboardManager : MonoBehaviour {
     chart += clickReported ? "C " : "x ";
     chart += "\n";
     return chart;
-  }
-
-  public void ReportOrientationReset() {
-    if (!orientationResetReported) {
-      OnOrientationReset(this, new CardboardEvent());
-      if (Debug.isDebugBuild) Debug.Log(" *** Orientation Reset *** ");
-      if (vibrateOnOrientationReset) Vibrate();
-      orientationResetReported = true;
-    }
   }
 }
