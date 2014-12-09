@@ -29,4 +29,6 @@ In no particular order:
 
 ----- Licensing
 
-Read CONTRIBUTORS.TXT first as it contains an overview of the licenses for the libraries used. Dive in particular has an interesting requirement.
+CardboardSDK-Unity relies on Durovis Drive which has a custom license. You can find the details in the Dive directory. To summarize, it mandates showing its splash screen in your application.
+
+The rest of the CardboardSDK-Unity code is MIT licensed. The legal text can be found in the CardboardSDK directory.

@@ -1,11 +1,15 @@
 Dive
   https://www.durovis.com/sdk.html
-  Custom usage license which mandates showing its splash screen in your application
+  Durovis Dive is a core library
 
 Andrew Whyte, Secret Ingredient Games
   http://www.andrewnoske.com/wiki/Unity_-_Detecting_Google_Cardboard_Click
-  MIT license
+  Base code for detecting magnet input
 
 Justin Scott
   https://github.com/JScott
-  MIT license
+  Repository owner
+
+Rukanishino
+  https://github.com/rukanishino
+  Contributed code for orientation tilt controls
