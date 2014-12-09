@@ -55,7 +55,7 @@ public class CardboardManager : MonoBehaviour {
     } 
 
     // We can always assume application are default to landscape left
-    if (Input.deviceOrientation == DeviceOrientation.Portrait) {
+    if (input.OrientationTilted()) {
       if (!orientationResetReported) ReportOrientationReset();
     }
     else if (orientationResetReported) {

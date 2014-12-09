@@ -23,6 +23,8 @@ public class CardboardInput {
   private int fastRotationImpulseFilter = 3;
   private int fastTiltImpulseFilter = 5;  // Clicking the magnet tends to tilt the device slightly.
 
+  private DeviceOrientation tiltedOrientation = DeviceOrientation.Portrait;
+
 	public CardboardInput() {
     Input.compass.enabled = true;
     Input.gyro.enabled = true;
@@ -74,6 +76,10 @@ public class CardboardInput {
 	public bool MagnetMovedUp() {
 		return magneticFieldRatio < 0.97;
 	}
+
+  public bool OrientationTilted() {
+    return Input.deviceOrientation == tiltedOrientation;
+  }
 
   public string MagnetReadingsChart() {
     string chart = "";
