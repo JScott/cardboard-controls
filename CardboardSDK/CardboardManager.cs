@@ -51,13 +51,8 @@ public class CardboardManager : MonoBehaviour {
       else upReported = false;
     } 
 
-    if (input.OrientationTilted()) {
-      if (!tiltReported) ReportTilt();
-    }
-    else if (tiltReported) {
-      if (Input.deviceOrientation == DeviceOrientation.LandscapeLeft)
-        tiltReported = false;
-    }
+    if (input.OrientationTilted()) ReportTilt();
+    else tiltReported = false;
 
     if (Debug.isDebugBuild && debugChartsInConsole) {
       string charts = input.MagnetReadingsChart() + "\n" + MagnetStateChart();
