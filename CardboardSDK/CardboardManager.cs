@@ -26,6 +26,10 @@ public class CardboardManager : MonoBehaviour {
   public bool vibrateOnMagnetUp = false;
   public bool vibrateOnMagnetClicked = true;
 
+  // Orientation readings
+  private bool orientationResetReported = true; // triggered at the start
+  
+  public bool vibrateOnOrientationReset = true;
 
   public bool debugChartsInConsole = false;
 
@@ -33,6 +37,7 @@ public class CardboardManager : MonoBehaviour {
   public CardboardAction OnMagnetDown = delegate {};
   public CardboardAction OnMagnetUp = delegate {};
   public CardboardAction OnMagnetClicked = delegate {};
+  public CardboardAction OnOrientationReset = delegate { };
 
   public void Start() {
     input = new CardboardInput();
@@ -47,6 +52,15 @@ public class CardboardManager : MonoBehaviour {
 
       if (input.MagnetMovedUp()) ReportUp();
       else upReported = false;
+    } 
+
+    // We can always assume application are default to landscape left
+    if (Input.deviceOrientation == DeviceOrientation.Portrait) {
+      if (!orientationResetReported) ReportOrientationReset();
+    }
+    else if (orientationResetReported) {
+      if (Input.deviceOrientation == DeviceOrientation.LandscapeLeft)
+        orientationResetReported = false;
     }
 
     if (Debug.isDebugBuild && debugChartsInConsole) {
@@ -124,5 +138,14 @@ public class CardboardManager : MonoBehaviour {
     chart += clickReported ? "C " : "x ";
     chart += "\n";
     return chart;
+  }
+
+  public void ReportOrientationReset() {
+    if (!orientationResetReported) {
+      OnOrientationReset(this, new CardboardEvent());
+      if (Debug.isDebugBuild) Debug.Log(" *** Orientation Reset *** ");
+      if (vibrateOnOrientationReset) Vibrate();
+      orientationResetReported = true;
+    }
   }
 }
