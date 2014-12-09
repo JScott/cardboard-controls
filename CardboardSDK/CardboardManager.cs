@@ -136,6 +136,7 @@ public class CardboardManager : MonoBehaviour {
     chart += magnetWasDown ? "d " : "_ ";
     chart += upReported ? "U " : "x ";
     chart += clickReported ? "C " : "x ";
+    chart += tiltReported ? "T " : "x ";
     chart += "\n";
     return chart;
   }
