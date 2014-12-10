@@ -1,4 +1,4 @@
-Dive
+Durovis
   https://www.durovis.com/sdk.html
   Durovis Dive is a core library
 
