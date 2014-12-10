@@ -1,18 +1,18 @@
 This stark demo will show off the various events and data that CardboardSDK allows you to plug into.
 
-The functionality hinges on the CardboardInput class, a MonoBehaviour class for a single Manager object in the scene. ExampleCharacterController.cs is heavily documented to show you how to utilize CardboardInput.
+CardboardInput provides the raw data in a meaningful way to CardboardManager.
 
+CardboardManager is your interpreter for that data. See below for a cheat sheet on the methods and delegates you can hook into.
 
 ---
 
-  class CardboardInput
-    float clickSpeedThreshold
+  class CardboardManager
     delegate void CardboardAction(object sender, CardboardEvent cardboardEvent)
       OnMagnetDown
       OnMagnetUp
-      OnMagnetMoved
       OnMagnetClick
+      OnOrientationTilt
     void Update()
     float SecondsMagnetHeld()
     bool IsMagnetHeld()
-    bool WasClicked()
+    void Vibrate()

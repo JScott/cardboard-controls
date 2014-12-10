@@ -27,8 +27,9 @@ public class ExampleCharacterController : MonoBehaviour {
     // That limit is public as cardboard.clickSpeedThreshold
     cardboard.OnMagnetClicked += CardboardClick;
 
-    // Not shown here is the OnMagnetMoved delegate.
-    // This is triggered when the magnet goes up or down.
+    // Not shown here is the OnOrientationTilt delegate.
+    // This is triggered on rotating the device to Portrait mode.
+    // The Google Cardboard app refers to this gesture as a Tilt.
 	}
 
 
@@ -91,9 +92,7 @@ public class ExampleCharacterController : MonoBehaviour {
       }
     }
 
-    // Not shown here is the WasClicked method.
-    // This tells you if magnet was clicked
-    // since the last time the method was called.
+    // Not shown here is the Vibrate methods which simply vibrates the device.
   }
 
   /*
