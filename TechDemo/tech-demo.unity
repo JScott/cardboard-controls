@@ -185,7 +185,7 @@ MonoBehaviour:
   vibrateOnMagnetUp: 0
   vibrateOnMagnetClicked: 1
   vibrateOnOrientationTilt: 1
-  debugChartsInConsole: 0
+  debugChartsEnabled: 0
   debugMagnetKey: 32
   debugOrientationKey: 9
 --- !u!4 &147994843
@@ -328,6 +328,10 @@ Prefab:
     - target: {fileID: 11400000, guid: 56066970be3a8c348ada96b52b52c000, type: 2}
       propertyPath: verboseDebug
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 56066970be3a8c348ada96b52b52c000, type: 2}
+      propertyPath: debugChartsEnabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 56066970be3a8c348ada96b52b52c000, type: 2}
