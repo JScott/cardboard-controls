@@ -28,7 +28,9 @@ public class CardboardManager : MonoBehaviour {
   public bool vibrateOnMagnetClicked = true;
   public bool vibrateOnOrientationTilt = true;
 
-  public bool debugChartsInConsole = false;
+  public bool debugChartsEnabled = false;
+  public KeyCode debugMagnetKey = KeyCode.Space;
+  public KeyCode debugOrientationKey = KeyCode.Tab;
 
   public delegate void CardboardAction(object sender, CardboardEvent cardboardEvent);
   public CardboardAction OnMagnetDown = delegate {};
@@ -40,21 +42,35 @@ public class CardboardManager : MonoBehaviour {
     input = new CardboardInput();
   }
 
+  public bool DebugKey(string forInput) {
+    if (!Debug.isDebugBuild) return false;
+    switch(forInput) {
+      case "magnetDown":
+        return Input.GetKeyDown(debugMagnetKey);
+      case "magnetUp":
+        return Input.GetKeyUp(debugMagnetKey);
+      case "orientationTilt":
+        return Input.GetKeyDown(debugOrientationKey);
+      default:
+        return false;
+    }
+  }
+
   public void Update() {
     input.Update();
 
     if (!input.Jostled()) { // && !input.RotatedQuickly()) {
-      if (input.MagnetMovedDown()) ReportDown();
+      if (input.MagnetMovedDown() || DebugKey("magnetDown")) ReportDown();
       else downReported = false;
 
-      if (input.MagnetMovedUp()) ReportUp();
+      if (input.MagnetMovedUp() || DebugKey("magnetUp")) ReportUp();
       else upReported = false;
     } 
 
-    if (input.OrientationTilted()) ReportTilt();
+    if (input.OrientationTilted() || DebugKey("orientationTilt")) ReportTilt();
     else tiltReported = false;
 
-    if (Debug.isDebugBuild && debugChartsInConsole) {
+    if (Debug.isDebugBuild && debugChartsEnabled) {
       string charts = input.MagnetReadingsChart() + "\n" + MagnetStateChart();
       Debug.Log(charts);
     }

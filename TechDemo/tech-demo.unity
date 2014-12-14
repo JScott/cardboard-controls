@@ -186,6 +186,8 @@ MonoBehaviour:
   vibrateOnMagnetClicked: 1
   vibrateOnOrientationTilt: 1
   debugChartsInConsole: 0
+  debugMagnetKey: 32
+  debugOrientationKey: 9
 --- !u!4 &147994843
 Transform:
   m_ObjectHideFlags: 0

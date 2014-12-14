@@ -5,7 +5,7 @@ using System.Collections;
 Replace this camera with the Durovis Dive camera to work on an actual Cardboard.
 */
 public class MouseCamera : MonoBehaviour {
-  private float lookSpeed = 50.0f;
+  private float lookSpeed = 100.0f;
 
   void Update () {
     float deltaSpeed = Time.deltaTime * lookSpeed;
