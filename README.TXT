@@ -6,8 +6,8 @@ This library goes hand-in-hand with Durovis Drive which handles the stereoscopic
 ----- Usage
 
 To pull this into your existing project:
-- copy over the CardboardSDK directory
-- add CardboardInputManager to your scene
+- Import the CardboardSDK package
+- use the CardboardInputManager prefab in your scene
 
 To add Durovis Dive:
 - download the "Plugin Package" from https://www.durovis.com/sdk.html
