@@ -1,10 +1,6 @@
-Durovis
-  https://www.durovis.com/sdk.html
-  Durovis Dive is a core library
-
 Andrew Whyte, Secret Ingredient Games
   http://www.andrewnoske.com/wiki/Unity_-_Detecting_Google_Cardboard_Click
-  Base code for detecting magnet input
+  MIT-licensed base code for detecting magnet input
 
 Justin Scott
   https://github.com/JScott

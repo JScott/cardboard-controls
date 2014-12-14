@@ -86,13 +86,8 @@ public class ExampleCharacterController : MonoBehaviour {
       if (cardboard.SecondsMagnetHeld() > 2 && !vibrateTriggered) {
         cardboard.Vibrate();
         vibrateTriggered = true;
-        // Unfortunately, magnet input is briefly ignored during vibrations.
-        // This is because the small physical movement jostles the accelerometer.
-        // You may want to limit usage to click-driven or non-magnet events.
       }
     }
-
-    // Not shown here is the Vibrate methods which simply vibrates the device.
   }
 
   /*
