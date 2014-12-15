@@ -1,6 +1,6 @@
 Cardboard SDK handles relevant device input for using a Google Cardboard. It gives you a wide range of events and data which expand your creative opportunities with this accessible VR platform.
 
-This library goes hand-in-hand with Durovis Drive which handles the stereoscopic rendering and gyroscope data for looking around. Unfortunately, the license prevents me from including it's SDK so I'll provide instructions on downloading it yourself.
+I don't yet have my own solution for stereoscopic rendering and head tracking so this library relies on Durovis Drive for that. Unfortunately, the license prevents me from including it's SDK so I'll provide instructions on downloading it yourself.
 
 
 ----- Usage
