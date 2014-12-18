@@ -25,16 +25,16 @@ public class CardboardInput {
 
   private DeviceOrientation tiltedOrientation = DeviceOrientation.Portrait;
 
-	public CardboardInput() {
+  public CardboardInput() {
     Input.compass.enabled = true;
     Input.gyro.enabled = true;
     tiltOffsetMagnitude = Input.acceleration.magnitude; // TODO: rename tiltoffset for clarity
     rotationRateMagnitude = Input.gyro.rotationRate.magnitude;
     magneticFieldMagnitude = Input.compass.rawVector.magnitude;
     magneticFieldBaseLine = Input.compass.rawVector.magnitude;
-	}
-	
-	public void Update() {
+  }
+  
+  public void Update() {
     Vector3 magneticField = Input.compass.rawVector;
     Vector3 rotationRate = Input.gyro.rotationRate; // TODO: shouldn't this be the offset, like tilt?
     Vector3 tiltNow = Input.acceleration;
@@ -44,14 +44,14 @@ public class CardboardInput {
     // TODO: "magnitude" isn't terribly descriptive
     FilterAndSetMagnitudes(tiltOffset.magnitude, rotationRate.magnitude, magneticField.magnitude);
     magneticFieldRatio = (magneticFieldMagnitude / magneticFieldBaseLine);
-	}
+  }
 
   public float ImpulseFilter(float from_value, float to_value, int filter) {
     return ((filter-1) * from_value + to_value) / filter;
   }
 
   // TODO: man, dictionaries would be great around this...
-	public void FilterAndSetMagnitudes(float newTiltOffsetMagnitude, float newRotationRateMagnitude, float newMagneticFieldMagnitude) {
+  public void FilterAndSetMagnitudes(float newTiltOffsetMagnitude, float newRotationRateMagnitude, float newMagneticFieldMagnitude) {
     // Apply Finite Impulse Response (FIR) filters
     // If the tilt hasn't changed, but the compass has, then the magnetic field moved
     // without device this is the essence of a cardboard magnet click.
@@ -61,21 +61,21 @@ public class CardboardInput {
     magneticFieldBaseLine = ImpulseFilter(magneticFieldBaseLine, newMagneticFieldMagnitude, slowImpulseFilter);
   }
 
-	public bool Jostled() {
-		return tiltOffsetMagnitude >= 0.2;
-	}
+  public bool Jostled() {
+    return tiltOffsetMagnitude >= 0.2;
+  }
 
-	public bool RotatedQuickly() {
-		return rotationRateMagnitude >= 3.0;
-	}
+  public bool RotatedQuickly() {
+    return rotationRateMagnitude >= 3.0;
+  }
 
-	public bool MagnetMovedDown() {
-		return magneticFieldRatio > 1.11;
-	}
+  public bool MagnetMovedDown() {
+    return magneticFieldRatio > 1.11;
+  }
 
-	public bool MagnetMovedUp() {
-		return magneticFieldRatio < 0.97;
-	}
+  public bool MagnetMovedUp() {
+    return magneticFieldRatio < 0.97;
+  }
 
   public bool OrientationTilted() {
     return Input.deviceOrientation == tiltedOrientation;
