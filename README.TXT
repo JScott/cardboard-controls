@@ -13,6 +13,8 @@ To add Durovis Dive:
 - download the "Plugin Package" from https://www.durovis.com/sdk.html
 - replace your main camera with the included Dive_Camera prefab
 
+For debug purposes, Space triggers the magnet and Tab triggers the orientation tilt.
+
 
 ----- Example Code
 
