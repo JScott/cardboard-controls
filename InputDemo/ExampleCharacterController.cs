@@ -57,7 +57,7 @@ public class ExampleCharacterController : MonoBehaviour {
 
   public void ChangeSphereColor(string name) {
     GameObject sphere = GameObject.Find(name);
-    sphere.renderer.material.color = new Color(Random.value, Random.value, Random.value);
+    sphere.GetComponent<Renderer>().material.color = new Color(Random.value, Random.value, Random.value);
   }
 
 
@@ -70,11 +70,11 @@ public class ExampleCharacterController : MonoBehaviour {
 
     // IsMagnetHeld is true when the magnet has gone down but not back up yet.    
     if (!cardboard.IsMagnetHeld()) {
-      textMesh.renderer.enabled = Time.time % 1 < 0.5;
+      textMesh.GetComponent<Renderer>().enabled = Time.time % 1 < 0.5;
       vibrateTriggered = false;
     }
     else {
-      textMesh.renderer.enabled = true;
+      textMesh.GetComponent<Renderer>().enabled = true;
 
       // SecondsMagnetHeld is the number of seconds we've held the magnet down.
       // It stops when when the magnet goes up and resets when the magnet goes down.
