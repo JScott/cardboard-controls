@@ -4,13 +4,13 @@ using System.Collections;
 public class ExampleCharacterController : MonoBehaviour {
   private static CardboardManager cardboard;
 
-  private Vector3 moveDirection = Vector3.zero;
-  private CharacterController controller;
+  //private Vector3 moveDirection = Vector3.zero;
+  //private CharacterController controller;
 
   private bool vibrateTriggered = false;
 
 	void Start () {
-    controller = GetComponent<CharacterController>();
+    //controller = GetComponent<CharacterController>();
 
     /*
     Start by getting the script off CardboardInputManager.
