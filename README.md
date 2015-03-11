@@ -34,7 +34,9 @@ The Inspector for the Manager object exposes:
 
 # Prerequisites
 
-Before using this SDK, you need to import the base Cardboard SDK if you haven't already:
+If you got this from the Asset Store then I've already packaged a version of the prerequisites for you.
+
+If not then you'll need to import the base Cardboard SDK if you haven't already:
 - [Download CardboardSDK.unitypackage](https://github.com/googlesamples/cardboard-unity/blob/master/CardboardSDKForUnity.unitypackage?raw=true) from [Google's repository](https://github.com/googlesamples/cardboard-unity).
 - Import it in your scene
 - Use the `CardboardMain` prefab for your camera
