@@ -9,7 +9,7 @@ public class ExampleCharacterController : MonoBehaviour {
 
   private bool vibrateTriggered = false;
 
-	void Start () {
+  void Start () {
     //controller = GetComponent<CharacterController>();
 
     /*
@@ -30,7 +30,7 @@ public class ExampleCharacterController : MonoBehaviour {
     // Not shown here is the OnOrientationTilt delegate.
     // This is triggered on rotating the device to Portrait mode.
     // The Google Cardboard app refers to this gesture as a Tilt.
-	}
+  }
 
 
 
