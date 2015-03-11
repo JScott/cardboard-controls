@@ -1,25 +1,52 @@
-Cardboard SDK handles relevant device input for using a Google Cardboard. It gives you a wide range of events and data which expand your creative opportunities with this accessible VR platform.
+This Cardboard SDK is all you need to develop the best Cardboard games in Unity. These scripts enhance [Google's official Cardboard SDK for Unity](https://developers.google.com/cardboard/unity/) with improvements such as discrete magnet control, orientation tilting, and event-driven architecture. Stop limiting your creative options!
 
-I don't yet have my own solution for stereoscopic rendering and head tracking so this library relies on Durovis Drive for that. Unfortunately, the license prevents me from including it's SDK so I'll provide instructions on downloading it yourself.
 
-The [official Google SDK](https://developers.google.com/cardboard/unity/) would be a great replacement for Dive but right now they have [a known bug](https://developers.google.com/cardboard/unity/release-notes#v040_initial_public_release) that prevents reading gyro or accelerometer data. [This may be fixed in Unity 5](http://www.reddit.com/r/GoogleCardboard/comments/2uzmeg/discussion_google_sdk_for_unity_vs_proprietary/coe1rsp).
+# What's added?
+
+In addition to everything from Google's impressive SDK, you get better interactions to improve the experience for developers and players alike.
+
+## Discrete Magnet Control
+
+Google's SDK only has one hook into the magnet: `bool CardboardTriggered`. It's available for one frame that you have to waste cycles polling for.
+
+Now you can utilize C# Delegates to expose:
+
+- Magnet down
+- Magnet up
+- Magnet click
+- Boolean if the magnet is held
+- Seconds magnet held for
+
+This expands your opportunities, allowing interactions like holding the magnet to move and clicking to interact to provide a more natural experience.
+
+## Standard Gestures
+
+Google's SDK has nothing for the gesture of tilting the Cardboard vertically. This is used in the official Cardboard app as an excellent way to navigate menus. Now you don't need to code it yourself.
+
+## Inspector Configuration
+
+The Inspector for the Manager object exposes:
+
+- Toggles for vibrations on each event
+- Debug charts to visualize input for development and debugging
+- Click speed tolerance for your application
+
+
+# Prerequisites
+
+Before using this SDK, you need to import the base Cardboard SDK if you haven't already:
+- [Download CardboardSDK.unitypackage](https://github.com/googlesamples/cardboard-unity/blob/master/CardboardSDKForUnity.unitypackage?raw=true) from [Google's repository](https://github.com/googlesamples/cardboard-unity).
+- Import it in your scene
+- Use the `CardboardMain` prefab for your camera
+
+I don't recommend it but you could use the Durovis Dive instead:
+- download the "Plugin Package" from https://www.durovis.com/sdk.html
+- Import it in your scene
+- Use the `Dive_Camera` prefab for your camera
+
+Dive has many technical issues but supports iOS devices.
 
 
 # Usage
 
-To pull this into your existing project:
-- Import the CardboardSDK package
-- use the CardboardInputManager prefab in your scene
-
-To add Durovis Dive:
-- download the "Plugin Package" from https://www.durovis.com/sdk.html
-- replace your main camera with the included Dive_Camera prefab
-
-For debug purposes, Space triggers the magnet and Tab triggers the orientation tilt.
-
-
-# Example Code
-
-TechDemo has a scene that shows off the capabilities and use of CardboardSDK. It's README and code explain the API.
-
-I've also included techdemo.apk with Dive built in so you can see it in action.
+When you import this package, just add the `CardboardInputManager` to the root of your scene. Now you can start using the API which is thoroughly documented in [the DemoScene code](https://github.com/JScott/CardboardSDK-Unity/blob/master/CardboardInput/DemoScene/ExampleCharacterController.cs).

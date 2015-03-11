@@ -18,7 +18,6 @@ sysinfo.txt
 
 **/*.meta
 /AssetStoreTools
-/Dive
+/Cardboard
 /Plugins
-**/dive-enhanced-*
 **/*.apk
