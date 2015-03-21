@@ -3,6 +3,8 @@ This Cardboard SDK is all you need to develop the best Cardboard games in Unity.
 
 # What's added?
 
+[![Join the chat at https://gitter.im/JScott/CardboardSDK-Unity](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/JScott/CardboardSDK-Unity?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 In addition to everything from Google's impressive SDK, you get better interactions to improve the experience for developers and players alike.
 
 ## Discrete Magnet Control
