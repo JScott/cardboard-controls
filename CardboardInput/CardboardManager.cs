@@ -100,8 +100,8 @@ public class CardboardManager : MonoBehaviour {
       case "down":
         downReported = true;
         magnetHeld = true;
-        clickStartTime = Time.time;
         magnetWasDown = true;
+        clickStartTime = Time.time;
         break;
       case "up":
         upReported = true;
