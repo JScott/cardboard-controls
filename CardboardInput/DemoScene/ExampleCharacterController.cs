@@ -22,6 +22,9 @@ public class ExampleCharacterController : MonoBehaviour {
     // That limit is public as cardboard.clickSpeedThreshold
     cardboard.OnMagnetClicked += CardboardClick;
 
+    // TODO: documentation
+    cardboard.OnFocusChange += CardboardFocus;
+
     // Not shown here is the OnOrientationTilt delegate.
     // This is triggered on rotating the device to Portrait mode.
     // The Google Cardboard app refers to this gesture as a Tilt.
@@ -48,6 +51,11 @@ public class ExampleCharacterController : MonoBehaviour {
     TextMesh textMesh = GameObject.Find("SphereClick/Counter").GetComponent<TextMesh>();
     int increment = int.Parse(textMesh.text) + 1;
     textMesh.text = increment.ToString();
+  }
+
+  public void CardboardFocus(object sender, CardboardEvent cardboardEvent) {
+    // TODO: do something cool here with the focused object
+    Debug.Log(cardboardEvent.raycast.FocusedObject());
   }
 
   public void ChangeSphereColor(string name) {

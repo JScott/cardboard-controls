@@ -78,12 +78,10 @@ public class CardboardManager : MonoBehaviour {
     if (rawInput.OrientationTilted() || DebugKey("orientationTilt")) ReportTilt();
     else tiltReported = false;
 
-    if (raycast.IsFocused()) {
-      if (recentlyFocusedObject != raycast.FocusedObject()) {
-        OnFocusChange(this, new CardboardEvent(raycast));
-      }
-      recentlyFocusedObject = raycast.FocusedObject();
+    if (recentlyFocusedObject != raycast.FocusedObject()) {
+      OnFocusChange(this, new CardboardEvent(raycast));
     }
+    recentlyFocusedObject = raycast.FocusedObject();
 
     if (Debug.isDebugBuild && debugChartsEnabled) {
       string charts = rawInput.MagnetReadingsChart() + "\n" + MagnetStateChart();
