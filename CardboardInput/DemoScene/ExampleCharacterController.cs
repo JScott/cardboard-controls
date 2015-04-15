@@ -60,6 +60,8 @@ public class ExampleCharacterController : MonoBehaviour {
     }
     // Focus will return an empty RaycastHit if not focused
     // TODO: do something with Focus() ?
+
+    // TODO: do something with SecondsFocused()
   }
 
   public void ChangeObjectColor(string name) {

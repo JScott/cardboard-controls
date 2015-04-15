@@ -168,25 +168,23 @@ public class CardboardManager : MonoBehaviour {
   }
 
   public RaycastHit Focus() {
-    if (raycast.IsFocused()) {
-      return raycast.Focus();
-    } else {
-      return new RaycastHit();
-    }
+    return raycast.Focus();
   }
 
+  // TODO: will inheritence improve the repetition here?
   public GameObject FocusedObject() {
-    if (raycast.IsFocused()) {
-      return raycast.FocusedObject();
-    } else {
-      return null;
-    }
+    return raycast.FocusedObject();
+  }
+
+  public bool IsFocused() {
+    return raycast.IsFocused();
   }
 
   public float SecondsFocused() {
     if (focusStartTime == 0f) return 0f;
     return Time.time - focusStartTime;
   }
+  // --- --- --- ---
 
   public string MagnetStateChart() {
     string chart = "";
