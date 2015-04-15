@@ -13,7 +13,6 @@ public class CardboardManager : MonoBehaviour {
   public CardboardRaycast raycast;
 
   public float clickSpeedThreshold = 0.4f;
-  private float clickStartTime = 0f;
 
   // Magnet readings
   private bool upReported = false;
@@ -22,15 +21,18 @@ public class CardboardManager : MonoBehaviour {
   private bool magnetWasDown = false;
   private bool tiltReported = false; // triggered at the start
   private bool magnetHeld = false;
+  private float clickStartTime = 0f;
 
   // Raycast readings
   private GameObject recentlyFocusedObject;
+  private float focusStartTime = 0f;
 
   // Vibration toggles
   public bool vibrateOnMagnetDown = false;
   public bool vibrateOnMagnetUp = false;
   public bool vibrateOnMagnetClicked = true;
   public bool vibrateOnOrientationTilt = true;
+  public bool vibrateOnFocusChange = false;
 
   // Debug
   public bool debugChartsEnabled = false;
@@ -49,7 +51,7 @@ public class CardboardManager : MonoBehaviour {
     raycast = new CardboardRaycast();
   }
 
-  public bool DebugKey(string forInput) {
+  private bool DebugKey(string forInput) {
     if (!Debug.isDebugBuild) return false;
     switch(forInput) {
       case "magnetDown":
@@ -79,7 +81,7 @@ public class CardboardManager : MonoBehaviour {
     else tiltReported = false;
 
     if (recentlyFocusedObject != raycast.FocusedObject()) {
-      OnFocusChange(this, new CardboardEvent(raycast));
+      ReportFocusChange();
     }
     recentlyFocusedObject = raycast.FocusedObject();
 
@@ -89,7 +91,7 @@ public class CardboardManager : MonoBehaviour {
     }
   }
 
-  public void ReportDown() {
+  private void ReportDown() {
     if (!downReported) {
       OnMagnetDown(this, new CardboardEvent());
       if (Debug.isDebugBuild) Debug.Log(" *** Magnet Down *** ");
@@ -98,7 +100,7 @@ public class CardboardManager : MonoBehaviour {
     }
   }
 
-  public void ReportUp() {
+  private void ReportUp() {
     if (!upReported) {
       OnMagnetUp(this, new CardboardEvent());
       if (Debug.isDebugBuild) Debug.Log(" *** Magnet Up *** ");
@@ -108,7 +110,7 @@ public class CardboardManager : MonoBehaviour {
     }
   }
 
-  public void SetMagnetFlagsForGoing(string direction) {
+  private void SetMagnetFlagsForGoing(string direction) {
     switch (direction) {
       case "down":
         downReported = true;
@@ -124,25 +126,32 @@ public class CardboardManager : MonoBehaviour {
     }
   }
 
-  public void CheckForClick() {
+  private void CheckForClick() {
     bool withinClickThreshold = SecondsMagnetHeld() <= clickSpeedThreshold;
     clickStartTime = 0f;
     if (withinClickThreshold) ReportClick();
   }
 
-  public void ReportClick() {
+  private void ReportClick() {
     OnMagnetClicked(this, new CardboardEvent());
     if (Debug.isDebugBuild) Debug.Log(" *** Magnet Click *** ");
     if (vibrateOnMagnetClicked) Vibrate();
   }
 
-  public void ReportTilt() {
+  private void ReportTilt() {
     if (!tiltReported) {
       OnOrientationTilt(this, new CardboardEvent());
       if (Debug.isDebugBuild) Debug.Log(" *** Orientation Tilt *** ");
       if (vibrateOnOrientationTilt) Vibrate();
       tiltReported = true;
     }
+  }
+
+  private void ReportFocusChange() {
+    OnFocusChange(this, new CardboardEvent());
+    //if (Debug.isDebugBuild) Debug.Log(" *** Focus Changed *** ");
+    if (vibrateOnFocusChange) Vibrate();
+    focusStartTime = Time.time;
   }
 
   public void Vibrate() {
@@ -156,6 +165,27 @@ public class CardboardManager : MonoBehaviour {
 
   public bool IsMagnetHeld() {
     return magnetHeld;
+  }
+
+  public RaycastHit Focus() {
+    if (raycast.IsFocused()) {
+      return raycast.Focus();
+    } else {
+      return new RaycastHit();
+    }
+  }
+
+  public GameObject FocusedObject() {
+    if (raycast.IsFocused()) {
+      return raycast.FocusedObject();
+    } else {
+      return null;
+    }
+  }
+
+  public float SecondsFocused() {
+    if (focusStartTime == 0f) return 0f;
+    return Time.time - focusStartTime;
   }
 
   public string MagnetStateChart() {

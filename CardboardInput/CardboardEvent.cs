@@ -2,12 +2,5 @@
 using System.Collections;
 
 public class CardboardEvent {
-  public CardboardRaycast raycast;
-
-  public CardboardEvent() {
-    raycast = null;
-  }
-  public CardboardEvent(CardboardRaycast _raycast) {
-    raycast = _raycast;
-  }
+  // A placeholder object to avoid breaking APIs later
 }

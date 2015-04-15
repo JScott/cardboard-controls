@@ -33,20 +33,20 @@ public class ExampleCharacterController : MonoBehaviour {
 
 
   /*
-  In this demo, we change sphere colours for each event triggered.
-  The CardboardEvent will eventually pass useful data related to the event
-  but it's currently just a placeholder.
+  In this demo, we change object colours for each event triggered.
+  The CardboardEvent is currently just a placeholder but exists to
+  pass useful information to events with a consistent API.
   */
   public void CardboardDown(object sender, CardboardEvent cardboardEvent) {
-    ChangeSphereColor("SphereDown");
+    ChangeObjectColor("SphereDown");
   }
 
   public void CardboardUp(object sender, CardboardEvent cardboardEvent) {
-    ChangeSphereColor("SphereUp");
+    ChangeObjectColor("SphereUp");
   }
 
   public void CardboardClick(object sender, CardboardEvent cardboardEvent) {
-    ChangeSphereColor("SphereClick");
+    ChangeObjectColor("SphereClick");
 
     TextMesh textMesh = GameObject.Find("SphereClick/Counter").GetComponent<TextMesh>();
     int increment = int.Parse(textMesh.text) + 1;
@@ -54,13 +54,18 @@ public class ExampleCharacterController : MonoBehaviour {
   }
 
   public void CardboardFocus(object sender, CardboardEvent cardboardEvent) {
-    // TODO: do something cool here with the focused object
-    Debug.Log(cardboardEvent.raycast.FocusedObject());
+    // FocusedObject will be null when IsFocused is false
+    if (cardboard.IsFocused()) {
+      ChangeObjectColor(cardboard.FocusedObject().name);
+    }
+    // Focus will return an empty RaycastHit if not focused
+    // TODO: do something with Focus() ?
   }
 
-  public void ChangeSphereColor(string name) {
-    GameObject sphere = GameObject.Find(name);
-    sphere.GetComponent<Renderer>().material.color = new Color(Random.value, Random.value, Random.value);
+  public void ChangeObjectColor(string name) {
+    GameObject obj = GameObject.Find(name);
+    Color newColor = new Color(Random.value, Random.value, Random.value);
+    obj.GetComponent<Renderer>().material.color = newColor;
   }
 
 
@@ -101,5 +106,6 @@ public class ExampleCharacterController : MonoBehaviour {
     cardboard.OnMagnetDown -= CardboardDown;
     cardboard.OnMagnetUp -= CardboardUp;
     cardboard.OnMagnetClicked -= CardboardClick;
+    cardboard.OnFocusChange -= CardboardFocus;
   }
 }
