@@ -9,7 +9,8 @@ using System.Linq;
 * Use state and delegates to report important metadata from CardboardInput
 */
 public class CardboardManager : MonoBehaviour {
-  public CardboardInput input;
+  public CardboardInput rawInput;
+  public CardboardRaycast raycast;
 
   public float clickSpeedThreshold = 0.4f;
   private float clickStartTime = 0f;
@@ -20,14 +21,18 @@ public class CardboardManager : MonoBehaviour {
   private bool clickReported = false;
   private bool magnetWasDown = false;
   private bool tiltReported = false; // triggered at the start
-
   private bool magnetHeld = false;
 
+  // Raycast readings
+  private GameObject recentlyFocusedObject;
+
+  // Vibration toggles
   public bool vibrateOnMagnetDown = false;
   public bool vibrateOnMagnetUp = false;
   public bool vibrateOnMagnetClicked = true;
   public bool vibrateOnOrientationTilt = true;
 
+  // Debug
   public bool debugChartsEnabled = false;
   public KeyCode debugMagnetKey = KeyCode.Space;
   public KeyCode debugOrientationKey = KeyCode.Tab;
@@ -37,9 +42,11 @@ public class CardboardManager : MonoBehaviour {
   public CardboardAction OnMagnetUp = delegate {};
   public CardboardAction OnMagnetClicked = delegate {};
   public CardboardAction OnOrientationTilt = delegate {};
+  public CardboardAction OnFocusChange = delegate {};
 
   public void Start() {
-    input = new CardboardInput();
+    rawInput = new CardboardInput();
+    raycast = new CardboardRaycast();
   }
 
   public bool DebugKey(string forInput) {
@@ -57,21 +64,29 @@ public class CardboardManager : MonoBehaviour {
   }
 
   public void Update() {
-    input.Update();
+    rawInput.Update();
+    raycast.Update();
 
-    if (!input.Jostled() && !input.RotatedQuickly()) {
-      if (input.MagnetMovedDown() || DebugKey("magnetDown")) ReportDown();
+    if (!rawInput.Jostled() && !rawInput.RotatedQuickly()) {
+      if (rawInput.MagnetMovedDown() || DebugKey("magnetDown")) ReportDown();
       else downReported = false;
 
-      if (input.MagnetMovedUp() || DebugKey("magnetUp")) ReportUp();
+      if (rawInput.MagnetMovedUp() || DebugKey("magnetUp")) ReportUp();
       else upReported = false;
     } 
 
-    if (input.OrientationTilted() || DebugKey("orientationTilt")) ReportTilt();
+    if (rawInput.OrientationTilted() || DebugKey("orientationTilt")) ReportTilt();
     else tiltReported = false;
 
+    if (raycast.IsFocused()) {
+      if (recentlyFocusedObject != raycast.FocusedObject()) {
+        OnFocusChange(this, new CardboardEvent(raycast));
+      }
+      recentlyFocusedObject = raycast.FocusedObject();
+    }
+
     if (Debug.isDebugBuild && debugChartsEnabled) {
-      string charts = input.MagnetReadingsChart() + "\n" + MagnetStateChart();
+      string charts = rawInput.MagnetReadingsChart() + "\n" + MagnetStateChart();
       Debug.Log(charts);
     }
   }

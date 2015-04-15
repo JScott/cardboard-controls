@@ -16,6 +16,7 @@ Now you can utilize C# Delegates to expose:
 - Magnet click
 - Boolean if the magnet is held
 - Seconds magnet held for
+- New object focused on
 
 This expands your opportunities, allowing interactions like holding the magnet to move and clicking to interact to provide a more natural experience.
 
@@ -46,7 +47,7 @@ I don't recommend it but you could use the Durovis Dive instead:
 - Import it in your scene
 - Use the `Dive_Camera` prefab for your camera
 
-Dive has many technical issues but supports iOS devices.
+Dive has many technical issues but supports iOS devices. You will also not be able to use the Raycast events which utilize Google's API.
 
 
 # Usage
