@@ -169,6 +169,14 @@ public class CardboardManager : MonoBehaviour {
     return Time.time - focusStartTime;
   }
 
+  public SetRaycastDistance(float distance) {
+    raycast.maxDistance = distance;
+  }
+
+  public SetRaycastLayerMask(LayerMask layerMask) {
+    raycast.layerMask = layerMask;
+  }
+
   public string MagnetStateChart() {
     string chart = "";
     chart += "Magnet State\n";
