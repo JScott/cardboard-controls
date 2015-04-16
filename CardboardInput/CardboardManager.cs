@@ -77,8 +77,8 @@ public class CardboardManager : MonoBehaviour {
     if (rawInput.OrientationTilted() || DebugKey("orientationTilt")) ReportTilt();
     else tiltReported = false;
 
-    if (recentlyFocusedObject != raycast.FocusedObject()) ReportFocusChange();
-    recentlyFocusedObject = raycast.FocusedObject();
+    if (recentlyFocusedObject != FocusedObject()) ReportFocusChange();
+    recentlyFocusedObject = FocusedObject();
 
     if (Debug.isDebugBuild && debugChartsEnabled) {
       string charts = rawInput.MagnetReadingsChart() + "\n" + MagnetStateChart();
@@ -148,23 +148,25 @@ public class CardboardManager : MonoBehaviour {
   }
 
   public RaycastHit Focus() {
-    return raycast.Focus();
+    return raycast.focus;
   }
 
-  // TODO: will inheritence improve the repetition here?
   public GameObject FocusedObject() {
-    return raycast.FocusedObject();
+    if (IsFocused()) {
+      return raycast.focus.transform.gameObject;
+    } else {
+      return null;
+    }
   }
 
   public bool IsFocused() {
-    return raycast.IsFocused();
+    return raycast.focused;
   }
 
   public float SecondsFocused() {
     if (focusStartTime == 0f) return 0f;
     return Time.time - focusStartTime;
   }
-  // --- --- --- ---
 
   public string MagnetStateChart() {
     string chart = "";

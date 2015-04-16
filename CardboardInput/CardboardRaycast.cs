@@ -8,10 +8,10 @@ using System.Collections;
 public class CardboardRaycast {
   public float maxDistance = Mathf.Infinity;
   public LayerMask layerMask = Physics.DefaultRaycastLayers;
+  public RaycastHit focus;
+  public bool focused;
 
   private CardboardHead head;
-  private RaycastHit focus;
-  private bool focused;
 
   public CardboardRaycast() {
     StereoController stereoController = Camera.main.GetComponent<StereoController>();
@@ -20,21 +20,5 @@ public class CardboardRaycast {
   
   public void Update() {
     focused = Physics.Raycast(head.Gaze, out focus, maxDistance, layerMask);
-  }
-
-  public bool IsFocused() {
-    return focused;
-  }
-
-  public RaycastHit Focus() {
-    return focus;
-  }
-
-  public GameObject FocusedObject() {
-    if (IsFocused()) {
-      return focus.transform.gameObject;
-    } else {
-      return null;
-    }
   }
 }
