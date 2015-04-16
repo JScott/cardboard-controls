@@ -47,13 +47,7 @@ public class CardboardManager : MonoBehaviour {
   public CardboardAction OnOrientationTilt = delegate {};
   public CardboardAction OnFocusChange = delegate {};
 
-  public void Start() {
-    rawInput = new CardboardInput();
-    raycast = new CardboardRaycast();
-  }
-
   private bool DebugKey(string forInput) {
-    if (!Debug.isDebugBuild) return false;
     switch(forInput) {
       case "magnetDown":
         return Input.GetKeyDown(debugMagnetKey);
@@ -66,28 +60,30 @@ public class CardboardManager : MonoBehaviour {
     }
   }
 
+  public void Start() {
+    rawInput = new CardboardInput();
+    raycast = new CardboardRaycast();
+  }
+
   public void Update() {
     rawInput.Update();
     raycast.Update();
 
+    CheckMagnetMovement();
+    CheckOrientationTilt();
+    CheckRaycastFocus();
+
+    if (debugChartsEnabled) PrintDebugCharts();
+  }
+
+
+  private void CheckMagnetMovement() {
     if (!rawInput.Jostled() && !rawInput.RotatedQuickly()) {
       if (rawInput.MagnetMovedDown() || DebugKey("magnetDown")) ReportDown();
       if (rawInput.MagnetMovedUp() || DebugKey("magnetUp")) ReportUp();
-    } 
-
-    if (rawInput.OrientationTilted() || DebugKey("orientationTilt")) ReportTilt();
-    else tiltReported = false;
-
-    if (recentlyFocusedObject != FocusedObject()) ReportFocusChange();
-    recentlyFocusedObject = FocusedObject();
-
-    if (debugChartsEnabled) {
-      string charts = rawInput.MagnetReadingsChart() + "\n" + MagnetStateChart();
-      Debug.Log(charts);
     }
   }
-
-  private void ReportDown() {
+    private void ReportDown() {
     if (currentMagnetState == MagnetState.Up) {
       currentMagnetState = MagnetState.Down;
       OnMagnetDown(this, new CardboardEvent());
@@ -96,7 +92,6 @@ public class CardboardManager : MonoBehaviour {
       clickStartTime = Time.time;
     }
   }
-
   private void ReportUp() {
     if (currentMagnetState == MagnetState.Down) {
       currentMagnetState = MagnetState.Up;
@@ -106,19 +101,22 @@ public class CardboardManager : MonoBehaviour {
       CheckForClick();
     }
   }
-
   private void CheckForClick() {
     bool withinClickThreshold = SecondsMagnetHeld() <= clickSpeedThreshold;
     clickStartTime = 0f;
     if (withinClickThreshold) ReportClick();
   }
-
   private void ReportClick() {
     OnMagnetClicked(this, new CardboardEvent());
     if (debugNotificationsEnabled) Debug.Log(" *** Magnet Click *** ");
     if (vibrateOnMagnetClicked) Vibrate();
   }
 
+
+  private void CheckOrientationTilt() {
+    if (rawInput.OrientationTilted() || DebugKey("orientationTilt")) ReportTilt();
+    else tiltReported = false;
+  }
   private void ReportTilt() {
     if (!tiltReported) {
       OnOrientationTilt(this, new CardboardEvent());
@@ -128,11 +126,22 @@ public class CardboardManager : MonoBehaviour {
     }
   }
 
+
+  private void CheckRaycastFocus() {
+    if (recentlyFocusedObject != FocusedObject()) ReportFocusChange();
+    recentlyFocusedObject = FocusedObject();
+  }
   private void ReportFocusChange() {
     OnFocusChange(this, new CardboardEvent());
     if (debugNotificationsEnabled) Debug.Log(" *** Focus Changed *** ");
     if (vibrateOnFocusChange) Vibrate();
     focusStartTime = Time.time;
+  }
+
+
+  private void PrintDebugCharts() {
+    string charts = rawInput.MagnetReadingsChart() + "\n" + MagnetStateChart();
+    Debug.Log(charts);
   }
 
   public void Vibrate() {
@@ -169,11 +178,11 @@ public class CardboardManager : MonoBehaviour {
     return Time.time - focusStartTime;
   }
 
-  public SetRaycastDistance(float distance) {
+  public void SetRaycastDistance(float distance) {
     raycast.maxDistance = distance;
   }
 
-  public SetRaycastLayerMask(LayerMask layerMask) {
+  public void SetRaycastLayerMask(LayerMask layerMask) {
     raycast.layerMask = layerMask;
   }
 
