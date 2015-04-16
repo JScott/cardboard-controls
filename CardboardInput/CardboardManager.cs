@@ -35,6 +35,7 @@ public class CardboardManager : MonoBehaviour {
   public bool vibrateOnFocusChange = false;
 
   // Debug
+  public bool debugNotificationsEnabled = true;
   public bool debugChartsEnabled = false;
   public KeyCode debugMagnetKey = KeyCode.Space;
   public KeyCode debugOrientationKey = KeyCode.Tab;
@@ -80,7 +81,7 @@ public class CardboardManager : MonoBehaviour {
     if (recentlyFocusedObject != FocusedObject()) ReportFocusChange();
     recentlyFocusedObject = FocusedObject();
 
-    if (Debug.isDebugBuild && debugChartsEnabled) {
+    if (debugChartsEnabled) {
       string charts = rawInput.MagnetReadingsChart() + "\n" + MagnetStateChart();
       Debug.Log(charts);
     }
@@ -90,7 +91,7 @@ public class CardboardManager : MonoBehaviour {
     if (currentMagnetState == MagnetState.Up) {
       currentMagnetState = MagnetState.Down;
       OnMagnetDown(this, new CardboardEvent());
-      if (Debug.isDebugBuild) Debug.Log(" *** Magnet Down *** ");
+      if (debugNotificationsEnabled) Debug.Log(" *** Magnet Down *** ");
       if (vibrateOnMagnetDown) Vibrate();
       clickStartTime = Time.time;
     }
@@ -100,7 +101,7 @@ public class CardboardManager : MonoBehaviour {
     if (currentMagnetState == MagnetState.Down) {
       currentMagnetState = MagnetState.Up;
       OnMagnetUp(this, new CardboardEvent());
-      if (Debug.isDebugBuild) Debug.Log(" *** Magnet Up *** ");
+      if (debugNotificationsEnabled) Debug.Log(" *** Magnet Up *** ");
       if (vibrateOnMagnetUp) Vibrate();
       CheckForClick();
     }
@@ -114,14 +115,14 @@ public class CardboardManager : MonoBehaviour {
 
   private void ReportClick() {
     OnMagnetClicked(this, new CardboardEvent());
-    if (Debug.isDebugBuild) Debug.Log(" *** Magnet Click *** ");
+    if (debugNotificationsEnabled) Debug.Log(" *** Magnet Click *** ");
     if (vibrateOnMagnetClicked) Vibrate();
   }
 
   private void ReportTilt() {
     if (!tiltReported) {
       OnOrientationTilt(this, new CardboardEvent());
-      if (Debug.isDebugBuild) Debug.Log(" *** Orientation Tilt *** ");
+      if (debugNotificationsEnabled) Debug.Log(" *** Orientation Tilt *** ");
       if (vibrateOnOrientationTilt) Vibrate();
       tiltReported = true;
     }
@@ -129,7 +130,7 @@ public class CardboardManager : MonoBehaviour {
 
   private void ReportFocusChange() {
     OnFocusChange(this, new CardboardEvent());
-    //if (Debug.isDebugBuild) Debug.Log(" *** Focus Changed *** ");
+    if (debugNotificationsEnabled) Debug.Log(" *** Focus Changed *** ");
     if (vibrateOnFocusChange) Vibrate();
     focusStartTime = Time.time;
   }
