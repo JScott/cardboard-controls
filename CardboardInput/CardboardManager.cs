@@ -53,7 +53,6 @@ public class CardboardManager : MonoBehaviour {
     raycast = new CardboardRaycast();
     debug = new CardboardDebug(debugMagnetKey, debugOrientationKey);
   }
-
   public void Update() {
     rawInput.Update();
     raycast.Update();
@@ -66,6 +65,7 @@ public class CardboardManager : MonoBehaviour {
     if (debugChartsEnabled) PrintDebugCharts();
   }
 
+
   private void PrintDebugCharts() {
     string charts = debug.Charts(
       IsMagnetHeld(),
@@ -74,6 +74,7 @@ public class CardboardManager : MonoBehaviour {
     );
     Debug.Log(charts);
   }
+
 
   private void CheckMagnetMovement() {
     if (!rawInput.Jostled() && !rawInput.RotatedQuickly()) {
@@ -140,20 +141,16 @@ public class CardboardManager : MonoBehaviour {
   public void Vibrate() {
     Handheld.Vibrate();
   }
-
   public float SecondsMagnetHeld() {
     if (clickStartTime == 0f) return 0f;
     return Time.time - clickStartTime;
   }
-
   public bool IsMagnetHeld() {
     return (currentMagnetState == MagnetState.Down);
   }
-
   public RaycastHit Focus() {
     return raycast.focus;
   }
-
   public GameObject FocusedObject() {
     if (IsFocused()) {
       return raycast.focus.transform.gameObject;
@@ -161,20 +158,16 @@ public class CardboardManager : MonoBehaviour {
       return null;
     }
   }
-
   public bool IsFocused() {
     return raycast.focused;
   }
-
   public float SecondsFocused() {
     if (focusStartTime == 0f) return 0f;
     return Time.time - focusStartTime;
   }
-
   public void SetRaycastDistance(float distance) {
     raycast.maxDistance = distance;
   }
-
   public void SetRaycastLayerMask(LayerMask layerMask) {
     raycast.layerMask = layerMask;
   }
