@@ -15,12 +15,13 @@ public class CardboardManager : MonoBehaviour {
   public float clickSpeedThreshold = 0.4f;
 
   // Magnet readings
-  private bool upReported = false;
-  private bool downReported = true; // down is triggered once as it finds baselines
+  private enum MagnetState {
+    Up,
+    Down
+  }
+  private MagnetState currentMagnetState = MagnetState.Up;
   private bool clickReported = false;
-  private bool magnetWasDown = false;
   private bool tiltReported = false; // triggered at the start
-  private bool magnetHeld = false;
   private float clickStartTime = 0f;
 
   // Raycast readings
@@ -71,10 +72,7 @@ public class CardboardManager : MonoBehaviour {
 
     if (!rawInput.Jostled() && !rawInput.RotatedQuickly()) {
       if (rawInput.MagnetMovedDown() || DebugKey("magnetDown")) ReportDown();
-      else downReported = false;
-
       if (rawInput.MagnetMovedUp() || DebugKey("magnetUp")) ReportUp();
-      else upReported = false;
     } 
 
     if (rawInput.OrientationTilted() || DebugKey("orientationTilt")) ReportTilt();
@@ -92,37 +90,22 @@ public class CardboardManager : MonoBehaviour {
   }
 
   private void ReportDown() {
-    if (!downReported) {
+    if (currentMagnetState == MagnetState.Up) {
+      currentMagnetState = MagnetState.Down;
       OnMagnetDown(this, new CardboardEvent());
       if (Debug.isDebugBuild) Debug.Log(" *** Magnet Down *** ");
       if (vibrateOnMagnetDown) Vibrate();
-      SetMagnetFlagsForGoing("down");
+      clickStartTime = Time.time;
     }
   }
 
   private void ReportUp() {
-    if (!upReported) {
+    if (currentMagnetState == MagnetState.Down) {
+      currentMagnetState = MagnetState.Up;
       OnMagnetUp(this, new CardboardEvent());
       if (Debug.isDebugBuild) Debug.Log(" *** Magnet Up *** ");
       if (vibrateOnMagnetUp) Vibrate();
-      if (magnetWasDown) CheckForClick();
-      SetMagnetFlagsForGoing("up");
-    }
-  }
-
-  private void SetMagnetFlagsForGoing(string direction) {
-    switch (direction) {
-      case "down":
-        downReported = true;
-        magnetHeld = true;
-        magnetWasDown = true;
-        clickStartTime = Time.time;
-        break;
-      case "up":
-        upReported = true;
-        magnetHeld = false;
-        magnetWasDown = false;
-        break;
+      CheckForClick();
     }
   }
 
@@ -164,7 +147,7 @@ public class CardboardManager : MonoBehaviour {
   }
 
   public bool IsMagnetHeld() {
-    return magnetHeld;
+    return (currentMagnetState == MagnetState.Down);
   }
 
   public RaycastHit Focus() {
@@ -189,9 +172,8 @@ public class CardboardManager : MonoBehaviour {
   public string MagnetStateChart() {
     string chart = "";
     chart += "Magnet State\n";
-    chart += downReported ? "D " : "x ";
-    chart += magnetWasDown ? "d " : "_ ";
-    chart += upReported ? "U " : "x ";
+    chart += (currentMagnetState == MagnetState.Down) ? "D " : "x ";
+    chart += (currentMagnetState == MagnetState.Up) ? "U " : "x ";
     chart += clickReported ? "C " : "x ";
     chart += tiltReported ? "T " : "x ";
     chart += "\n";
