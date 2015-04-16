@@ -20,7 +20,6 @@ public class CardboardManager : MonoBehaviour {
     Down
   }
   private MagnetState currentMagnetState = MagnetState.Up;
-  private bool clickReported = false;
   private bool tiltReported = false; // triggered at the start
   private float clickStartTime = 0f;
 
@@ -78,9 +77,7 @@ public class CardboardManager : MonoBehaviour {
     if (rawInput.OrientationTilted() || DebugKey("orientationTilt")) ReportTilt();
     else tiltReported = false;
 
-    if (recentlyFocusedObject != raycast.FocusedObject()) {
-      ReportFocusChange();
-    }
+    if (recentlyFocusedObject != raycast.FocusedObject()) ReportFocusChange();
     recentlyFocusedObject = raycast.FocusedObject();
 
     if (Debug.isDebugBuild && debugChartsEnabled) {
@@ -174,7 +171,6 @@ public class CardboardManager : MonoBehaviour {
     chart += "Magnet State\n";
     chart += (currentMagnetState == MagnetState.Down) ? "D " : "x ";
     chart += (currentMagnetState == MagnetState.Up) ? "U " : "x ";
-    chart += clickReported ? "C " : "x ";
     chart += tiltReported ? "T " : "x ";
     chart += "\n";
     return chart;
