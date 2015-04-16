@@ -11,6 +11,7 @@ using System.Linq;
 public class CardboardManager : MonoBehaviour {
   public CardboardInput rawInput;
   public CardboardRaycast raycast;
+  public CardboardDebug debug;
 
   public float clickSpeedThreshold = 0.4f;
 
@@ -47,27 +48,16 @@ public class CardboardManager : MonoBehaviour {
   public CardboardAction OnOrientationTilt = delegate {};
   public CardboardAction OnFocusChange = delegate {};
 
-  private bool DebugKey(string forInput) {
-    switch(forInput) {
-      case "magnetDown":
-        return Input.GetKeyDown(debugMagnetKey);
-      case "magnetUp":
-        return Input.GetKeyUp(debugMagnetKey);
-      case "orientationTilt":
-        return Input.GetKeyDown(debugOrientationKey);
-      default:
-        return false;
-    }
-  }
-
   public void Start() {
     rawInput = new CardboardInput();
     raycast = new CardboardRaycast();
+    debug = new CardboardDebug(debugMagnetKey, debugOrientationKey);
   }
 
   public void Update() {
     rawInput.Update();
     raycast.Update();
+    debug.Update( );
 
     CheckMagnetMovement();
     CheckOrientationTilt();
@@ -76,11 +66,19 @@ public class CardboardManager : MonoBehaviour {
     if (debugChartsEnabled) PrintDebugCharts();
   }
 
+  private void PrintDebugCharts() {
+    string charts = debug.Charts(
+      IsMagnetHeld(),
+      tiltReported,
+      rawInput.MagnetReadingsChart()
+    );
+    Debug.Log(charts);
+  }
 
   private void CheckMagnetMovement() {
     if (!rawInput.Jostled() && !rawInput.RotatedQuickly()) {
-      if (rawInput.MagnetMovedDown() || DebugKey("magnetDown")) ReportDown();
-      if (rawInput.MagnetMovedUp() || DebugKey("magnetUp")) ReportUp();
+      if (rawInput.MagnetMovedDown() || debug.KeyFor("magnetDown")) ReportDown();
+      if (rawInput.MagnetMovedUp() || debug.KeyFor("magnetUp")) ReportUp();
     }
   }
     private void ReportDown() {
@@ -114,7 +112,7 @@ public class CardboardManager : MonoBehaviour {
 
 
   private void CheckOrientationTilt() {
-    if (rawInput.OrientationTilted() || DebugKey("orientationTilt")) ReportTilt();
+    if (rawInput.OrientationTilted() || debug.KeyFor("orientationTilt")) ReportTilt();
     else tiltReported = false;
   }
   private void ReportTilt() {
@@ -138,11 +136,6 @@ public class CardboardManager : MonoBehaviour {
     focusStartTime = Time.time;
   }
 
-
-  private void PrintDebugCharts() {
-    string charts = rawInput.MagnetReadingsChart() + "\n" + MagnetStateChart();
-    Debug.Log(charts);
-  }
 
   public void Vibrate() {
     Handheld.Vibrate();
@@ -184,15 +177,5 @@ public class CardboardManager : MonoBehaviour {
 
   public void SetRaycastLayerMask(LayerMask layerMask) {
     raycast.layerMask = layerMask;
-  }
-
-  public string MagnetStateChart() {
-    string chart = "";
-    chart += "Magnet State\n";
-    chart += (currentMagnetState == MagnetState.Down) ? "D " : "x ";
-    chart += (currentMagnetState == MagnetState.Up) ? "U " : "x ";
-    chart += tiltReported ? "T " : "x ";
-    chart += "\n";
-    return chart;
   }
 }
