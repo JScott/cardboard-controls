@@ -1,0 +1,49 @@
+CardboardInputManager object
+
+CardboardInputGaze.cs
+CardboardInputMagnet.cs
+CardboardInputOrientation.cs
+CardboardInputDebug.cs
+CardboardInputEvent.cs
+
+--- --- --- ---
+
+CardboardInput
+
+CardboardInput.gaze
+CardboardInput.gaze.IsFocused()
+CardboardInput.gaze.SecondsHeld()
+CardboardInput.gaze.Object()
+CardboardInput.gaze.Hit()
+CardboardInput.gaze.maxDistance
+CardboardInput.gaze.layerMask
+- OnChange
+
+CardboardInput.magnet
+CardboardInput.magnet.SecondsHeld()
+CardboardInput.magnet.IsHeld()
+CardboardInput.magnet.clickSpeedThreshold
+- OnUp
+- OnDown
+- OnClick
+
+CardboardInput.orientation
+- OnTilt
+
+CardboardInput.debug
+CardboardInput.debug.Charts()
+CardboardInput.debug.KeyFor(string forInput)
+
+
+// deprecate, Handheld.Vibrate is good enough
+CardboardInput.Vibrate()
+
+--- --- --- ---
+
+cardboard = GameObject.Find("CardboardInputManager").GetComponent<CardboardManager>();
+cardboard.magnet.OnDown += CardboardMagnetDown;
+function CardboardMagnetDown() {
+  if (cardboard.gaze.IsFocused()) {
+    Debug.Log(cardboard.gaze.SecondsHeld());
+  }
+}
