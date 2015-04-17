@@ -4,7 +4,7 @@ using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Linq;
-using CardboardDelegates;
+using CardboardInputDelegates;
 
 /**
 * Use state and delegates to report important metadata from CardboardInput
@@ -25,18 +25,11 @@ public class CardboardManager : MonoBehaviour {
   private bool tiltReported = false; // triggered at the start
   private float clickStartTime = 0f;
 
-  // Raycast readings
-  public float focusMaxDistance = Mathf.Infinity;
-  public LayerMask focusLayerMask = Physics.DefaultRaycastLayers;
-  private GameObject recentlyFocusedObject;
-  private float focusStartTime = 0f;
-
   // Vibration toggles
   public bool vibrateOnMagnetDown = false;
   public bool vibrateOnMagnetUp = false;
   public bool vibrateOnMagnetClicked = true;
   public bool vibrateOnOrientationTilt = true;
-  public bool vibrateOnFocusChange = false;
 
   // Debug
   public bool debugNotificationsEnabled = true;
@@ -45,24 +38,23 @@ public class CardboardManager : MonoBehaviour {
   public KeyCode debugOrientationKey = KeyCode.Tab;
 
   // Delegates
-  public CardboardDelegate OnMagnetDown = delegate {};
-  public CardboardDelegate OnMagnetUp = delegate {};
-  public CardboardDelegate OnMagnetClicked = delegate {};
-  public CardboardDelegate OnOrientationTilt = delegate {};
-  public CardboardDelegate OnFocusChange = delegate {};
+  public CardboardInputDelegate OnMagnetDown = delegate {};
+  public CardboardInputDelegate OnMagnetUp = delegate {};
+  public CardboardInputDelegate OnMagnetClicked = delegate {};
+  public CardboardInputDelegate OnOrientationTilt = delegate {};
 
-  public void Start() {
+  public void Awake() {
     rawInput = new CardboardInput();
-    raycast = new CardboardRaycast(focusMaxDistance, focusLayerMask);
+    raycast = new CardboardRaycast();
     debug = new CardboardDebug(debugMagnetKey, debugOrientationKey);
   }
+
   public void Update() {
     rawInput.Update();
     raycast.Update();
 
     CheckMagnetMovement();
     CheckOrientationTilt();
-    CheckRaycastFocus();
 
     if (debugChartsEnabled) PrintDebugCharts();
   }
@@ -87,7 +79,7 @@ public class CardboardManager : MonoBehaviour {
     private void ReportDown() {
     if (currentMagnetState == MagnetState.Up) {
       currentMagnetState = MagnetState.Down;
-      OnMagnetDown(this, new CardboardEvent());
+      OnMagnetDown(this, new CardboardInputEvent());
       if (debugNotificationsEnabled) Debug.Log(" *** Magnet Down *** ");
       if (vibrateOnMagnetDown) Vibrate();
       clickStartTime = Time.time;
@@ -96,7 +88,7 @@ public class CardboardManager : MonoBehaviour {
   private void ReportUp() {
     if (currentMagnetState == MagnetState.Down) {
       currentMagnetState = MagnetState.Up;
-      OnMagnetUp(this, new CardboardEvent());
+      OnMagnetUp(this, new CardboardInputEvent());
       if (debugNotificationsEnabled) Debug.Log(" *** Magnet Up *** ");
       if (vibrateOnMagnetUp) Vibrate();
       CheckForClick();
@@ -108,7 +100,7 @@ public class CardboardManager : MonoBehaviour {
     if (withinClickThreshold) ReportClick();
   }
   private void ReportClick() {
-    OnMagnetClicked(this, new CardboardEvent());
+    OnMagnetClicked(this, new CardboardInputEvent());
     if (debugNotificationsEnabled) Debug.Log(" *** Magnet Click *** ");
     if (vibrateOnMagnetClicked) Vibrate();
   }
@@ -120,23 +112,11 @@ public class CardboardManager : MonoBehaviour {
   }
   private void ReportTilt() {
     if (!tiltReported) {
-      OnOrientationTilt(this, new CardboardEvent());
+      OnOrientationTilt(this, new CardboardInputEvent());
       if (debugNotificationsEnabled) Debug.Log(" *** Orientation Tilt *** ");
       if (vibrateOnOrientationTilt) Vibrate();
       tiltReported = true;
     }
-  }
-
-
-  private void CheckRaycastFocus() {
-    if (recentlyFocusedObject != FocusedObject()) ReportFocusChange();
-    recentlyFocusedObject = FocusedObject();
-  }
-  private void ReportFocusChange() {
-    OnFocusChange(this, new CardboardEvent());
-    if (debugNotificationsEnabled) Debug.Log(" *** Focus Changed *** ");
-    if (vibrateOnFocusChange) Vibrate();
-    focusStartTime = Time.time;
   }
 
 
@@ -149,22 +129,5 @@ public class CardboardManager : MonoBehaviour {
   }
   public bool IsMagnetHeld() {
     return (currentMagnetState == MagnetState.Down);
-  }
-  public RaycastHit Focus() {
-    return raycast.focus;
-  }
-  public GameObject FocusedObject() {
-    if (IsFocused()) {
-      return raycast.focus.transform.gameObject;
-    } else {
-      return null;
-    }
-  }
-  public bool IsFocused() {
-    return raycast.focused;
-  }
-  public float SecondsFocused() {
-    if (focusStartTime == 0f) return 0f;
-    return Time.time - focusStartTime;
   }
 }

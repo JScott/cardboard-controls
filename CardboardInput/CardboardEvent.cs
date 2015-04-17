@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CardboardEvent {
+public class CardboardInputEvent {
   // A placeholder object to avoid breaking APIs later
 }
 
-namespace CardboardDelegates {
-  public delegate void CardboardDelegate(object sender, CardboardEvent cardboardEvent);
+namespace CardboardInputDelegates {
+  public delegate void CardboardInputDelegate(object sender, CardboardInputEvent cardboardInputEvent);
 }

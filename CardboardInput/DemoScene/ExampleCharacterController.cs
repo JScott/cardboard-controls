@@ -24,7 +24,7 @@ public class ExampleCharacterController : MonoBehaviour {
 
     // When the thing we're looking at changes, determined by a raycast
     // The raycast distance and layer mask are public as configurable in the inspector
-    cardboard.OnFocusChange += CardboardFocus;
+    cardboard.raycast.OnChange += CardboardFocus;
 
     // Not shown here is the OnOrientationTilt delegate
     // This is triggered on rotating the device to Portrait mode
@@ -38,32 +38,32 @@ public class ExampleCharacterController : MonoBehaviour {
   The CardboardEvent is currently just a placeholder but exists to
   pass useful information to events with a consistent API.
   */
-  public void CardboardDown(object sender, CardboardEvent cardboardEvent) {
+  public void CardboardDown(object sender, CardboardInputEvent cardboardEvent) {
     ChangeObjectColor("SphereDown");
   }
 
-  public void CardboardUp(object sender, CardboardEvent cardboardEvent) {
+  public void CardboardUp(object sender, CardboardInputEvent cardboardEvent) {
     ChangeObjectColor("SphereUp");
   }
 
-  public void CardboardClick(object sender, CardboardEvent cardboardEvent) {
+  public void CardboardClick(object sender, CardboardInputEvent cardboardEvent) {
     ChangeObjectColor("SphereClick");
 
     TextMesh textMesh = GameObject.Find("SphereClick/Counter").GetComponent<TextMesh>();
     int increment = int.Parse(textMesh.text) + 1;
     textMesh.text = increment.ToString();
 
-    if (cardboard.IsFocused()) {
-      Debug.Log("We've focused on this object for "+cardboard.SecondsFocused()+" seconds.");
+    if (cardboard.raycast.IsFocused()) {
+      Debug.Log("We've focused on this object for "+cardboard.raycast.SecondsFocused()+" seconds.");
     }
     
     // TODO: get something from raycast focus
   }
 
-  public void CardboardFocus(object sender, CardboardEvent cardboardEvent) {
+  public void CardboardFocus(object sender, CardboardInputEvent cardboardEvent) {
     // If we're not focused, the focused object will be null
-    if (cardboard.IsFocused()) {
-      ChangeObjectColor(cardboard.FocusedObject().name);
+    if (cardboard.raycast.IsFocused()) {
+      ChangeObjectColor(cardboard.raycast.FocusedObject().name);
     }
   }
 
@@ -111,6 +111,6 @@ public class ExampleCharacterController : MonoBehaviour {
     cardboard.OnMagnetDown -= CardboardDown;
     cardboard.OnMagnetUp -= CardboardUp;
     cardboard.OnMagnetClicked -= CardboardClick;
-    cardboard.OnFocusChange -= CardboardFocus;
+    cardboard.raycast.OnChange -= CardboardFocus;
   }
 }
