@@ -9,8 +9,8 @@ using CardboardInputDelegates;
 /**
 * Use state and delegates to report important metadata from CardboardInput
 */
-public class CardboardManager : MonoBehaviour {
-  public CardboardInput rawInput;
+public class CardboardControlManager : MonoBehaviour {
+  public CardboardControl rawInput;
   public CardboardRaycast raycast;
   public CardboardDebug debug;
 
@@ -44,7 +44,7 @@ public class CardboardManager : MonoBehaviour {
   public CardboardInputDelegate OnOrientationTilt = delegate {};
 
   public void Awake() {
-    rawInput = new CardboardInput();
+    rawInput = new CardboardControl();
     raycast = new CardboardRaycast();
     debug = new CardboardDebug(debugMagnetKey, debugOrientationKey);
   }

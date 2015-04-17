@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class ExampleCharacterController : MonoBehaviour {
-  private static CardboardManager cardboard;
+  private static CardboardControlManager cardboard;
 
   private bool vibrateTriggered = false;
 
@@ -14,7 +14,7 @@ public class ExampleCharacterController : MonoBehaviour {
     Unity provides a good primer on delegates here:
     http://unity3d.com/learn/tutorials/modules/intermediate/scripting/delegates
     */
-    cardboard = GameObject.Find("CardboardInputManager").GetComponent<CardboardManager>();
+    cardboard = GameObject.Find("CardboardControlManager").GetComponent<CardboardControlManager>();
     cardboard.OnMagnetDown += CardboardDown;  // When the magnet goes down
     cardboard.OnMagnetUp += CardboardUp;      // When the magnet comes back up
 

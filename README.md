@@ -52,4 +52,4 @@ Dive has many technical issues but supports iOS devices. You will also not be ab
 
 # Usage
 
-When you import this package, just add the `CardboardInputManager` to the root of your scene. Now you can start using the API which is thoroughly documented in [the DemoScene code](https://github.com/JScott/CardboardSDK-Unity/blob/master/CardboardInput/DemoScene/ExampleCharacterController.cs).
+When you import this package, just add the `CardboardControlManager` to the root of your scene. Now you can start using the API which is thoroughly documented in [the DemoScene code](https://github.com/JScott/CardboardSDK-Unity/blob/master/CardboardControl/DemoScene/ExampleCharacterController.cs).

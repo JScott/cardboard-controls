@@ -1,0 +1,49 @@
+CardboardControlManager object
+
+CardboardControlGaze.cs
+CardboardControlMagnet.cs
+CardboardControlOrientation.cs
+CardboardControlDebug.cs
+CardboardControlEvent.cs
+
+--- --- --- ---
+
+CardboardControl
+
+CardboardControl.gaze
+CardboardControl.gaze.IsFocused()
+CardboardControl.gaze.SecondsHeld()
+CardboardControl.gaze.Object()
+CardboardControl.gaze.Hit()
+CardboardControl.gaze.maxDistance
+CardboardControl.gaze.layerMask
+- OnChange
+
+CardboardControl.magnet
+CardboardControl.magnet.SecondsHeld()
+CardboardControl.magnet.IsHeld()
+CardboardControl.magnet.clickSpeedThreshold
+- OnUp
+- OnDown
+- OnClick
+
+CardboardControl.orientation
+- OnTilt
+
+CardboardControl.debug
+CardboardControl.debug.Charts()
+CardboardControl.debug.KeyFor(string forControl)
+
+
+// deprecate, Handheld.Vibrate is good enough
+CardboardControl.Vibrate()
+
+--- --- --- ---
+
+cardboard = GameObject.Find("CardboardControlManager").GetComponent<CardboardManager>();
+cardboard.magnet.OnDown += CardboardMagnetDown;
+function CardboardMagnetDown() {
+  if (cardboard.gaze.IsFocused()) {
+    Debug.Log(cardboard.gaze.SecondsHeld());
+  }
+}

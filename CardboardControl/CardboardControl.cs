@@ -4,7 +4,7 @@ using System.Collections;
 /**
 * Dealing with raw input from a Cardboard device
 */
-public class CardboardInput {
+public class CardboardControl {
   private Vector3 previousAcceleration;
 
   private float accelerationMagnitude;
@@ -25,7 +25,7 @@ public class CardboardInput {
 
   private DeviceOrientation tiltedOrientation = DeviceOrientation.Portrait;
 
-  public CardboardInput() {
+  public CardboardControl() {
     Input.compass.enabled = true;
     Input.gyro.enabled = true;
     accelerationMagnitude = Input.acceleration.magnitude;
