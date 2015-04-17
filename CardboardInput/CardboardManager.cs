@@ -4,6 +4,7 @@ using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Linq;
+using CardboardDelegates;
 
 /**
 * Use state and delegates to report important metadata from CardboardInput
@@ -44,12 +45,11 @@ public class CardboardManager : MonoBehaviour {
   public KeyCode debugOrientationKey = KeyCode.Tab;
 
   // Delegates
-  public delegate void CardboardAction(object sender, CardboardEvent cardboardEvent);
-  public CardboardAction OnMagnetDown = delegate {};
-  public CardboardAction OnMagnetUp = delegate {};
-  public CardboardAction OnMagnetClicked = delegate {};
-  public CardboardAction OnOrientationTilt = delegate {};
-  public CardboardAction OnFocusChange = delegate {};
+  public CardboardDelegate OnMagnetDown = delegate {};
+  public CardboardDelegate OnMagnetUp = delegate {};
+  public CardboardDelegate OnMagnetClicked = delegate {};
+  public CardboardDelegate OnOrientationTilt = delegate {};
+  public CardboardDelegate OnFocusChange = delegate {};
 
   public void Start() {
     rawInput = new CardboardInput();
