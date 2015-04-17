@@ -25,6 +25,8 @@ public class CardboardManager : MonoBehaviour {
   private float clickStartTime = 0f;
 
   // Raycast readings
+  public float focusMaxDistance = Mathf.Infinity;
+  public LayerMask focusLayerMask = Physics.DefaultRaycastLayers;
   private GameObject recentlyFocusedObject;
   private float focusStartTime = 0f;
 
@@ -41,6 +43,7 @@ public class CardboardManager : MonoBehaviour {
   public KeyCode debugMagnetKey = KeyCode.Space;
   public KeyCode debugOrientationKey = KeyCode.Tab;
 
+  // Delegates
   public delegate void CardboardAction(object sender, CardboardEvent cardboardEvent);
   public CardboardAction OnMagnetDown = delegate {};
   public CardboardAction OnMagnetUp = delegate {};
@@ -50,13 +53,12 @@ public class CardboardManager : MonoBehaviour {
 
   public void Start() {
     rawInput = new CardboardInput();
-    raycast = new CardboardRaycast();
+    raycast = new CardboardRaycast(focusMaxDistance, focusLayerMask);
     debug = new CardboardDebug(debugMagnetKey, debugOrientationKey);
   }
   public void Update() {
     rawInput.Update();
     raycast.Update();
-    debug.Update( );
 
     CheckMagnetMovement();
     CheckOrientationTilt();
@@ -164,11 +166,5 @@ public class CardboardManager : MonoBehaviour {
   public float SecondsFocused() {
     if (focusStartTime == 0f) return 0f;
     return Time.time - focusStartTime;
-  }
-  public void SetRaycastDistance(float distance) {
-    raycast.maxDistance = distance;
-  }
-  public void SetRaycastLayerMask(LayerMask layerMask) {
-    raycast.layerMask = layerMask;
   }
 }

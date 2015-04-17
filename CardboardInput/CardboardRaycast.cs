@@ -13,9 +13,11 @@ public class CardboardRaycast {
 
   private CardboardHead head;
 
-  public CardboardRaycast() {
+  public CardboardRaycast(float _maxDistance, LayerMask _layerMask) {
     StereoController stereoController = Camera.main.GetComponent<StereoController>();
     head = stereoController.Head;
+    maxDistance = _maxDistance;
+    layerMask = _layerMask;
   }
   
   public void Update() {

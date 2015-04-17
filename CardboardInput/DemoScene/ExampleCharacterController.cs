@@ -8,8 +8,8 @@ public class ExampleCharacterController : MonoBehaviour {
 
   void Start () {
     /*
-    Start by getting the script off CardboardInputManager.
-    This is a good place to pass your methods to its delegates.
+    Start by capturing the script on CardboardInputManager
+    This script has the delegates that you'll be passing your methods to
     
     Unity provides a good primer on delegates here:
     http://unity3d.com/learn/tutorials/modules/intermediate/scripting/delegates
@@ -19,15 +19,16 @@ public class ExampleCharacterController : MonoBehaviour {
     cardboard.OnMagnetUp += CardboardUp;      // When the magnet comes back up
 
     // When the magnet goes down and up within the "click threshold" time
-    // That limit is public as cardboard.clickSpeedThreshold
+    // That slick speed threshold is configurable in the inspector
     cardboard.OnMagnetClicked += CardboardClick;
 
-    // TODO: documentation
+    // When the thing we're looking at changes, determined by a raycast
+    // The raycast distance and layer mask are public as configurable in the inspector
     cardboard.OnFocusChange += CardboardFocus;
 
-    // Not shown here is the OnOrientationTilt delegate.
-    // This is triggered on rotating the device to Portrait mode.
-    // The Google Cardboard app refers to this gesture as a Tilt.
+    // Not shown here is the OnOrientationTilt delegate
+    // This is triggered on rotating the device to Portrait mode
+    // The Google Cardboard app refers to this gesture as a Tilt
   }
 
 
@@ -51,17 +52,19 @@ public class ExampleCharacterController : MonoBehaviour {
     TextMesh textMesh = GameObject.Find("SphereClick/Counter").GetComponent<TextMesh>();
     int increment = int.Parse(textMesh.text) + 1;
     textMesh.text = increment.ToString();
+
+    if (cardboard.IsFocused()) {
+      Debug.Log("We've focused on this object for "+cardboard.SecondsFocused()+" seconds.");
+    }
+    
+    // TODO: get something from raycast focus
   }
 
   public void CardboardFocus(object sender, CardboardEvent cardboardEvent) {
-    // FocusedObject will be null when IsFocused is false
+    // If we're not focused, the focused object will be null
     if (cardboard.IsFocused()) {
       ChangeObjectColor(cardboard.FocusedObject().name);
     }
-    // Focus will return an empty RaycastHit if not focused
-    // TODO: do something with Focus() ?
-
-    // TODO: do something with SecondsFocused()
   }
 
   public void ChangeObjectColor(string name) {

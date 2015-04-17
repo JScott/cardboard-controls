@@ -13,8 +13,6 @@ public class CardboardDebug {
     orientationKey = _orientationKey;
   }
 
-  public void Update() {}
-
   public bool KeyFor(string forInput) {
     switch(forInput) {
       case "magnetDown":
