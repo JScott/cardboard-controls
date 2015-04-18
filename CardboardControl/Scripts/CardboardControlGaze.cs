@@ -11,11 +11,11 @@ public class CardboardControlGaze : MonoBehaviour {
   public LayerMask layerMask = Physics.DefaultRaycastLayers;
   public bool vibrateOnChange = false;
   
-  private GameObject recentlyFocusedObject = null;
-  private float focusStartTime = 0f;
+  private GameObject recentObject = null;
+  private float gazeStartTime = 0f;
   private CardboardHead head;
-  private RaycastHit focus;
-  private bool focused;
+  private RaycastHit hit;
+  private bool isHeld;
   
   public CardboardInputDelegate OnChange = delegate {};
 
@@ -25,38 +25,38 @@ public class CardboardControlGaze : MonoBehaviour {
   }
   
   public void Update() {
-    focused = Physics.Raycast(head.Gaze, out focus, maxDistance, layerMask);
-    CheckRaycastFocus();
+    isHeld = Physics.Raycast(head.Gaze, out hit, maxDistance, layerMask);
+    CheckGaze();
   }
 
-  private void CheckRaycastFocus() {
-    if (recentlyFocusedObject != FocusedObject()) ReportFocusChange();
-    recentlyFocusedObject = FocusedObject();
+  private void CheckGaze() {
+    if (recentObject != Object()) ReportGazeChange();
+    recentObject = Object();
   }
 
-  private void ReportFocusChange() {
+  private void ReportGazeChange() {
     OnChange(this, new CardboardInputEvent());
-    //if (debugNotificationsEnabled) Debug.Log(" *** Focus Changed *** ");
+    //if (debugNotificationsEnabled) Debug.Log(" *** Gaze Changed *** ");
     if (vibrateOnChange) Handheld.Vibrate();
-    focusStartTime = Time.time;
+    gazeStartTime = Time.time;
   }
 
-  public bool IsFocused() {
-    return focused;
+  public bool IsHeld() {
+    return isHeld;
   }
 
-  public float SecondsFocused() {
-    if (focusStartTime == 0f) return 0f;
-    return Time.time - focusStartTime;
+  public float SecondsHeld() {
+    if (gazeStartTime == 0f) return 0f;
+    return Time.time - gazeStartTime;
   }
 
-  public RaycastHit Focus() {
-    return focus;
+  public RaycastHit Hit() {
+    return hit;
   }
 
-  public GameObject FocusedObject() {
-    if (IsFocused()) {
-      return focus.transform.gameObject;
+  public GameObject Object() {
+    if (IsHeld()) {
+      return hit.transform.gameObject;
     } else {
       return null;
     }

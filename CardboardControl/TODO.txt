@@ -1,6 +1,6 @@
 CardboardControlManager object
 
-CardboardControlGaze.cs
+! CardboardControlGaze.cs
 CardboardControlMagnet.cs
 CardboardControlOrientation.cs
 CardboardControlDebug.cs
@@ -10,29 +10,29 @@ CardboardControlEvent.cs
 
 CardboardControl
 
-CardboardControl.gaze
-CardboardControl.gaze.IsFocused()
-CardboardControl.gaze.SecondsHeld()
-CardboardControl.gaze.Object()
-CardboardControl.gaze.Hit()
-CardboardControl.gaze.maxDistance
-CardboardControl.gaze.layerMask
-- OnChange
+! CardboardControl.gaze
+! CardboardControl.gaze.IsHeld()
+! CardboardControl.gaze.SecondsHeld()
+! CardboardControl.gaze.Object()
+! CardboardControl.gaze.Hit()
+! CardboardControl.gaze.maxDistance
+! CardboardControl.gaze.layerMask
+! - OnChange
 
-CardboardControl.magnet
-CardboardControl.magnet.SecondsHeld()
-CardboardControl.magnet.IsHeld()
-CardboardControl.magnet.clickSpeedThreshold
-- OnUp
-- OnDown
-- OnClick
+! CardboardControl.magnet
+! CardboardControl.magnet.SecondsHeld()
+! CardboardControl.magnet.IsHeld()
+! CardboardControl.magnet.clickSpeedThreshold
+! - OnUp
+! - OnDown
+! - OnClick
 
 CardboardControl.orientation
 - OnTilt
 
 CardboardControl.debug
 CardboardControl.debug.Charts()
-CardboardControl.debug.KeyFor(string forControl)
+CardboardControl.debug.KeyFor(string forInput)
 
 
 // deprecate, Handheld.Vibrate is good enough

@@ -15,10 +15,6 @@ public class CardboardDebug {
 
   public bool KeyFor(string forInput) {
     switch(forInput) {
-      case "magnetDown":
-        return Input.GetKeyDown(magnetKey);
-      case "magnetUp":
-        return Input.GetKeyUp(magnetKey);
       case "orientationTilt":
         return Input.GetKeyDown(orientationKey);
       default:
