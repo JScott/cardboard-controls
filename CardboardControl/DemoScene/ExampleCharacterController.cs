@@ -22,9 +22,9 @@ public class ExampleCharacterController : MonoBehaviour {
     // That slick speed threshold is configurable in the inspector
     cardboard.OnMagnetClicked += CardboardClick;
 
-    // When the thing we're looking at changes, determined by a raycast
-    // The raycast distance and layer mask are public as configurable in the inspector
-    cardboard.raycast.OnChange += CardboardFocus;
+    // When the thing we're looking at changes, determined by a gaze
+    // The gaze distance and layer mask are public as configurable in the inspector
+    cardboard.gaze.OnChange += CardboardFocus;
 
     // Not shown here is the OnOrientationTilt delegate
     // This is triggered on rotating the device to Portrait mode
@@ -53,17 +53,17 @@ public class ExampleCharacterController : MonoBehaviour {
     int increment = int.Parse(textMesh.text) + 1;
     textMesh.text = increment.ToString();
 
-    if (cardboard.raycast.IsFocused()) {
-      Debug.Log("We've focused on this object for "+cardboard.raycast.SecondsFocused()+" seconds.");
+    if (cardboard.gaze.IsFocused()) {
+      Debug.Log("We've focused on this object for "+cardboard.gaze.SecondsFocused()+" seconds.");
     }
     
-    // TODO: get something from raycast focus
+    // TODO: get something from gaze focus
   }
 
   public void CardboardFocus(object sender, CardboardInputEvent cardboardEvent) {
     // If we're not focused, the focused object will be null
-    if (cardboard.raycast.IsFocused()) {
-      ChangeObjectColor(cardboard.raycast.FocusedObject().name);
+    if (cardboard.gaze.IsFocused()) {
+      ChangeObjectColor(cardboard.gaze.FocusedObject().name);
     }
   }
 
@@ -111,6 +111,6 @@ public class ExampleCharacterController : MonoBehaviour {
     cardboard.OnMagnetDown -= CardboardDown;
     cardboard.OnMagnetUp -= CardboardUp;
     cardboard.OnMagnetClicked -= CardboardClick;
-    cardboard.raycast.OnChange -= CardboardFocus;
+    cardboard.gaze.OnChange -= CardboardFocus;
   }
 }

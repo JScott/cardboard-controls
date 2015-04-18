@@ -11,7 +11,7 @@ using CardboardInputDelegates;
 */
 public class CardboardControlManager : MonoBehaviour {
   public CardboardControl rawInput;
-  public CardboardRaycast raycast;
+  public CardboardControlGaze gaze;
   public CardboardDebug debug;
 
   public float clickSpeedThreshold = 0.4f;
@@ -45,13 +45,13 @@ public class CardboardControlManager : MonoBehaviour {
 
   public void Awake() {
     rawInput = new CardboardControl();
-    raycast = new CardboardRaycast();
+    gaze = new CardboardControlGaze();
     debug = new CardboardDebug(debugMagnetKey, debugOrientationKey);
   }
 
   public void Update() {
     rawInput.Update();
-    raycast.Update();
+    gaze.Update();
 
     CheckMagnetMovement();
     CheckOrientationTilt();
