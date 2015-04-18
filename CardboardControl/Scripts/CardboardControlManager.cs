@@ -11,6 +11,7 @@ using CardboardInputDelegates;
 */
 public class CardboardControlManager : MonoBehaviour {
   public CardboardControl rawInput;
+  [HideInInspector]
   public CardboardControlGaze gaze;
   public CardboardDebug debug;
 
@@ -45,7 +46,7 @@ public class CardboardControlManager : MonoBehaviour {
 
   public void Awake() {
     rawInput = new CardboardControl();
-    gaze = new CardboardControlGaze();
+    gaze = gameObject.GetComponent<CardboardControlGaze>();
     debug = new CardboardDebug(debugMagnetKey, debugOrientationKey);
   }
 

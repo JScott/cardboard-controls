@@ -6,7 +6,7 @@ using CardboardInputDelegates;
 * Creating a vision raycast and handling the data from it
 * Relies on Google Cardboard SDK API's
 */
-public class CardboardControlGaze {
+public class CardboardControlGaze : MonoBehaviour {
   public float maxDistance = Mathf.Infinity;
   public LayerMask layerMask = Physics.DefaultRaycastLayers;
   public bool vibrateOnChange = false;
@@ -14,13 +14,12 @@ public class CardboardControlGaze {
   private GameObject recentlyFocusedObject = null;
   private float focusStartTime = 0f;
   private CardboardHead head;
+  private RaycastHit focus;
+  private bool focused;
   
-  // Hide in inspector?
-  public RaycastHit focus;
-  public bool focused;
   public CardboardInputDelegate OnChange = delegate {};
 
-  public CardboardControlGaze() {
+  public void Start() {
     StereoController stereoController = Camera.main.GetComponent<StereoController>();
     head = stereoController.Head;
   }
