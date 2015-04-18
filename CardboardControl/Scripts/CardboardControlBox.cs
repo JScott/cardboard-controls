@@ -15,9 +15,6 @@ public class CardboardControlBox : MonoBehaviour {
   
   public CardboardControlDelegate OnTilt = delegate {};
 
-  public void Start() {
-  }
-  
   public void Update() {
     CheckOrientation();
   }
@@ -41,7 +38,7 @@ public class CardboardControlBox : MonoBehaviour {
   }
 
   private void ReportTilt() {
-    OnTilt(this, new CardboardControlEvent());
+    OnTilt(this);
     //if (debugNotificationsEnabled) Debug.Log(" *** Orientation Tilt *** ");
     if (vibrateOnOrientationTilt) Handheld.Vibrate();
   }

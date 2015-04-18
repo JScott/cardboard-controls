@@ -35,18 +35,16 @@ public class ExampleCharacterController : MonoBehaviour {
 
   /*
   In this demo, we change object colours for each event triggered.
-  The CardboardEvent is currently just a placeholder but exists to
-  pass useful information to events with a consistent API.
   */
-  public void CardboardDown(object sender, CardboardControlEvent cardboardEvent) {
+  public void CardboardDown(object sender) {
     ChangeObjectColor("SphereDown");
   }
 
-  public void CardboardUp(object sender, CardboardControlEvent cardboardEvent) {
+  public void CardboardUp(object sender) {
     ChangeObjectColor("SphereUp");
   }
 
-  public void CardboardClick(object sender, CardboardControlEvent cardboardEvent) {
+  public void CardboardClick(object sender) {
     ChangeObjectColor("SphereClick");
 
     TextMesh textMesh = GameObject.Find("SphereClick/Counter").GetComponent<TextMesh>();
@@ -60,7 +58,7 @@ public class ExampleCharacterController : MonoBehaviour {
     // TODO: get something from gaze focus
   }
 
-  public void CardboardFocus(object sender, CardboardControlEvent cardboardEvent) {
+  public void CardboardFocus(object sender) {
     // If we're not focused, the focused object will be null
     if (cardboard.gaze.IsHeld()) {
       ChangeObjectColor(cardboard.gaze.Object().name);
