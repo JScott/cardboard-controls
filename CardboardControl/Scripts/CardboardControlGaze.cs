@@ -36,7 +36,6 @@ public class CardboardControlGaze : MonoBehaviour {
 
   private void ReportGazeChange() {
     OnChange(this);
-    //if (debugNotificationsEnabled) Debug.Log(" *** Gaze Changed *** ");
     if (vibrateOnChange) Handheld.Vibrate();
     gazeStartTime = Time.time;
   }
@@ -46,7 +45,6 @@ public class CardboardControlGaze : MonoBehaviour {
   }
 
   public float SecondsHeld() {
-    if (gazeStartTime == 0f) return 0f;
     return Time.time - gazeStartTime;
   }
 

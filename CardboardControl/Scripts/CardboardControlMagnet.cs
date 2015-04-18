@@ -52,7 +52,6 @@ public class CardboardControlMagnet : MonoBehaviour {
     if (currentMagnetState == MagnetState.Up) {
       currentMagnetState = MagnetState.Down;
       OnDown(this);
-      // if (debugNotificationsEnabled) Debug.Log(" *** Magnet Down *** ");
       if (vibrateOnDown) Handheld.Vibrate();
       clickStartTime = Time.time;
     }
@@ -62,7 +61,6 @@ public class CardboardControlMagnet : MonoBehaviour {
     if (currentMagnetState == MagnetState.Down) {
       currentMagnetState = MagnetState.Up;
       OnUp(this);
-      // if (debugNotificationsEnabled) Debug.Log(" *** Magnet Up *** ");
       if (vibrateOnUp) Handheld.Vibrate();
       CheckForClick();
     }
@@ -76,12 +74,10 @@ public class CardboardControlMagnet : MonoBehaviour {
 
   private void ReportClick() {
     OnClick(this);
-    // if (debugNotificationsEnabled) Debug.Log(" *** Magnet Click *** ");
     if (vibrateOnClick) Handheld.Vibrate();
   }
 
   public float SecondsHeld() {
-    if (clickStartTime == 0f) return 0f;
     return Time.time - clickStartTime;
   }
 
