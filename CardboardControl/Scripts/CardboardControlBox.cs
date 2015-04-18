@@ -22,8 +22,13 @@ public class CardboardControlBox : MonoBehaviour {
     CheckOrientation();
   }
 
-  private bool KeyFor(string direction) {
-    return Input.GetKeyDown(tiltKey);
+  private bool KeyFor(string movement) {
+    switch(movement) {
+      case "tilt":
+        return Input.GetKeyDown(tiltKey);
+      default:
+        return false;
+    }
   }
 
   private void CheckOrientation() {

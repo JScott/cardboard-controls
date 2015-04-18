@@ -31,10 +31,13 @@ public class CardboardControlMagnet : MonoBehaviour {
   }
 
   private bool KeyFor(string direction) {
-    if (direction == "down") {
-      return Input.GetKeyDown(magnetKey);
-    } else {
-      return Input.GetKeyUp(magnetKey);
+    switch(direction) {
+      case "down":
+        return Input.GetKeyDown(magnetKey);
+      case "up":
+        return Input.GetKeyUp(magnetKey);
+      default:
+        return false;
     }
   }
 

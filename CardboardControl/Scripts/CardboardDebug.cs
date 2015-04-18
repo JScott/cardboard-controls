@@ -13,6 +13,15 @@ public class CardboardDebug {
     orientationKey = _orientationKey;
   }
 
+  public bool KeyFor(string forInput) {
+    switch(forInput) {
+      case "orientationTilt":
+        return Input.GetKeyDown(orientationKey);
+      default:
+        return false;
+    }
+  }
+
   public string Charts(bool isMagnetHeld, bool isTiltReported, string magnetReadingsChart) {
     return magnetReadingsChart + "\n" + MagnetStateChart(isMagnetHeld, isTiltReported);
   }
