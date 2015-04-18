@@ -88,4 +88,24 @@ public class CardboardControlMagnet : MonoBehaviour {
   public bool IsHeld() {
     return (currentMagnetState == MagnetState.Down);
   }
+
+  public string SensorChart() {
+    string chart = "";
+    chart += "Sensor Readings\n";
+    chart += !sensor.IsJostled() ? "***** steady " : "!!!!! jostled ";
+    if (!sensor.IsJostled()) {
+      chart += sensor.IsDown() ? "vvv " : "    ";
+      chart += sensor.IsUp() ? "^^^ " : "    ";
+    }
+    return chart;
+  }
+
+  public string StateChart() {
+    string chart = "";
+    chart += "Magnet State\n";
+    chart += (IsHeld()) ? "U " : "x ";
+    chart += (!IsHeld()) ? "D " : "x ";
+    chart += "\n";
+    return chart;
+  }
 }

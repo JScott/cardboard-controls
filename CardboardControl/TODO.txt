@@ -23,6 +23,8 @@ CardboardControl
 ! CardboardControl.magnet
 ! CardboardControl.magnet.SecondsHeld()
 ! CardboardControl.magnet.IsHeld()
+! CardboardControl.magnet.SensorChart()
+! CardboardControl.magnet.StateChart()
 ! CardboardControl.magnet.clickSpeedThreshold
 ! - OnUp
 ! - OnDown
@@ -31,9 +33,6 @@ CardboardControl
 ! CardboardControl.box
 ! CardboardControl.box.IsTilted()
 ! - OnTilt
-
-CardboardControl.debug
-CardboardControl.debug.Charts()
 
 --- --- --- ---
 

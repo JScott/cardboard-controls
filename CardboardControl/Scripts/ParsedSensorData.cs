@@ -73,16 +73,4 @@ public class ParsedSensorData : MonoBehaviour {
   public bool IsUp() {
     return magneticFieldRatio < 0.97;
   }
-
-  public string MagnetReadingsChart() {
-  //   string chart = "";
-  //   chart += "Magnet Readings\n";
-  //   chart += !Jostled() ? "***** steady " : "!!!!! jostled ";
-  //   if (!Jostled()) {
-  //     chart += MagnetMovedDown() ? "vvv " : "    ";
-  //     chart += MagnetMovedUp() ? "^^^ " : "    ";
-  //   }
-  //   return chart;
-    return "";
-  }
 }
