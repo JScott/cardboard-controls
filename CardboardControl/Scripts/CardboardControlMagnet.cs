@@ -11,7 +11,7 @@ public class CardboardControlMagnet : MonoBehaviour {
   public bool vibrateOnDown = false;
   public bool vibrateOnUp = false;
   public bool vibrateOnClick = true;
-  public KeyCode debugKey = KeyCode.Space;
+  public KeyCode magnetKey = KeyCode.Space;
 
   private ParsedSensorData sensor;
   private enum MagnetState { Up, Down }
@@ -32,9 +32,9 @@ public class CardboardControlMagnet : MonoBehaviour {
 
   private bool KeyFor(string direction) {
     if (direction == "down") {
-      return Input.GetKeyDown(debugKey);
+      return Input.GetKeyDown(magnetKey);
     } else {
-      return Input.GetKeyUp(debugKey);
+      return Input.GetKeyUp(magnetKey);
     }
   }
 

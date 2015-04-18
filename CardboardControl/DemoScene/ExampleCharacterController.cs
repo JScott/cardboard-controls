@@ -26,9 +26,9 @@ public class ExampleCharacterController : MonoBehaviour {
     // The gaze distance and layer mask are public as configurable in the inspector
     cardboard.gaze.OnChange += CardboardFocus;
 
-    // Not shown here is the OnOrientationTilt delegate
+    // Not used here is the OnTilt delegate
     // This is triggered on rotating the device to Portrait mode
-    // The Google Cardboard app refers to this gesture as a Tilt
+    // cardboard.box.OnTilt += ...
   }
 
 

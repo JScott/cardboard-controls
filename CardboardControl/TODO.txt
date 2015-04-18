@@ -3,7 +3,7 @@ CardboardControlManager object
 CardboardControlManager.cs
 ! CardboardControlGaze.cs
 ! CardboardControlMagnet.cs
-CardboardControlOrientation.cs
+CardboardControlBox.cs
 CardboardControlDebug.cs
 ! CardboardControlDelegates.cs
 
@@ -28,16 +28,12 @@ CardboardControl
 ! - OnDown
 ! - OnClick
 
-CardboardControl.orientation
-- OnTilt
+! CardboardControl.box
+! CardboardControl.box.IsTilted()
+! - OnTilt
 
 CardboardControl.debug
 CardboardControl.debug.Charts()
-CardboardControl.debug.KeyFor(string forInput)
-
-
-// deprecate, Handheld.Vibrate is good enough
-CardboardControl.Vibrate()
 
 --- --- --- ---
 
