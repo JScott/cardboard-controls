@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-using CardboardInputDelegates;
+using CardboardControlDelegates;
 
 /**
 * Creating a vision raycast and handling the data from it
@@ -17,7 +17,7 @@ public class CardboardControlGaze : MonoBehaviour {
   private RaycastHit hit;
   private bool isHeld;
   
-  public CardboardInputDelegate OnChange = delegate {};
+  public CardboardControlDelegate OnChange = delegate {};
 
   public void Start() {
     StereoController stereoController = Camera.main.GetComponent<StereoController>();
@@ -35,7 +35,7 @@ public class CardboardControlGaze : MonoBehaviour {
   }
 
   private void ReportGazeChange() {
-    OnChange(this, new CardboardInputEvent());
+    OnChange(this, new CardboardControlEvent());
     //if (debugNotificationsEnabled) Debug.Log(" *** Gaze Changed *** ");
     if (vibrateOnChange) Handheld.Vibrate();
     gazeStartTime = Time.time;

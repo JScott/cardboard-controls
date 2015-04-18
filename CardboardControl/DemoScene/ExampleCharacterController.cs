@@ -8,7 +8,7 @@ public class ExampleCharacterController : MonoBehaviour {
 
   void Start () {
     /*
-    Start by capturing the script on CardboardInputManager
+    Start by capturing the script on CardboardControlManager
     This script has the delegates that you'll be passing your methods to
     
     Unity provides a good primer on delegates here:
@@ -38,15 +38,15 @@ public class ExampleCharacterController : MonoBehaviour {
   The CardboardEvent is currently just a placeholder but exists to
   pass useful information to events with a consistent API.
   */
-  public void CardboardDown(object sender, CardboardInputEvent cardboardEvent) {
+  public void CardboardDown(object sender, CardboardControlEvent cardboardEvent) {
     ChangeObjectColor("SphereDown");
   }
 
-  public void CardboardUp(object sender, CardboardInputEvent cardboardEvent) {
+  public void CardboardUp(object sender, CardboardControlEvent cardboardEvent) {
     ChangeObjectColor("SphereUp");
   }
 
-  public void CardboardClick(object sender, CardboardInputEvent cardboardEvent) {
+  public void CardboardClick(object sender, CardboardControlEvent cardboardEvent) {
     ChangeObjectColor("SphereClick");
 
     TextMesh textMesh = GameObject.Find("SphereClick/Counter").GetComponent<TextMesh>();
@@ -60,7 +60,7 @@ public class ExampleCharacterController : MonoBehaviour {
     // TODO: get something from gaze focus
   }
 
-  public void CardboardFocus(object sender, CardboardInputEvent cardboardEvent) {
+  public void CardboardFocus(object sender, CardboardControlEvent cardboardEvent) {
     // If we're not focused, the focused object will be null
     if (cardboard.gaze.IsHeld()) {
       ChangeObjectColor(cardboard.gaze.Object().name);
@@ -76,7 +76,7 @@ public class ExampleCharacterController : MonoBehaviour {
 
 
   /*
-  During our game we can utilize data from CardboardInput.
+  During our game we can utilize data from the CardboardControl API.
   */
   void Update() {
     TextMesh textMesh = GameObject.Find("SphereDown/Counter").GetComponent<TextMesh>();

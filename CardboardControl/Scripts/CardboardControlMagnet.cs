@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-using CardboardInputDelegates;
+using CardboardControlDelegates;
 
 /**
 * Creating a vision raycast and handling the data from it
@@ -18,9 +18,9 @@ public class CardboardControlMagnet : MonoBehaviour {
   private MagnetState currentMagnetState = MagnetState.Up;
   private float clickStartTime = 0f;
 
-  public CardboardInputDelegate OnUp = delegate {};
-  public CardboardInputDelegate OnDown = delegate {};
-  public CardboardInputDelegate OnClick = delegate {};
+  public CardboardControlDelegate OnUp = delegate {};
+  public CardboardControlDelegate OnDown = delegate {};
+  public CardboardControlDelegate OnClick = delegate {};
 
   public void Start() {
     sensor = gameObject.GetComponent<ParsedSensorData>();
@@ -48,7 +48,7 @@ public class CardboardControlMagnet : MonoBehaviour {
   private void ReportDown() {
     if (currentMagnetState == MagnetState.Up) {
       currentMagnetState = MagnetState.Down;
-      OnDown(this, new CardboardInputEvent());
+      OnDown(this, new CardboardControlEvent());
       // if (debugNotificationsEnabled) Debug.Log(" *** Magnet Down *** ");
       if (vibrateOnDown) Handheld.Vibrate();
       clickStartTime = Time.time;
@@ -58,7 +58,7 @@ public class CardboardControlMagnet : MonoBehaviour {
   private void ReportUp() {
     if (currentMagnetState == MagnetState.Down) {
       currentMagnetState = MagnetState.Up;
-      OnUp(this, new CardboardInputEvent());
+      OnUp(this, new CardboardControlEvent());
       // if (debugNotificationsEnabled) Debug.Log(" *** Magnet Up *** ");
       if (vibrateOnUp) Handheld.Vibrate();
       CheckForClick();
@@ -72,7 +72,7 @@ public class CardboardControlMagnet : MonoBehaviour {
   }
 
   private void ReportClick() {
-    OnClick(this, new CardboardInputEvent());
+    OnClick(this, new CardboardControlEvent());
     // if (debugNotificationsEnabled) Debug.Log(" *** Magnet Click *** ");
     if (vibrateOnClick) Handheld.Vibrate();
   }

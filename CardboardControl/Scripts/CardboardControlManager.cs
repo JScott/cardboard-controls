@@ -4,10 +4,10 @@ using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Linq;
-using CardboardInputDelegates;
+using CardboardControlDelegates;
 
 /**
-* Use state and delegates to report important metadata from CardboardInput
+* Bring all the control scripts together to provide a convenient API
 */
 public class CardboardControlManager : MonoBehaviour {
   [HideInInspector]
@@ -29,7 +29,7 @@ public class CardboardControlManager : MonoBehaviour {
   public KeyCode debugOrientationKey = KeyCode.Tab;
 
   // Delegates
-  public CardboardInputDelegate OnOrientationTilt = delegate {};
+  public CardboardControlDelegate OnOrientationTilt = delegate {};
 
   public void Awake() {
     magnet = gameObject.GetComponent<CardboardControlMagnet>();
@@ -64,7 +64,7 @@ public class CardboardControlManager : MonoBehaviour {
   }
   private void ReportTilt() {
     if (!tiltReported) {
-      OnOrientationTilt(this, new CardboardInputEvent());
+      OnOrientationTilt(this, new CardboardControlEvent());
       //if (debugNotificationsEnabled) Debug.Log(" *** Orientation Tilt *** ");
       if (vibrateOnOrientationTilt) Vibrate();
       tiltReported = true;

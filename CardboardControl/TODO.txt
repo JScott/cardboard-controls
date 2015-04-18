@@ -1,10 +1,11 @@
 CardboardControlManager object
 
+CardboardControlManager.cs
 ! CardboardControlGaze.cs
-CardboardControlMagnet.cs
+! CardboardControlMagnet.cs
 CardboardControlOrientation.cs
 CardboardControlDebug.cs
-CardboardControlEvent.cs
+! CardboardControlDelegates.cs
 
 --- --- --- ---
 
