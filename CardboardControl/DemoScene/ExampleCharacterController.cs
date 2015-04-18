@@ -4,22 +4,20 @@ using System.Collections;
 public class ExampleCharacterController : MonoBehaviour {
   private static CardboardControl cardboard;
 
-  private bool vibrateTriggered = false;
-
   void Start () {
     /*
-    Start by capturing the script on CardboardControlManager
-    This script has the delegates that you'll be passing your methods to
-    
-    Unity provides a good primer on delegates here:
-    http://unity3d.com/learn/tutorials/modules/intermediate/scripting/delegates
+    * Start by capturing the helper script on CardboardControlManager
+    * This script has access to all the controls and their delegates
+    *
+    * Unity provides a good primer on delegates here:
+    * http://unity3d.com/learn/tutorials/modules/intermediate/scripting/delegates
     */
     cardboard = GameObject.Find("CardboardControlManager").GetComponent<CardboardControl>();
     cardboard.magnet.OnDown += CardboardDown;  // When the magnet goes down
     cardboard.magnet.OnUp += CardboardUp;      // When the magnet comes back up
 
     // When the magnet goes down and up within the "click threshold" time
-    // That slick speed threshold is configurable in the inspector
+    // That click speed threshold is configurable in the inspector
     cardboard.magnet.OnClick += CardboardClick;
 
     // When the thing we're looking at changes, determined by a gaze
@@ -34,13 +32,15 @@ public class ExampleCharacterController : MonoBehaviour {
 
 
   /*
-  In this demo, we change object colours for each event triggered.
+  * In this demo, we randomize object colours for triggered events
   */
   public void CardboardDown(object sender) {
+    Debug.Log("Magnet went down");
     ChangeObjectColor("SphereDown");
   }
 
   public void CardboardUp(object sender) {
+    Debug.Log("Magnet came up");
     ChangeObjectColor("SphereUp");
   }
 
@@ -51,17 +51,19 @@ public class ExampleCharacterController : MonoBehaviour {
     int increment = int.Parse(textMesh.text) + 1;
     textMesh.text = increment.ToString();
 
-    if (cardboard.gaze.IsHeld()) {
-      Debug.Log("We've focused on this object for "+cardboard.gaze.SecondsHeld()+" seconds.");
-    }
+    // With the cardboard object, we can grab information from various controls
+    // If the raycast doesn't find anything then the focused object will be null
+    string name = cardboard.gaze.Object() == null ? "nothing" : cardboard.gaze.Object().name;
+    float count = cardboard.gaze.SecondsHeld();
+    Debug.Log("We've focused on "+name+" for "+count+" seconds.");
     
-    // TODO: get something from gaze focus
+    // If you need more raycast data from cardboard.gaze, the RaycastHit is exposed as gaze.Hit
   }
 
   public void CardboardFocus(object sender) {
     // For more event-driven code, you can grab the data from the sender
     CardboardControlGaze gaze = sender as CardboardControlGaze;
-    // If we're not focused, the focused object will be null
+    // gaze.IsHeld will make sure the gaze.Object isn't null
     if (gaze.IsHeld()) {
       ChangeObjectColor(gaze.Object().name);
     }
@@ -76,36 +78,25 @@ public class ExampleCharacterController : MonoBehaviour {
 
 
   /*
-  During our game we can utilize data from the CardboardControl API.
+  * During our game we can utilize data from the CardboardControl API
   */
   void Update() {
     TextMesh textMesh = GameObject.Find("SphereDown/Counter").GetComponent<TextMesh>();
 
-    // IsMagnetHeld is true when the magnet has gone down but not back up yet.    
-    if (!cardboard.magnet.IsHeld()) {
-      textMesh.GetComponent<Renderer>().enabled = Time.time % 1 < 0.5;
-      vibrateTriggered = false;
+    // magnet.IsHeld is true when the magnet has gone down but not back up yet
+    if (cardboard.magnet.IsHeld()) {
+      textMesh.GetComponent<Renderer>().enabled = true;
+      // magnet.SecondsHeld is the number of seconds we've held the magnet down
+      textMesh.text = cardboard.magnet.SecondsHeld().ToString("#.##");
     }
     else {
-      textMesh.GetComponent<Renderer>().enabled = true;
-
-      // SecondsMagnetHeld is the number of seconds we've held the magnet down.
-      // It stops when when the magnet goes up and resets when the magnet goes down.
-      textMesh.text = cardboard.magnet.SecondsHeld().ToString("#.##");
-
-      // CardboardSDK has built-in triggers vibrations to provide feedback.
-      // You can toggle them via the Unity Inspector or manually trigger your
-      // own vibration events, as seen here.
-      if (cardboard.magnet.SecondsHeld() > 2 && !vibrateTriggered) {
-        Handheld.Vibrate();
-        vibrateTriggered = true;
-      }
+      textMesh.GetComponent<Renderer>().enabled = Time.time % 1 < 0.5;
     }
   }
 
   /*
-  Be sure to unsubscribe before this object is destroyed
-  so the garbage collector can clean up the object.
+  * Be sure to unsubscribe before this object is destroyed
+  * so the garbage collector can clean everything up
   */
   void OnDestroy() {
     cardboard.magnet.OnDown -= CardboardDown;

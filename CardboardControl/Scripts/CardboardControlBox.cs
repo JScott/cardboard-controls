@@ -39,7 +39,6 @@ public class CardboardControlBox : MonoBehaviour {
 
   private void ReportTilt() {
     OnTilt(this);
-    //if (debugNotificationsEnabled) Debug.Log(" *** Orientation Tilt *** ");
     if (vibrateOnOrientationTilt) Handheld.Vibrate();
   }
   
