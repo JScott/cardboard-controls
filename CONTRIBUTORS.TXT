@@ -8,4 +8,4 @@ Justin Scott
 
 Rukanishino
   https://github.com/rukanishino
-  Contributed code for orientation tilt controls
+  Contributed code for the orientation tilt controls

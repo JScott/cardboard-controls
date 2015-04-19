@@ -1,15 +1,19 @@
-CardboardControlManager object
+redo demoscene readme - add the below API
+redo readme - add links to iOS open-source alternative
 
-CardboardControlManager.cs
+--- --- --- ---
+
+! CardboardControlManager object
+
+! CardboardControl.cs
 ! CardboardControlGaze.cs
 ! CardboardControlMagnet.cs
-CardboardControlBox.cs
-CardboardControlDebug.cs
+! CardboardControlBox.cs
 ! CardboardControlDelegates.cs
 
 --- --- --- ---
 
-CardboardControl
+! CardboardControl
 
 ! CardboardControl.gaze
 ! CardboardControl.gaze.IsHeld()
