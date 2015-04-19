@@ -42,7 +42,7 @@ public class CardboardControlMagnet : MonoBehaviour {
   }
 
   private void CheckMagnet() {
-    if (!sensor.IsJostled() && !sensor.IsRotatedQuickly()) {
+    if (!sensor.IsCalibrating() && !sensor.IsJostled() && !sensor.IsRotatedQuickly()) {
       if (sensor.IsDown() || KeyFor("down")) ReportDown();
       if (sensor.IsUp() || KeyFor("up")) ReportUp();
     }

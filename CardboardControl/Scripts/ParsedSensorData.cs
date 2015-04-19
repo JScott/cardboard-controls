@@ -50,12 +50,16 @@ public class ParsedSensorData : MonoBehaviour {
   // TODO: dictionaries could shorten a lot of these lines
   private void FilterAndSetMagnitudes(float newAccelerationMagnitude, float newGyroRotationMagnitude, float newMagneticFieldMagnitude) {
     // Apply Finite Impulse Response (FIR) filters
-    // If the tilt hasn't changed, but the compass has, then the magnetic field moved
-    // without device this is the essence of a cardboard magnet click.
+    // If the tilt hasn't changed, but the compass has, then the magnetic field moved without the device
+    // This is the essence of a cardboard magnet click
     accelerationMagnitude = ImpulseFilter(accelerationMagnitude, newAccelerationMagnitude, fastAccelerationImpulseFilter);
     gyroRotationMagnitude = ImpulseFilter(gyroRotationMagnitude, newGyroRotationMagnitude, fastRotationImpulseFilter);
     magneticFieldMagnitude = ImpulseFilter(magneticFieldMagnitude, newMagneticFieldMagnitude, fastMagnetImpulseFilter);
     magneticFieldBaseLine = ImpulseFilter(magneticFieldBaseLine, newMagneticFieldMagnitude, slowImpulseFilter);
+  }
+
+  public bool IsCalibrating() {
+    return Time.time <= 1.0f;
   }
 
   public bool IsJostled() {
