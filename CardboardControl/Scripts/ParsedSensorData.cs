@@ -23,8 +23,7 @@ public class ParsedSensorData : MonoBehaviour {
     Input.gyro.enabled = true;
     accelerationMagnitude = Input.acceleration.magnitude;
     gyroRotationMagnitude = Input.gyro.rotationRate.magnitude;
-    magneticFieldMagnitude = Input.compass.rawVector.magnitude;
-    magneticFieldBaseLine = Input.compass.rawVector.magnitude;
+    magneticFieldMagnitude = magneticFieldBaseLine = Input.compass.rawVector.magnitude;
   }
   
   public void Update() {
@@ -63,11 +62,11 @@ public class ParsedSensorData : MonoBehaviour {
   }
 
   public bool IsJostled() {
-    return accelerationMagnitude >= 0.2;
+    return accelerationMagnitude >= 0.15;
   }
 
   public bool IsRotatedQuickly() {
-    return gyroRotationMagnitude >= 3.0;
+    return gyroRotationMagnitude >= 1.5;
   }
 
   public bool IsDown() {
