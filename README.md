@@ -2,13 +2,7 @@ Cardboard Controls+ is all you need to develop the best Cardboard games in Unity
 
 # What's added?
 
-In addition to everything from Google's impressive SDK, you get better interactions to improve the experience for developers and players alike.
-
-## Discrete Magnet Control
-
-Google's SDK only has one hook into the magnet: `bool CardboardTriggered`. It's available for one frame that you have to waste cycles polling for. 
-
-Now you can utilize C# methods and delegates to expose:
+Google's SDK only has one hook into the magnet: `bool CardboardTriggered`. It's available for one frame that you have to waste cycles polling for. Instead of limiting yourself to that, you can now utilize C# methods and delegates for:
 
 - Magnet down
 - Magnet up
@@ -18,13 +12,12 @@ Now you can utilize C# methods and delegates to expose:
 
 This expands your opportunities, allowing interactions like holding the magnet to move and clicking to interact to provide a more natural experience.
 
-## Standard Gestures
+There are also methods and delegates for:
 
-Google's SDK has nothing for the gesture of tilting the Cardboard vertically. This is used in the official Cardboard app as an excellent way to navigate menus. Now you don't need to code it yourself.
+- Tilting the device, as used in the official Cardboard app to navigate menus
+- Gaze raycasting, capturing what you look at and for how long
 
-## Raycast Gaze
-
-Google's SDK provides a Gaze vector to represent the direction you're facing. I've taken the courtesy of building a Gaze raycast that covers a lot of common uses for game developers. More events and delegates mean that you can focus on what cool things your game does and not building the same boilerplate again.
+These helpers let you focus on what makes your game cool instead of boilerplate code.
 
 # Prerequisites
 
@@ -35,7 +28,7 @@ If not then you'll need to import the base Cardboard SDK if you haven't already:
 - Import it in your scene
 - Use the `CardboardMain` prefab for your camera
 
-If you're working on iOS then you might want to look into replacing Google's SDK with [rsanchezsaez's CardboardSDK-iOS](https://github.com/rsanchezsaez/cardboardsdk-ios). It's a port of the Android code for iOS that nearly has feature parity.
+If you're working on iOS then you might want to look into replacing Google's SDK with [rsanchezsaez's CardboardSDK-iOS](https://github.com/rsanchezsaez/cardboardsdk-ios). It ports the Android code to iOS with nearly feature parity.
 
 If neither of those work, you might want to look into the [Durovis Dive Plugin Package](https://www.durovis.com/sdk.html) as a last resort. You will also not be able to use controls that rely on Google's API, such as the Raycast Gaze.
 
