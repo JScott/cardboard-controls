@@ -11,12 +11,12 @@ public class ParsedSensorData : MonoBehaviour {
   private float gyroRotationMagnitude;
   private float magneticFieldMagnitude;
   private float magneticFieldBaseLine;
-  private float magneticFieldRatio;  
+  private float magneticFieldRatio;
 
-  private int slowImpulseFilter = 25;
-  private int fastMagnetImpulseFilter = 3;
-  private int fastRotationImpulseFilter = 3;
-  private int fastAccelerationImpulseFilter = 5;  // Clicking the magnet tends to make a small, sharp spike in movement
+  private const int slowImpulseFilter = 25;
+  private const int fastMagnetImpulseFilter = 3;
+  private const int fastRotationImpulseFilter = 3;
+  private const int fastAccelerationImpulseFilter = 5;  // Clicking the magnet tends to make a small, sharp spike in movement
 
   public void Start() {
     Input.compass.enabled = true;
@@ -67,7 +67,7 @@ public class ParsedSensorData : MonoBehaviour {
   }
 
   public bool IsDown() {
-    return magneticFieldRatio > 1.11;
+    return magneticFieldRatio > 1.5;
   }
 
   public bool IsUp() {
