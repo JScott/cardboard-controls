@@ -23,10 +23,11 @@ public class CardboardControlMagnet : MonoBehaviour {
   public CardboardControlDelegate OnClick = delegate {};
 
   public void Start() {
-    sensor = gameObject.GetComponent<ParsedSensorData>();
+    sensor = new ParsedSensorData();
   }
   
   public void Update() {
+    sensor.Update();
     CheckMagnet();
   }
 

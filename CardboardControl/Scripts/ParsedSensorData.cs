@@ -4,7 +4,7 @@ using System.Collections;
 /**
 * Dealing with raw input from a Cardboard device
 */
-public class ParsedSensorData : MonoBehaviour {
+public class ParsedSensorData {
   private Vector3 previousAcceleration;
 
   private float accelerationMagnitude;
@@ -18,7 +18,7 @@ public class ParsedSensorData : MonoBehaviour {
   private const int fastRotationImpulseFilter = 3;
   private const int fastAccelerationImpulseFilter = 5;  // Clicking the magnet tends to make a small, sharp spike in movement
 
-  public void Start() {
+  public ParsedSensorData() {
     Input.compass.enabled = true;
     Input.gyro.enabled = true;
     accelerationMagnitude = Input.acceleration.magnitude;
@@ -58,7 +58,7 @@ public class ParsedSensorData : MonoBehaviour {
   }
 
   public bool IsCalibrating() {
-    return Time.time <= 1.0f;
+    return Time.time <= 1.5f;
   }
 
   public bool IsJostled() {
@@ -74,6 +74,6 @@ public class ParsedSensorData : MonoBehaviour {
   }
 
   public bool IsUp() {
-    return magneticFieldRatio < 0.97;
+    return magneticFieldRatio < 0.8;
   }
 }
