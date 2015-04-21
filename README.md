@@ -1,5 +1,7 @@
 Cardboard Controls+ is all you need to develop the best Cardboard games in Unity. These scripts enhance [Google's official Cardboard SDK for Unity](https://developers.google.com/cardboard/unity/) with improvements such as discrete magnet control, raycast data, and event-driven architecture. Stop limiting your creative options!
 
+[![Join the chat at https://gitter.im/JScott/CardboardSDK-Unity](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/JScott/CardboardSDK-Unity?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 # What's added?
 
 Google's SDK only has one hook into the magnet: `bool CardboardTriggered`. It's available for one frame that you have to waste cycles polling for. Instead of limiting yourself to that, you can now utilize C# methods and delegates for:
