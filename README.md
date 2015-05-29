@@ -36,4 +36,4 @@ If neither of those work, you might want to look into the [Durovis Dive Plugin P
 
 # Usage
 
-When you import this package, just add the `CardboardControlManager` prefab to the root of your scene. Now you can start using the API which is thoroughly documented in [the DemoScene code](https://github.com/JScott/CardboardSDK-Unity/blob/master/CardboardControl/DemoScene/ExampleCharacterController.cs).
+When you import [the latest package](https://github.com/JScott/cardboard-controls/releases/latest), just add the `CardboardControlManager` prefab to the root of your scene. Now you can start using the API which is documented in [the DemoScene code](https://github.com/JScott/CardboardSDK-Unity/blob/master/CardboardControl/DemoScene/ExampleCharacterController.cs).
