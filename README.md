@@ -4,6 +4,8 @@ Cardboard Controls+ is all you need to develop the best Cardboard games in Unity
 
 # What's added?
 
+[![Join the chat at https://gitter.im/JScott/cardboard-controls](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/JScott/cardboard-controls?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Google's SDK only has one hook into the magnet: `bool CardboardTriggered`. It's available for one frame that you have to waste cycles polling for. Instead of limiting yourself to that, you can now utilize C# methods and delegates for:
 
 - Magnet down
