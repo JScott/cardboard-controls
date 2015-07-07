@@ -2,6 +2,12 @@ Cardboard Controls+ is all you need to develop the best Cardboard games in Unity
 
 [![Join the chat at https://gitter.im/JScott/cardboard-controls](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/JScott/cardboard-controls?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+# Usage
+
+When you import [the latest unitypackage](https://github.com/JScott/cardboard-controls/releases/latest), just add the `CardboardControlManager` prefab to the root of your scene. Now you can start using the API which is documented in [the DemoScene code](https://github.com/JScott/CardboardSDK-Unity/blob/master/CardboardControl/DemoScene/ExampleCharacterController.cs).
+
+You may experience problems if you import the code manually without using the provided unitypackage file.
+
 # What's added?
 
 Google's SDK only has one hook into the magnet: `bool CardboardTriggered`. It's available for one frame that you have to waste cycles polling for. Instead of limiting yourself to that, you can now utilize C# methods and delegates for:
@@ -33,7 +39,3 @@ If not then you'll need to import the base Cardboard SDK if you haven't already:
 If you're working on iOS then you might want to look into replacing Google's SDK with [rsanchezsaez's CardboardSDK-iOS](https://github.com/rsanchezsaez/cardboardsdk-ios). It ports the Android code to iOS with nearly feature parity.
 
 If neither of those work, you might want to look into the [Durovis Dive Plugin Package](https://www.durovis.com/sdk.html) as a last resort. You will also not be able to use controls that rely on Google's API, such as the Raycast Gaze.
-
-# Usage
-
-When you import [the latest package](https://github.com/JScott/cardboard-controls/releases/latest), just add the `CardboardControlManager` prefab to the root of your scene. Now you can start using the API which is documented in [the DemoScene code](https://github.com/JScott/CardboardSDK-Unity/blob/master/CardboardControl/DemoScene/ExampleCharacterController.cs).
