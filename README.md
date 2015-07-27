@@ -39,7 +39,3 @@ If not then you'll need to import the base Cardboard SDK if you haven't already:
 - [Download CardboardSDK.unitypackage](https://github.com/googlesamples/cardboard-unity/blob/master/CardboardSDKForUnity.unitypackage?raw=true) from [Google's repository](https://github.com/googlesamples/cardboard-unity).
 - Import it in your scene
 - Use the `CardboardMain` prefab for your camera
-
-If you're working on iOS then you might want to look into replacing Google's SDK with [rsanchezsaez's CardboardSDK-iOS](https://github.com/rsanchezsaez/cardboardsdk-ios). It ports the Android code to iOS with nearly feature parity.
-
-If neither of those work, you might want to look into the [Durovis Dive Plugin Package](https://www.durovis.com/sdk.html) as a last resort. You will also not be able to use controls that rely on Google's API, such as the Raycast Gaze.
