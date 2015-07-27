@@ -63,9 +63,10 @@ public class ExampleCharacterController : MonoBehaviour {
   public void CardboardFocus(object sender) {
     // For more event-driven code, you can grab the data from the sender
     CardboardControlGaze gaze = sender as CardboardControlGaze;
+    string name = gaze.Object().name;
     // gaze.IsHeld will make sure the gaze.Object isn't null
-    if (gaze.IsHeld()) {
-      ChangeObjectColor(gaze.Object().name);
+    if (gaze.IsHeld() && name.Contains("Cube")) {
+      ChangeObjectColor(name);
     }
   }
 
