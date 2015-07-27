@@ -110,7 +110,7 @@ public class CardboardControlTrigger : MonoBehaviour {
   }
 
   public string SensorChart() {
-    return MagnetChart() + TouchChart();
+    return MagnetChart() + "\n\n" + TouchChart();
   }
 
   public string MagnetChart() {
@@ -131,10 +131,8 @@ public class CardboardControlTrigger : MonoBehaviour {
 
   public string StateChart() {
     string chart = "";
-    chart += "Trigger State\n";
-    chart += (IsHeld()) ? "U " : "x ";
-    chart += (!IsHeld()) ? "D " : "x ";
-    chart += "\n";
+    chart += "Trigger State: ";
+    chart += IsHeld() ? "down" : "up";
     return chart;
   }
 }
