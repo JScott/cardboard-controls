@@ -40,4 +40,4 @@ If not then you'll need to import the base Cardboard SDK if you haven't already:
 - Import it in your scene
 - Use the `CardboardMain` prefab for your camera
 
-If you're having any trouble getting Google's Cardboard SDK set up, read through their excellent [guide for getting started](https://developers.google.com/cardboard/unity/get-started). Cardboard Controls+ has been tested against v0.5.1
+If you're having any trouble getting Google's Cardboard SDK set up, read through their excellent [guide for getting started](https://developers.google.com/cardboard/unity/get-started). Cardboard Controls+ has been tested against v0.5.1.
