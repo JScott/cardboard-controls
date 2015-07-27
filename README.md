@@ -39,3 +39,5 @@ If not then you'll need to import the base Cardboard SDK if you haven't already:
 - [Download CardboardSDK.unitypackage](https://github.com/googlesamples/cardboard-unity/blob/master/CardboardSDKForUnity.unitypackage?raw=true) from [Google's repository](https://github.com/googlesamples/cardboard-unity).
 - Import it in your scene
 - Use the `CardboardMain` prefab for your camera
+
+If you're having any trouble getting Google's Cardboard SDK set up, read through their excellent [guide for getting started](https://developers.google.com/cardboard/unity/get-started).
