@@ -14,6 +14,7 @@ public class CardboardControlTrigger : MonoBehaviour {
   public KeyCode triggerKey = KeyCode.Space;
 
   private ParsedMagnetData magnet;
+  private ParsedTouchData touch;
   private enum TriggerState { Up, Down }
   private TriggerState currentTriggerState = TriggerState.Up;
   private float clickStartTime = 0f;
@@ -24,12 +25,14 @@ public class CardboardControlTrigger : MonoBehaviour {
 
   public void Start() {
     magnet = new ParsedMagnetData();
+    touch = new ParsedTouchData();
   }
 
   public void Update() {
     magnet.Update();
+    touch.Update();
+    CheckTouch();
     CheckMagnet();
-    // CheckTouch();
     CheckKey();
   }
 
@@ -54,6 +57,11 @@ public class CardboardControlTrigger : MonoBehaviour {
       if (magnet.IsDown()) ReportDown();
       if (magnet.IsUp()) ReportUp();
     }
+  }
+
+  private void CheckTouch() {
+    if (touch.IsDown()) ReportDown();
+    if (touch.IsUp()) ReportUp();
   }
 
   private bool IsMagnetReady() {
@@ -117,7 +125,7 @@ public class CardboardControlTrigger : MonoBehaviour {
 
   public string TouchChart() {
     string chart = "Touch Reading: ";
-    chart += IsTouching() ? "touched" : "--";
+    chart += IsTouching() ? "touching" : "--";
     return chart;
   }
 
