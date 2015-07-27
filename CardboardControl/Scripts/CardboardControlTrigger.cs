@@ -30,7 +30,7 @@ public class CardboardControlTrigger : MonoBehaviour {
     magnet.Update();
     CheckMagnet();
     // CheckTouch();
-    // CheckKey();
+    CheckKey();
   }
 
   private bool KeyFor(string direction) {
@@ -44,16 +44,20 @@ public class CardboardControlTrigger : MonoBehaviour {
     }
   }
 
+  private void CheckKey() {
+    if (KeyFor("down")) ReportDown();
+    if (KeyFor("up")) ReportUp();
+  }
+
   private void CheckMagnet() {
-    if (!magnet.IsCalibrating() && !magnet.IsJostled() && !magnet.IsRotatedQuickly()) {
-      if (magnet.IsDown() || KeyFor("down")) ReportDown();
-      if (magnet.IsUp() || KeyFor("up")) ReportUp();
+    if (IsMagnetReady()) {
+      if (magnet.IsDown()) ReportDown();
+      if (magnet.IsUp()) ReportUp();
     }
   }
 
-  private void CheckTouch() {
-    if (IsTouching()) ReportDown();
-    else ReportUp();
+  private bool IsMagnetReady() {
+    return !(magnet.IsCalibrating() || magnet.IsJostled() || magnet.IsRotatedQuickly());
   }
 
   private bool IsTouching() {
