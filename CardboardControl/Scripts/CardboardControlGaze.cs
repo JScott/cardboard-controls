@@ -10,20 +10,20 @@ public class CardboardControlGaze : MonoBehaviour {
   public float maxDistance = Mathf.Infinity;
   public LayerMask layerMask = Physics.DefaultRaycastLayers;
   public bool vibrateOnChange = false;
-  
+
   private GameObject recentObject = null;
   private float gazeStartTime = 0f;
   private CardboardHead head;
   private RaycastHit hit;
   private bool isHeld;
-  
+
   public CardboardControlDelegate OnChange = delegate {};
 
   public void Start() {
     StereoController stereoController = Camera.main.GetComponent<StereoController>();
     head = stereoController.Head;
   }
-  
+
   public void Update() {
     isHeld = Physics.Raycast(head.Gaze, out hit, maxDistance, layerMask);
     CheckGaze();

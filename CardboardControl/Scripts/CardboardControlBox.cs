@@ -9,10 +9,10 @@ using CardboardControlDelegates;
 public class CardboardControlBox : MonoBehaviour {
   public bool vibrateOnOrientationTilt = true;
   public KeyCode tiltKey = KeyCode.Tab;
-  
+
   private const DeviceOrientation tiltedOrientation = DeviceOrientation.Portrait;
   private bool tiltReported = false; // triggered at the start
-  
+
   public CardboardControlDelegate OnTilt = delegate {};
 
   public void Update() {
@@ -41,7 +41,7 @@ public class CardboardControlBox : MonoBehaviour {
     OnTilt(this);
     if (vibrateOnOrientationTilt) Handheld.Vibrate();
   }
-  
+
   public bool IsTilted() {
     return Input.deviceOrientation == tiltedOrientation;
   }

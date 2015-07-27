@@ -25,7 +25,7 @@ public class ParsedSensorData {
     gyroRotationMagnitude = Input.gyro.rotationRate.magnitude;
     magneticFieldMagnitude = magneticFieldBaseLine = Input.compass.rawVector.magnitude;
   }
-  
+
   public void Update() {
     Vector3 accelerationDelta = CalculateAccelerationDelta();
     Vector3 gyroRotation = Input.gyro.rotationRate;

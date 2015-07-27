@@ -6,7 +6,7 @@ using CardboardControlDelegates;
 * Creating a vision raycast and handling the data from it
 * Relies on Google Cardboard SDK API's
 */
-public class CardboardControlMagnet : MonoBehaviour {  
+public class CardboardControlMagnet : MonoBehaviour {
   public float clickSpeedThreshold = 0.4f;
   public bool vibrateOnDown = false;
   public bool vibrateOnUp = false;
@@ -25,7 +25,7 @@ public class CardboardControlMagnet : MonoBehaviour {
   public void Start() {
     sensor = new ParsedSensorData();
   }
-  
+
   public void Update() {
     sensor.Update();
     CheckMagnet();
@@ -48,7 +48,7 @@ public class CardboardControlMagnet : MonoBehaviour {
       if (sensor.IsUp() || KeyFor("up")) ReportUp();
     }
   }
-  
+
   private void ReportDown() {
     if (currentMagnetState == MagnetState.Up) {
       currentMagnetState = MagnetState.Down;
@@ -57,7 +57,7 @@ public class CardboardControlMagnet : MonoBehaviour {
       clickStartTime = Time.time;
     }
   }
-  
+
   private void ReportUp() {
     if (currentMagnetState == MagnetState.Down) {
       currentMagnetState = MagnetState.Up;
@@ -66,7 +66,7 @@ public class CardboardControlMagnet : MonoBehaviour {
       CheckForClick();
     }
   }
-  
+
   private void CheckForClick() {
     bool withinClickThreshold = SecondsHeld() <= clickSpeedThreshold;
     clickStartTime = 0f;
