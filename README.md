@@ -1,8 +1,10 @@
+# Cardboard Controls+
+
 Cardboard Controls+ is all you need to develop the best Cardboard games in Unity. These scripts enhance [Google's official Cardboard SDK for Unity](https://developers.google.com/cardboard/unity/) with improvements such as discrete magnet control, raycast data, and event-driven architecture. Stop limiting your creative options!
 
 [![Join the chat at https://gitter.im/JScott/cardboard-controls](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/JScott/cardboard-controls?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-# Usage
+## Usage
 
 - Import [the latest unitypackage](https://github.com/JScott/cardboard-controls/releases/latest)
 - Add the `CardboardControlManager` prefab to the root of your scene
@@ -10,7 +12,7 @@ Cardboard Controls+ is all you need to develop the best Cardboard games in Unity
 
 You may experience problems if you import the code manually without using the provided unitypackage file.
 
-# What's added?
+## What's added?
 
 Google's SDK only has one hook into the trigger: `bool CardboardTriggered`. It's available for one frame that you have to waste cycles polling for. Instead of limiting yourself to that, you can now utilize C# methods and delegates for:
 
@@ -29,7 +31,7 @@ There are also methods and delegates for:
 
 These helpers let you focus on what makes your game cool instead of boilerplate code.
 
-# Prerequisites
+## Prerequisites
 
 If you got this from the Asset Store then I've already packaged a version of the prerequisites for you.
 
