@@ -6,16 +6,16 @@ using CardboardControlDelegates;
 * Creating a vision raycast and handling the data from it
 * Relies on Google Cardboard SDK API's
 */
-public class CardboardControlMagnet : MonoBehaviour {
+public class CardboardControlTrigger : MonoBehaviour {
   public float clickSpeedThreshold = 0.4f;
   public bool vibrateOnDown = false;
   public bool vibrateOnUp = false;
   public bool vibrateOnClick = true;
-  public KeyCode magnetKey = KeyCode.Space;
+  public KeyCode triggerKey = KeyCode.Space;
 
-  private ParsedSensorData sensor;
-  private enum MagnetState { Up, Down }
-  private MagnetState currentMagnetState = MagnetState.Up;
+  private ParsedMagnetData magnet;
+  private enum TriggerState { Up, Down }
+  private TriggerState currentTriggerState = TriggerState.Up;
   private float clickStartTime = 0f;
 
   public CardboardControlDelegate OnUp = delegate {};
@@ -23,35 +23,46 @@ public class CardboardControlMagnet : MonoBehaviour {
   public CardboardControlDelegate OnClick = delegate {};
 
   public void Start() {
-    sensor = new ParsedSensorData();
+    magnet = new ParsedMagnetData();
   }
 
   public void Update() {
-    sensor.Update();
+    magnet.Update();
     CheckMagnet();
+    // CheckTouch();
+    // CheckKey();
   }
 
   private bool KeyFor(string direction) {
     switch(direction) {
       case "down":
-        return Input.GetKeyDown(magnetKey);
+        return Input.GetKeyDown(triggerKey);
       case "up":
-        return Input.GetKeyUp(magnetKey);
+        return Input.GetKeyUp(triggerKey);
       default:
         return false;
     }
   }
 
   private void CheckMagnet() {
-    if (!sensor.IsCalibrating() && !sensor.IsJostled() && !sensor.IsRotatedQuickly()) {
-      if (sensor.IsDown() || KeyFor("down")) ReportDown();
-      if (sensor.IsUp() || KeyFor("up")) ReportUp();
+    if (!magnet.IsCalibrating() && !magnet.IsJostled() && !magnet.IsRotatedQuickly()) {
+      if (magnet.IsDown() || KeyFor("down")) ReportDown();
+      if (magnet.IsUp() || KeyFor("up")) ReportUp();
     }
   }
 
+  private void CheckTouch() {
+    if (IsTouching()) ReportDown();
+    else ReportUp();
+  }
+
+  private bool IsTouching() {
+    return Input.touchCount > 0;
+  }
+
   private void ReportDown() {
-    if (currentMagnetState == MagnetState.Up) {
-      currentMagnetState = MagnetState.Down;
+    if (currentTriggerState == TriggerState.Up) {
+      currentTriggerState = TriggerState.Down;
       OnDown(this);
       if (vibrateOnDown) Handheld.Vibrate();
       clickStartTime = Time.time;
@@ -59,8 +70,8 @@ public class CardboardControlMagnet : MonoBehaviour {
   }
 
   private void ReportUp() {
-    if (currentMagnetState == MagnetState.Down) {
-      currentMagnetState = MagnetState.Up;
+    if (currentTriggerState == TriggerState.Down) {
+      currentTriggerState = TriggerState.Up;
       OnUp(this);
       if (vibrateOnUp) Handheld.Vibrate();
       CheckForClick();
@@ -83,23 +94,32 @@ public class CardboardControlMagnet : MonoBehaviour {
   }
 
   public bool IsHeld() {
-    return (currentMagnetState == MagnetState.Down);
+    return (currentTriggerState == TriggerState.Down);
   }
 
   public string SensorChart() {
-    string chart = "";
-    chart += "Sensor Readings\n";
-    chart += !sensor.IsJostled() ? "***** steady " : "!!!!! jostled ";
-    if (!sensor.IsJostled()) {
-      chart += sensor.IsDown() ? "vvv " : "    ";
-      chart += sensor.IsUp() ? "^^^ " : "    ";
+    return MagnetChart() + TouchChart();
+  }
+
+  public string MagnetChart() {
+    string chart = "Magnet Readings\n";
+    chart += !magnet.IsJostled() ? "***** steady " : "!!!!! jostled ";
+    if (!magnet.IsJostled()) {
+      chart += magnet.IsDown() ? "vvv " : "    ";
+      chart += magnet.IsUp() ? "^^^ " : "    ";
     }
+    return chart;
+  }
+
+  public string TouchChart() {
+    string chart = "Touch Reading: ";
+    chart += IsTouching() ? "touched" : "--";
     return chart;
   }
 
   public string StateChart() {
     string chart = "";
-    chart += "Magnet State\n";
+    chart += "Trigger State\n";
     chart += (IsHeld()) ? "U " : "x ";
     chart += (!IsHeld()) ? "D " : "x ";
     chart += "\n";

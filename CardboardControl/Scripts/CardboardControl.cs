@@ -11,7 +11,7 @@ using CardboardControlDelegates;
 */
 public class CardboardControl : MonoBehaviour {
   [HideInInspector]
-  public CardboardControlMagnet magnet;
+  public CardboardControlTrigger trigger;
   [HideInInspector]
   public CardboardControlGaze gaze;
   [HideInInspector]
@@ -20,7 +20,7 @@ public class CardboardControl : MonoBehaviour {
   public bool debugChartsEnabled = false;
 
   public void Awake() {
-    magnet = gameObject.GetComponent<CardboardControlMagnet>();
+    trigger = gameObject.GetComponent<CardboardControlTrigger>();
     gaze = gameObject.GetComponent<CardboardControlGaze>();
     box = gameObject.GetComponent<CardboardControlBox>();
   }
@@ -30,7 +30,7 @@ public class CardboardControl : MonoBehaviour {
   }
 
   public void PrintDebugCharts() {
-    Debug.Log(magnet.SensorChart());
-    Debug.Log(magnet.StateChart());
+    Debug.Log(trigger.SensorChart());
+    Debug.Log(trigger.StateChart());
   }
 }

@@ -2,9 +2,9 @@
 using System.Collections;
 
 /**
-* Dealing with raw input from a Cardboard device
+* Dealing with raw magnet input from a Cardboard device
 */
-public class ParsedSensorData {
+public class ParsedMagnetData {
   private Vector3 previousAcceleration;
 
   private float accelerationMagnitude;
@@ -18,7 +18,7 @@ public class ParsedSensorData {
   private const int fastRotationImpulseFilter = 3;
   private const int fastAccelerationImpulseFilter = 5;  // Clicking the magnet tends to make a small, sharp spike in movement
 
-  public ParsedSensorData() {
+  public ParsedMagnetData() {
     Input.compass.enabled = true;
     Input.gyro.enabled = true;
     accelerationMagnitude = Input.acceleration.magnitude;
