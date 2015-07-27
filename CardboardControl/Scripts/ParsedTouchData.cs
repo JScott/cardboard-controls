@@ -7,10 +7,18 @@ using System.Collections;
 public class ParsedTouchData {
   private bool wasTouched = false;
 
-  public ParsedTouchData() {}
+  public ParsedTouchData() {
+    Cardboard cardboard = CardboardGameObject().GetComponent<Cardboard>();
+    cardboard.TapIsTrigger = false;
+  }
+
+  private GameObject CardboardGameObject() {
+    GameObject gameObject = Camera.main.gameObject;
+    return gameObject.transform.parent.parent.gameObject;
+  }
 
   public void Update() {
-    wasTouched |= this.IsDown();
+    wasTouched |= IsDown();
   }
 
   public bool IsDown() {
@@ -18,7 +26,7 @@ public class ParsedTouchData {
   }
 
   public bool IsUp() {
-    if (!this.IsDown() && wasTouched) {
+    if (!IsDown() && wasTouched) {
       wasTouched = false;
       return true;
     }
