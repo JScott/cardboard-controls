@@ -70,7 +70,7 @@ public class ParsedMagnetData {
   }
 
   public bool IsDown() {
-    return magneticFieldRatio > 1.5;
+    return magneticFieldRatio > 1.3;
   }
 
   public bool IsUp() {
