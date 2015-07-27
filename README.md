@@ -4,19 +4,21 @@ Cardboard Controls+ is all you need to develop the best Cardboard games in Unity
 
 # Usage
 
-When you import [the latest unitypackage](https://github.com/JScott/cardboard-controls/releases/latest), just add the `CardboardControlManager` prefab to the root of your scene. Now you can start using the API which is documented in [the DemoScene code](https://github.com/JScott/CardboardSDK-Unity/blob/master/CardboardControl/DemoScene/ExampleCharacterController.cs).
+- Import [the latest unitypackage](https://github.com/JScott/cardboard-controls/releases/latest)
+- Add the `CardboardControlManager` prefab to the root of your scene
+- Use the [API](https://github.com/JScott/cardboard-controls/wiki/API) which is explained in [the DemoScene code](https://github.com/JScott/CardboardSDK-Unity/blob/master/CardboardControl/DemoScene/ExampleCharacterController.cs).
 
 You may experience problems if you import the code manually without using the provided unitypackage file.
 
 # What's added?
 
-Google's SDK only has one hook into the magnet: `bool CardboardTriggered`. It's available for one frame that you have to waste cycles polling for. Instead of limiting yourself to that, you can now utilize C# methods and delegates for:
+Google's SDK only has one hook into the trigger: `bool CardboardTriggered`. It's available for one frame that you have to waste cycles polling for. Instead of limiting yourself to that, you can now utilize C# methods and delegates for:
 
-- Magnet down
-- Magnet up
-- Magnet click
-- Boolean if the magnet is held
-- Seconds magnet held for
+- Trigger down
+- Trigger up
+- Trigger click
+- Boolean if the trigger is held
+- Seconds trigger held for
 
 This expands your opportunities, allowing interactions like holding the magnet to move and clicking to interact to provide a more natural experience.
 
