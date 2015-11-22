@@ -33,6 +33,7 @@ public class ParsedMagnetData {
 
     FilterAndSetMagnitudes(accelerationDelta.magnitude, gyroRotation.magnitude, magneticField.magnitude);
     magneticFieldRatio = (magneticFieldMagnitude / magneticFieldBaseLine);
+  	Debug.Log("MFRatio: "+magneticFieldRatio);
   }
 
   private Vector3 CalculateAccelerationDelta() {
@@ -70,10 +71,10 @@ public class ParsedMagnetData {
   }
 
   public bool IsDown() {
-    return magneticFieldRatio > 1.1;
+    return magneticFieldRatio < 0.95;
   }
 
   public bool IsUp() {
-    return magneticFieldRatio < 0.9;
+    return magneticFieldRatio > 1.05;
   }
 }
