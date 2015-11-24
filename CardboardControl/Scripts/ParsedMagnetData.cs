@@ -31,7 +31,7 @@ public class ParsedMagnetData {
   }
   private List<MagnetMoment> magnetWindow;
   private MagnetWindowState currentMagnetWindow;
-  private float MAX_WINDOW_SECONDS = 0.4f;
+  private float MAX_WINDOW_SECONDS = 0.2f;
   private float MAGNET_RATIO_THRESHOLD = 0.1f;
   private float windowLength = 0.0f;
 
