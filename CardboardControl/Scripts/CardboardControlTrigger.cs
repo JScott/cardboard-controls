@@ -33,7 +33,7 @@ public class CardboardControlTrigger : MonoBehaviour {
     touch.Update();
     CheckTouch();
     CheckMagnet();
-    // CheckKey();
+    CheckKey();
   }
 
   private bool KeyFor(string direction) {
