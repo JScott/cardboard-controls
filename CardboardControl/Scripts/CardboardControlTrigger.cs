@@ -53,19 +53,13 @@ public class CardboardControlTrigger : MonoBehaviour {
   }
 
   private void CheckMagnet() {
-    // if (IsMagnetReady()) {
-      if (magnet.IsDown()) ReportDown();
-      if (magnet.IsUp()) ReportUp();
-    // }
+    if (magnet.IsDown()) ReportDown();
+    if (magnet.IsUp()) ReportUp();
   }
 
   private void CheckTouch() {
     if (touch.IsDown()) ReportDown();
     if (touch.IsUp()) ReportUp();
-  }
-
-  private bool IsMagnetReady() {
-    return !(magnet.IsCalibrating() || magnet.IsJostled() || magnet.IsRotatedQuickly());
   }
 
   private bool IsTouching() {
@@ -115,11 +109,8 @@ public class CardboardControlTrigger : MonoBehaviour {
 
   public string MagnetChart() {
     string chart = "Magnet Readings\n";
-    chart += !magnet.IsJostled() ? "***** steady " : "!!!!! jostled ";
-    if (!magnet.IsJostled()) {
-      chart += magnet.IsDown() ? "vvv " : "    ";
-      chart += magnet.IsUp() ? "^^^ " : "    ";
-    }
+    chart += magnet.IsDown() ? "vvv " : "    ";
+    chart += magnet.IsUp() ? "^^^ " : "    ";
     return chart;
   }
 
