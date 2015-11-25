@@ -99,10 +99,10 @@ public class ParsedMagnetData {
   }
 
   public bool IsDown() {
-    return isDown;
+    return triggerState != TriggerState.Neutral && isDown;
   }
 
   public bool IsUp() {
-    return !isDown;
+    return triggerState != TriggerState.Neutral && !isDown;
   }
 }
