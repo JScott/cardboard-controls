@@ -22,8 +22,10 @@ public class ParsedMagnetData {
   private List<MagnetMoment> magnetWindow;
   private MagnetWindowState currentMagnetWindow;
   private float MAX_WINDOW_SECONDS = 0.2f;
-  private float MAGNET_RATIO_THRESHOLD = 0.1f;
+  private float MAGNET_RATIO_MIN_THRESHOLD = 0.05f;
+  private float MAGNET_RATIO_MAX_THRESHOLD = 0.1f;
   private float CALIBRATION_SECONDS = 1f;
+  private float MAGNITUDE_THRESHOLD = 150.0f;
   private float windowLength = 0.0f;
 
   enum TriggerState {
@@ -35,6 +37,8 @@ public class ParsedMagnetData {
   private TriggerState triggerState = TriggerState.Neutral;
   private bool isDown = false;
 
+  // TODO: things get messed up when you insert the device into the magnet cardboard for the first time!
+
   public ParsedMagnetData() {
     Input.compass.enabled = true;
     magnetWindow = new List<MagnetMoment>();
@@ -45,18 +49,34 @@ public class ParsedMagnetData {
     TrimMagnetWindow();
     AddToMagnetWindow();
     currentMagnetWindow = CaptureMagnetWindow();
+
     TriggerState newTriggerState = GetTriggerState();
+    // Debug.Log(Input.compass.rawVector.magnitude + "\n" + newTriggerState + "\n" + triggerState);
+
     if (newTriggerState != TriggerState.Neutral && triggerState != newTriggerState) {
       isDown = !isDown;
       triggerState = newTriggerState;
     }
   }
-
   private TriggerState GetTriggerState() {
     if (Time.time < CALIBRATION_SECONDS) return TriggerState.Neutral;
-    if (currentMagnetWindow.ratio < 1f-MAGNET_RATIO_THRESHOLD) return TriggerState.Negative;
-    if (currentMagnetWindow.ratio > 1f+MAGNET_RATIO_THRESHOLD) return TriggerState.Postive;
+    if (Input.compass.rawVector.magnitude < MAGNITUDE_THRESHOLD) {
+      triggerState = TriggerState.Neutral;
+      return TriggerState.Neutral;
+    }
+    if (IsNegative()) return TriggerState.Negative;
+    if (IsPositive()) return TriggerState.Postive;
     return TriggerState.Neutral;
+  }
+
+  private bool IsNegative() {
+    return (currentMagnetWindow.ratio < 1f-MAGNET_RATIO_MIN_THRESHOLD &&
+            currentMagnetWindow.ratio > 1f-MAGNET_RATIO_MAX_THRESHOLD);
+  }
+
+  private bool IsPositive() {
+    return (currentMagnetWindow.ratio > 1f+MAGNET_RATIO_MIN_THRESHOLD &&
+            currentMagnetWindow.ratio < 1f+MAGNET_RATIO_MAX_THRESHOLD);
   }
 
   public void TrimMagnetWindow() {
