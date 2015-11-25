@@ -21,9 +21,19 @@ public class ParsedMagnetData {
   }
   private List<MagnetMoment> magnetWindow;
   private MagnetWindowState currentMagnetWindow;
-  private float MAX_WINDOW_SECONDS = 0.4f;
+  private float MAX_WINDOW_SECONDS = 0.2f;
   private float MAGNET_RATIO_THRESHOLD = 0.1f;
+  private float CALIBRATION_SECONDS = 1f;
   private float windowLength = 0.0f;
+
+  enum TriggerState {
+    Negative,
+    Neutral,
+    Postive
+  };
+  private bool wasTriggering = false;
+  private TriggerState triggerState = TriggerState.Neutral;
+  private bool isDown = false;
 
   public ParsedMagnetData() {
     Input.compass.enabled = true;
@@ -35,6 +45,18 @@ public class ParsedMagnetData {
     TrimMagnetWindow();
     AddToMagnetWindow();
     currentMagnetWindow = CaptureMagnetWindow();
+    TriggerState newTriggerState = GetTriggerState();
+    if (newTriggerState != TriggerState.Neutral && triggerState != newTriggerState) {
+      isDown = !isDown;
+      triggerState = newTriggerState;
+    }
+  }
+
+  private TriggerState GetTriggerState() {
+    if (Time.time < CALIBRATION_SECONDS) return TriggerState.Neutral;
+    if (currentMagnetWindow.ratio < 1f-MAGNET_RATIO_THRESHOLD) return TriggerState.Negative;
+    if (currentMagnetWindow.ratio > 1f+MAGNET_RATIO_THRESHOLD) return TriggerState.Postive;
+    return TriggerState.Neutral;
   }
 
   public void TrimMagnetWindow() {
@@ -77,10 +99,10 @@ public class ParsedMagnetData {
   }
 
   public bool IsDown() {
-    return currentMagnetWindow.ratio > 1.0f+MAGNET_RATIO_THRESHOLD;
+    return isDown;
   }
 
   public bool IsUp() {
-    return currentMagnetWindow.ratio < 1.0f-MAGNET_RATIO_THRESHOLD;
+    return !isDown;
   }
 }
