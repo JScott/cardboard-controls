@@ -16,17 +16,18 @@ public class ParsedMagnetData {
   }
   private struct MagnetWindowState {
     public float ratio;
+    public float delta;
   }
   private List<MagnetMoment> magnetWindow;
   private MagnetWindowState currentMagnetWindow;
-  private float MAX_WINDOW_SECONDS = 0.05f;
-  private float MAGNET_RATIO_MIN_THRESHOLD = 0.03f;
-  private float MAGNET_RATIO_MAX_THRESHOLD = 0.2f;
-  private float CALIBRATION_SECONDS = 2.0f;
-  private float MAGNITUDE_THRESHOLD = 150.0f;
+  private float MAX_WINDOW_SECONDS = 0.1f;
+  private float MAGNET_RATIO_THRESHOLD = 0.03f;
+  private float MAGNET_MAGNITUDE_THRESHOLD = 300.0f;
+  private float STABLE_RATIO_THRESHOLD = 0.001f;
+  private float STABLE_DELTA_THRESHOLD = 2.0f;
   private float windowLength = 0.0f;
 
-  private bool DEBUG = false;
+  public bool DEBUG = true;
 
   enum TriggerState {
     Negative,
@@ -36,6 +37,8 @@ public class ParsedMagnetData {
   private bool wasTriggering = false;
   private TriggerState triggerState = TriggerState.Neutral;
   private bool isDown = false;
+
+  private bool isStable = false;
 
   public ParsedMagnetData() {
     Input.compass.enabled = true;
@@ -48,38 +51,52 @@ public class ParsedMagnetData {
     AddToMagnetWindow();
     currentMagnetWindow = CaptureMagnetWindow();
 
-    TriggerState newTriggerState = GetTriggerState();
-    if (DEBUG) DebugOutput();
-    if (newTriggerState != TriggerState.Neutral && triggerState != newTriggerState) {
+    TriggerState newTriggerState = CheckTriggerState();
+    isStable = CheckStability();
+    if (!isStable) triggerState = TriggerState.Neutral;
+
+    if (isStable && newTriggerState != TriggerState.Neutral && triggerState != newTriggerState) {
       isDown = !isDown;
       triggerState = newTriggerState;
     }
+    if (DEBUG) PrintDebug();
   }
 
-  private void DebugOutput() {
+  private bool CheckStability() {
+    // Delta approximates how fast the device is moving relative to the magnet
+    // Ratio approximates how still the device is over time
+    if (MagnetAbsent()) return false;
+    else if(currentMagnetWindow.delta < STABLE_DELTA_THRESHOLD &&
+            currentMagnetWindow.ratio < 1f+STABLE_RATIO_THRESHOLD &&
+            currentMagnetWindow.ratio > 1f-STABLE_RATIO_THRESHOLD) return true;
+    return isStable;
+  }
+
+  private void PrintDebug() {
+    if (Time.time % 0.1 > 0.05) return;
     Debug.Log("--- Magnetometer\nmagnitude: " + Input.compass.rawVector.magnitude +
-              "\nratio: " + currentMagnetWindow.ratio);
+              "\nratio: " + currentMagnetWindow.ratio +
+              "\ndelta: " + currentMagnetWindow.delta + 
+              "\nstable: " + isStable +
+              "\nstate: " + triggerState);
   }
 
-  private TriggerState GetTriggerState() {
-    if (Time.time < CALIBRATION_SECONDS) return TriggerState.Neutral;
-    if (Input.compass.rawVector.magnitude < MAGNITUDE_THRESHOLD) {
-      triggerState = TriggerState.Neutral;
-      return TriggerState.Neutral;
-    }
+  private TriggerState CheckTriggerState() {
     if (IsNegative()) return TriggerState.Negative;
     if (IsPositive()) return TriggerState.Postive;
     return TriggerState.Neutral;
   }
 
+  private bool MagnetAbsent() {
+    return Input.compass.rawVector.magnitude < MAGNET_MAGNITUDE_THRESHOLD;
+  }
+
   private bool IsNegative() {
-    return (currentMagnetWindow.ratio < 1f-MAGNET_RATIO_MIN_THRESHOLD &&
-            currentMagnetWindow.ratio > 1f-MAGNET_RATIO_MAX_THRESHOLD);
+    return (currentMagnetWindow.ratio < 1f-MAGNET_RATIO_THRESHOLD);
   }
 
   private bool IsPositive() {
-    return (currentMagnetWindow.ratio > 1f+MAGNET_RATIO_MIN_THRESHOLD &&
-            currentMagnetWindow.ratio < 1f+MAGNET_RATIO_MAX_THRESHOLD);
+    return (currentMagnetWindow.ratio > 1f+MAGNET_RATIO_THRESHOLD);
   }
 
   public void TrimMagnetWindow() {
@@ -101,6 +118,7 @@ public class ParsedMagnetData {
     List<MagnetMoment> firstHalf = magnetWindow.GetRange(0, middle);
     List<MagnetMoment> lastHalf = magnetWindow.GetRange(middle, magnetWindow.Count - middle);
     newState.ratio = Average(firstHalf) / Average(lastHalf);
+    newState.delta = Mathf.Abs(magnetWindow[magnetWindow.Count-1].yMagnitude - magnetWindow[0].yMagnitude);
     return newState;
   }
 
