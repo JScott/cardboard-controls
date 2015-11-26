@@ -21,7 +21,8 @@ public class ParsedMagnetData {
   private List<MagnetMoment> magnetWindow;
   private MagnetWindowState currentMagnetWindow;
   private float MAX_WINDOW_SECONDS = 0.1f;
-  private float MAGNET_RATIO_THRESHOLD = 0.03f;
+  private float MAGNET_RATIO_MIN_THRESHOLD = 0.03f;
+  private float MAGNET_RATIO_MAX_THRESHOLD = 0.2f;
   private float MAGNET_MAGNITUDE_THRESHOLD = 300.0f;
   private float STABLE_RATIO_THRESHOLD = 0.001f;
   private float STABLE_DELTA_THRESHOLD = 2.0f;
@@ -92,11 +93,13 @@ public class ParsedMagnetData {
   }
 
   private bool IsNegative() {
-    return (currentMagnetWindow.ratio < 1f-MAGNET_RATIO_THRESHOLD);
+    return (currentMagnetWindow.ratio < 1f-MAGNET_RATIO_MIN_THRESHOLD &&
+            currentMagnetWindow.ratio > 1f-MAGNET_RATIO_MAX_THRESHOLD);
   }
 
   private bool IsPositive() {
-    return (currentMagnetWindow.ratio > 1f+MAGNET_RATIO_THRESHOLD);
+    return (currentMagnetWindow.ratio > 1f+MAGNET_RATIO_MIN_THRESHOLD &&
+            currentMagnetWindow.ratio < 1f+MAGNET_RATIO_MAX_THRESHOLD);
   }
 
   public void TrimMagnetWindow() {
