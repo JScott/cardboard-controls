@@ -12,6 +12,7 @@ public class CardboardControlTrigger : MonoBehaviour {
   public bool vibrateOnUp = false;
   public bool vibrateOnClick = true;
   public KeyCode triggerKey = KeyCode.Space;
+  public bool printDebugInfo = false;
 
   private ParsedMagnetData magnet;
   private ParsedTouchData touch;
@@ -26,6 +27,10 @@ public class CardboardControlTrigger : MonoBehaviour {
   public void Start() {
     magnet = new ParsedMagnetData();
     touch = new ParsedTouchData();
+    if (printDebugInfo) {
+      magnet.DEBUG = true;
+      touch.DEBUG = true;
+    }
   }
 
   public void Update() {
@@ -101,29 +106,5 @@ public class CardboardControlTrigger : MonoBehaviour {
 
   public bool IsHeld() {
     return (currentTriggerState == TriggerState.Down);
-  }
-
-  public string SensorChart() {
-    return MagnetChart() + "\n\n" + TouchChart();
-  }
-
-  public string MagnetChart() {
-    string chart = "Magnet Readings\n";
-    chart += magnet.IsDown() ? "vvv " : "    ";
-    chart += magnet.IsUp() ? "^^^ " : "    ";
-    return chart;
-  }
-
-  public string TouchChart() {
-    string chart = "Touch Reading: ";
-    chart += IsTouching() ? "touching" : "--";
-    return chart;
-  }
-
-  public string StateChart() {
-    string chart = "";
-    chart += "Trigger State: ";
-    chart += IsHeld() ? "down" : "up";
-    return chart;
   }
 }

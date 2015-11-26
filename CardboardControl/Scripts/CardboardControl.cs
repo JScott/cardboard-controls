@@ -17,20 +17,9 @@ public class CardboardControl : MonoBehaviour {
   [HideInInspector]
   public CardboardControlBox box;
 
-  public bool debugChartsEnabled = false;
-
   public void Awake() {
     trigger = gameObject.GetComponent<CardboardControlTrigger>();
     gaze = gameObject.GetComponent<CardboardControlGaze>();
     box = gameObject.GetComponent<CardboardControlBox>();
-  }
-
-  public void Update() {
-    if (debugChartsEnabled) PrintDebugCharts();
-  }
-
-  public void PrintDebugCharts() {
-    Debug.Log(trigger.SensorChart());
-    Debug.Log(trigger.StateChart());
   }
 }
