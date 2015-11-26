@@ -15,18 +15,18 @@ public class ParsedMagnetData {
     }
   }
   private struct MagnetWindowState {
-    public float firstHalf;
-    public float lastHalf;
-    public float ratio; // TODO: do I only need this?
+    public float ratio;
   }
   private List<MagnetMoment> magnetWindow;
   private MagnetWindowState currentMagnetWindow;
-  private float MAX_WINDOW_SECONDS = 0.2f;
-  private float MAGNET_RATIO_MIN_THRESHOLD = 0.05f;
-  private float MAGNET_RATIO_MAX_THRESHOLD = 0.1f;
-  private float CALIBRATION_SECONDS = 1f;
+  private float MAX_WINDOW_SECONDS = 0.05f;
+  private float MAGNET_RATIO_MIN_THRESHOLD = 0.03f;
+  private float MAGNET_RATIO_MAX_THRESHOLD = 0.2f;
+  private float CALIBRATION_SECONDS = 2.0f;
   private float MAGNITUDE_THRESHOLD = 150.0f;
   private float windowLength = 0.0f;
+
+  private bool DEBUG = false;
 
   enum TriggerState {
     Negative,
@@ -36,8 +36,6 @@ public class ParsedMagnetData {
   private bool wasTriggering = false;
   private TriggerState triggerState = TriggerState.Neutral;
   private bool isDown = false;
-
-  // TODO: things get messed up when you insert the device into the magnet cardboard for the first time!
 
   public ParsedMagnetData() {
     Input.compass.enabled = true;
@@ -51,13 +49,18 @@ public class ParsedMagnetData {
     currentMagnetWindow = CaptureMagnetWindow();
 
     TriggerState newTriggerState = GetTriggerState();
-    // Debug.Log(Input.compass.rawVector.magnitude + "\n" + newTriggerState + "\n" + triggerState);
-
+    if (DEBUG) DebugOutput();
     if (newTriggerState != TriggerState.Neutral && triggerState != newTriggerState) {
       isDown = !isDown;
       triggerState = newTriggerState;
     }
   }
+
+  private void DebugOutput() {
+    Debug.Log("--- Magnetometer\nmagnitude: " + Input.compass.rawVector.magnitude +
+              "\nratio: " + currentMagnetWindow.ratio);
+  }
+
   private TriggerState GetTriggerState() {
     if (Time.time < CALIBRATION_SECONDS) return TriggerState.Neutral;
     if (Input.compass.rawVector.magnitude < MAGNITUDE_THRESHOLD) {
@@ -97,9 +100,7 @@ public class ParsedMagnetData {
     int middle = magnetWindow.Count / 2;
     List<MagnetMoment> firstHalf = magnetWindow.GetRange(0, middle);
     List<MagnetMoment> lastHalf = magnetWindow.GetRange(middle, magnetWindow.Count - middle);
-    newState.firstHalf = Average(firstHalf);
-    newState.lastHalf = Average(lastHalf);
-    newState.ratio = newState.firstHalf / newState.lastHalf;
+    newState.ratio = Average(firstHalf) / Average(lastHalf);
     return newState;
   }
 
