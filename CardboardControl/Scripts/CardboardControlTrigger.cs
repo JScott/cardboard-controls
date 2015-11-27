@@ -28,8 +28,8 @@ public class CardboardControlTrigger : MonoBehaviour {
     magnet = new ParsedMagnetData();
     touch = new ParsedTouchData();
     if (printDebugInfo) {
-      magnet.DEBUG = true;
-      touch.DEBUG = true;
+      magnet.debugMode = true;
+      touch.debugMode = true;
     }
   }
 

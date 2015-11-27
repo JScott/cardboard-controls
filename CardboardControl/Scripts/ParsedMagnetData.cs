@@ -23,12 +23,12 @@ public class ParsedMagnetData {
   private float MAX_WINDOW_SECONDS = 0.1f;
   private float MAGNET_RATIO_MIN_THRESHOLD = 0.03f;
   private float MAGNET_RATIO_MAX_THRESHOLD = 0.2f;
-  private float MAGNET_MAGNITUDE_THRESHOLD = 300.0f;
+  private float MAGNET_MAGNITUDE_THRESHOLD = 200.0f;
   private float STABLE_RATIO_THRESHOLD = 0.001f;
   private float STABLE_DELTA_THRESHOLD = 2.0f;
   private float windowLength = 0.0f;
 
-  public bool DEBUG = true;
+  public bool debugMode = true;
 
   enum TriggerState {
     Negative,
@@ -60,7 +60,7 @@ public class ParsedMagnetData {
       isDown = !isDown;
       triggerState = newTriggerState;
     }
-    if (DEBUG) PrintDebug();
+    if (debugMode) PrintDebug();
   }
 
   private bool CheckStability() {

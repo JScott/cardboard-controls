@@ -6,7 +6,7 @@ using System.Collections;
 */
 public class ParsedTouchData {
   private bool wasTouched = false;
-  public bool DEBUG = false;
+  public bool debugMode = false;
 
   public ParsedTouchData() {
     Cardboard cardboard = CardboardGameObject().GetComponent<Cardboard>();
@@ -20,7 +20,7 @@ public class ParsedTouchData {
 
   public void Update() {
     wasTouched |= IsDown();
-    if (DEBUG) PrintDebug();
+    if (debugMode) PrintDebug();
   }
 
   public bool IsDown() {
