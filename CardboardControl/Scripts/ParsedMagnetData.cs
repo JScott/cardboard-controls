@@ -28,8 +28,6 @@ public class ParsedMagnetData {
   private float STABLE_DELTA_THRESHOLD = 2.0f;
   private float windowLength = 0.0f;
 
-  public bool debugMode = true;
-
   enum TriggerState {
     Negative,
     Neutral,
@@ -58,7 +56,6 @@ public class ParsedMagnetData {
       isDown = !isDown;
       triggerState = newTriggerState;
     }
-    if (debugMode) PrintDebug();
   }
 
   private bool CheckStability() {
@@ -69,15 +66,6 @@ public class ParsedMagnetData {
             currentMagnetWindow.ratio < 1f+STABLE_RATIO_THRESHOLD &&
             currentMagnetWindow.ratio > 1f-STABLE_RATIO_THRESHOLD) return true;
     return isStable;
-  }
-
-  private void PrintDebug() {
-    if (Time.time % 0.1 > 0.05) return;
-    Debug.Log("--- Magnetometer\nmagnitude: " + Input.compass.rawVector.magnitude +
-              "\nratio: " + currentMagnetWindow.ratio +
-              "\ndelta: " + currentMagnetWindow.delta + 
-              "\nstable: " + isStable +
-              "\nstate: " + triggerState);
   }
 
   private TriggerState CheckTriggerState() {
@@ -149,5 +137,13 @@ public class ParsedMagnetData {
   public void ResetState() {
     triggerState = TriggerState.Neutral;
     isDown = false;
+  }
+
+  public void PrintDebug() {
+    Debug.Log("--- Magnetometer\nmagnitude: " + Input.compass.rawVector.magnitude +
+              "\nratio: " + currentMagnetWindow.ratio +
+              "\ndelta: " + currentMagnetWindow.delta + 
+              "\nstable: " + isStable +
+              "\nstate: " + triggerState);
   }
 }

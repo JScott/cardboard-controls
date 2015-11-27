@@ -20,6 +20,9 @@ public class CardboardControlTrigger : MonoBehaviour {
   private TriggerState currentTriggerState = TriggerState.Up;
   private float clickStartTime = 0f;
 
+  private int debugThrottle = 0;
+  private int FRAMES_PER_DEBUG = 5;
+
   public CardboardControlDelegate OnUp = delegate {};
   public CardboardControlDelegate OnDown = delegate {};
   public CardboardControlDelegate OnClick = delegate {};
@@ -27,10 +30,6 @@ public class CardboardControlTrigger : MonoBehaviour {
   public void Start() {
     magnet = new ParsedMagnetData();
     touch = new ParsedTouchData();
-    if (printDebugInfo) {
-      magnet.debugMode = true;
-      touch.debugMode = true;
-    }
   }
 
   public void Update() {
@@ -39,6 +38,10 @@ public class CardboardControlTrigger : MonoBehaviour {
     CheckTouch();
     CheckMagnet();
     CheckKey();
+  }
+
+  public void FixedUpdate() {
+    if (printDebugInfo) PrintDebug();
   }
 
   private bool KeyFor(string direction) {
@@ -110,5 +113,14 @@ public class CardboardControlTrigger : MonoBehaviour {
 
   public void ResetMagnetState() {
     magnet.ResetState();
+  }
+
+  private void PrintDebug() {
+    debugThrottle++;
+    if (debugThrottle >= FRAMES_PER_DEBUG) {
+      magnet.PrintDebug();
+      touch.PrintDebug();
+      debugThrottle = 0;
+    }
   }
 }
