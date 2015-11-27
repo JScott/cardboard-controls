@@ -33,12 +33,10 @@ public class ParsedMagnetData {
   enum TriggerState {
     Negative,
     Neutral,
-    Postive
+    Positive
   };
-  private bool wasTriggering = false;
   private TriggerState triggerState = TriggerState.Neutral;
   private bool isDown = false;
-
   private bool isStable = false;
 
   public ParsedMagnetData() {
@@ -54,7 +52,7 @@ public class ParsedMagnetData {
 
     TriggerState newTriggerState = CheckTriggerState();
     isStable = CheckStability();
-    if (!isStable) triggerState = TriggerState.Neutral;
+    if (!isStable) ResetState();
 
     if (isStable && newTriggerState != TriggerState.Neutral && triggerState != newTriggerState) {
       isDown = !isDown;
@@ -84,7 +82,7 @@ public class ParsedMagnetData {
 
   private TriggerState CheckTriggerState() {
     if (IsNegative()) return TriggerState.Negative;
-    if (IsPositive()) return TriggerState.Postive;
+    if (IsPositive()) return TriggerState.Positive;
     return TriggerState.Neutral;
   }
 
@@ -146,5 +144,10 @@ public class ParsedMagnetData {
 
   public bool IsUp() {
     return triggerState != TriggerState.Neutral && !isDown;
+  }
+
+  public void ResetState() {
+    triggerState = TriggerState.Neutral;
+    isDown = false;
   }
 }

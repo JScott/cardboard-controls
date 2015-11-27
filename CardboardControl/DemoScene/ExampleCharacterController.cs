@@ -24,9 +24,8 @@ public class ExampleCharacterController : MonoBehaviour {
     // The gaze distance and layer mask are public as configurable in the inspector
     cardboard.gaze.OnChange += CardboardFocus;
 
-    // Not used here is the OnTilt delegate
-    // This is triggered on rotating the device to Portrait mode
-    // cardboard.box.OnTilt += ...
+    // When we rotate the device into portrait mode
+    cardboard.box.OnTilt += CardboardMagnetReset;
   }
 
 
@@ -69,10 +68,26 @@ public class ExampleCharacterController : MonoBehaviour {
     }
   }
 
+  public void CardboardMagnetReset(object sender) {
+    // Resetting the magnet will reset the polarity if up and down are confused
+    // This occasionally happens when the device is inserted into the enclosure
+    // or if the magnetometer readings are weak enough to cut in and out
+    cardboard.trigger.ResetMagnetState();
+    ResetSpheres();
+  }
+
   public void ChangeObjectColor(string name) {
     GameObject obj = GameObject.Find(name);
     Color newColor = new Color(Random.value, Random.value, Random.value);
     obj.GetComponent<Renderer>().material.color = newColor;
+  }
+
+  public void ResetSpheres() {
+    string[] spheres = { "SphereDown", "SphereUp", "SphereClick" };
+    foreach (string sphere in spheres) {
+      GameObject obj = GameObject.Find(sphere);
+      obj.GetComponent<Renderer>().material.color = Color.white;
+    }
   }
 
 

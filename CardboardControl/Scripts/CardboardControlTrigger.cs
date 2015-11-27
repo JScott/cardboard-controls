@@ -107,4 +107,8 @@ public class CardboardControlTrigger : MonoBehaviour {
   public bool IsHeld() {
     return (currentTriggerState == TriggerState.Down);
   }
+
+  public void ResetMagnetState() {
+    magnet.ResetState();
+  }
 }

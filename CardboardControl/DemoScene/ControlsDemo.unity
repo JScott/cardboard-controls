@@ -132,6 +132,18 @@ Prefab:
       propertyPath: debugChartsEnabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11462268, guid: 1a84bd65df01b4cebaa6f31094d684cd, type: 2}
+      propertyPath: vibrateOnOrientationTilt
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11469074, guid: 1a84bd65df01b4cebaa6f31094d684cd, type: 2}
+      propertyPath: printDebugInfo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11469074, guid: 1a84bd65df01b4cebaa6f31094d684cd, type: 2}
+      propertyPath: vibrateOnClick
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1a84bd65df01b4cebaa6f31094d684cd, type: 2}
   m_IsPrefabParent: 0
