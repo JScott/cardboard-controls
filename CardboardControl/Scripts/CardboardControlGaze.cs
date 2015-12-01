@@ -17,9 +17,11 @@ public class CardboardControlGaze : MonoBehaviour {
   private RaycastHit hit;
   private bool isHeld;
 
+  private CardboardControl cardboard;
   public CardboardControlDelegate OnChange = delegate {};
 
   public void Start() {
+    cardboard = gameObject.GetComponent<CardboardControl>();
     StereoController stereoController = Camera.main.GetComponent<StereoController>();
     head = stereoController.Head;
   }
@@ -30,7 +32,7 @@ public class CardboardControlGaze : MonoBehaviour {
   }
 
   private void CheckGaze() {
-    if (recentObject != Object()) ReportGazeChange();
+    if (recentObject != Object() && cardboard.EventReady("OnChange")) ReportGazeChange();
     recentObject = Object();
   }
 

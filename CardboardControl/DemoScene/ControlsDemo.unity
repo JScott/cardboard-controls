@@ -132,6 +132,18 @@ Prefab:
       propertyPath: useTouch
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11457768, guid: 652814e1e9ffe134aa9b9c61f31fb762, type: 2}
+      propertyPath: timeBetweenEvents
+      value: .200000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 11474088, guid: 652814e1e9ffe134aa9b9c61f31fb762, type: 2}
+      propertyPath: printDebugInfo
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11457768, guid: 652814e1e9ffe134aa9b9c61f31fb762, type: 2}
+      propertyPath: eventCooldown
+      value: .200000003
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 652814e1e9ffe134aa9b9c61f31fb762, type: 2}
   m_IsPrefabParent: 0

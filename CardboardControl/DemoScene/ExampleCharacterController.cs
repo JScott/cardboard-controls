@@ -72,6 +72,7 @@ public class ExampleCharacterController : MonoBehaviour {
     // Resetting the magnet will reset the polarity if up and down are confused
     // This occasionally happens when the device is inserted into the enclosure
     // or if the magnetometer readings are weak enough to cut in and out
+    Debug.Log("Device tilted");
     cardboard.trigger.ResetMagnetState();
     ResetSpheres();
   }

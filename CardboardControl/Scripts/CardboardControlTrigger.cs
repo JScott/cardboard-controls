@@ -21,15 +21,19 @@ public class CardboardControlTrigger : MonoBehaviour {
   private enum TriggerState { Up, Down }
   private TriggerState currentTriggerState = TriggerState.Up;
   private float clickStartTime = 0f;
+  private float eventCooldown = 0f;
 
   private int debugThrottle = 0;
   private int FRAMES_PER_DEBUG = 5;
 
+  private CardboardControl cardboard;
   public CardboardControlDelegate OnUp = delegate {};
   public CardboardControlDelegate OnDown = delegate {};
   public CardboardControlDelegate OnClick = delegate {};
 
+
   public void Start() {
+    cardboard = gameObject.GetComponent<CardboardControl>();
     magnet = new ParsedMagnetData();
     touch = new ParsedTouchData();
   }
@@ -63,13 +67,13 @@ public class CardboardControlTrigger : MonoBehaviour {
   }
 
   private void CheckMagnet() {
-    if (magnet.IsDown()) ReportDown();
-    if (magnet.IsUp()) ReportUp();
+    if (magnet.IsDown() && cardboard.EventReady("OnDown")) ReportDown();
+    if (magnet.IsUp() && cardboard.EventReady("OnUp")) ReportUp();
   }
 
   private void CheckTouch() {
-    if (touch.IsDown()) ReportDown();
-    if (touch.IsUp()) ReportUp();
+    if (touch.IsDown() && cardboard.EventReady("OnDown")) ReportDown();
+    if (touch.IsUp() && cardboard.EventReady("OnUp")) ReportUp();
   }
 
   private bool IsTouching() {
@@ -97,7 +101,7 @@ public class CardboardControlTrigger : MonoBehaviour {
   private void CheckForClick() {
     bool withinClickThreshold = SecondsHeld() <= clickSpeedThreshold;
     clickStartTime = 0f;
-    if (withinClickThreshold) ReportClick();
+    if (withinClickThreshold && cardboard.EventReady("OnClick")) ReportClick();
   }
 
   private void ReportClick() {
