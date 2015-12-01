@@ -11,6 +11,8 @@ public class CardboardControlTrigger : MonoBehaviour {
   public bool vibrateOnDown = false;
   public bool vibrateOnUp = false;
   public bool vibrateOnClick = true;
+  public bool useMagnet = true;
+  public bool useTouch = true;
   public KeyCode triggerKey = KeyCode.Space;
   public bool printDebugInfo = false;
 
@@ -35,8 +37,8 @@ public class CardboardControlTrigger : MonoBehaviour {
   public void Update() {
     magnet.Update();
     touch.Update();
-    CheckTouch();
-    CheckMagnet();
+    if (useTouch) CheckTouch();
+    if (useMagnet) CheckMagnet();
     CheckKey();
   }
 
