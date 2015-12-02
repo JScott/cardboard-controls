@@ -21,9 +21,15 @@ public class ParsedMagnetData {
   private List<MagnetMoment> magnetWindow;
   private MagnetWindowState currentMagnetWindow;
   private float MAX_WINDOW_SECONDS = 0.1f;
+  #if UNITY_IOS
+  private float MAGNET_RATIO_MIN_THRESHOLD = 0.005f;
+  private float MAGNET_RATIO_MAX_THRESHOLD = 0.1f;
+  private float MAGNET_MAGNITUDE_THRESHOLD = 700.0f;
+  #else
   private float MAGNET_RATIO_MIN_THRESHOLD = 0.03f;
   private float MAGNET_RATIO_MAX_THRESHOLD = 0.2f;
   private float MAGNET_MAGNITUDE_THRESHOLD = 200.0f;
+  #endif
   private float STABLE_RATIO_THRESHOLD = 0.001f;
   private float STABLE_DELTA_THRESHOLD = 2.0f;
   private float windowLength = 0.0f;
