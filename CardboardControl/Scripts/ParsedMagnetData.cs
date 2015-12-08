@@ -23,8 +23,8 @@ public class ParsedMagnetData {
   private float MAX_WINDOW_SECONDS = 0.1f;
   #if UNITY_IOS
   private float MAGNET_RATIO_MIN_THRESHOLD = 0.005f;
-  private float MAGNET_RATIO_MAX_THRESHOLD = 0.1f;
-  private float MAGNET_MAGNITUDE_THRESHOLD = 700.0f;
+  private float MAGNET_RATIO_MAX_THRESHOLD = 0.2f;
+  private float MAGNET_MAGNITUDE_THRESHOLD = 800.0f;
   #else
   private float MAGNET_RATIO_MIN_THRESHOLD = 0.03f;
   private float MAGNET_RATIO_MAX_THRESHOLD = 0.2f;
