@@ -20,11 +20,12 @@ public class CardboardControl : MonoBehaviour {
 
   private const float TIME_TO_CALIBRATE = 1f;
   private Dictionary<string,float> cooldownCounter = new Dictionary<string,float>() {
-    {"OnUp", TIME_TO_CALIBRATE},
+    {"OnUp", TIME_TO_CALIBRATE}, // trigger
     {"OnDown", TIME_TO_CALIBRATE},
     {"OnClick", TIME_TO_CALIBRATE},
-    {"OnChange", TIME_TO_CALIBRATE},
-    {"OnTilt", TIME_TO_CALIBRATE}
+    {"OnChange", TIME_TO_CALIBRATE}, // gaze
+    {"OnStare", TIME_TO_CALIBRATE},
+    {"OnTilt", TIME_TO_CALIBRATE} // box
   };
   public float eventCooldown = 0.2f;
 

@@ -26,6 +26,9 @@ public class ExampleCharacterController : MonoBehaviour {
 
     // When we rotate the device into portrait mode
     cardboard.box.OnTilt += CardboardMagnetReset;
+
+    // We also can trigger when we've been staring at an object
+    // cardboard.gaze.OnStare += ...
   }
 
 
