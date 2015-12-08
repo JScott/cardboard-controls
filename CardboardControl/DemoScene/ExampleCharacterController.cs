@@ -55,7 +55,7 @@ public class ExampleCharacterController : MonoBehaviour {
 
     // With the cardboard object, we can grab information from various controls
     // If the raycast doesn't find anything then the focused object will be null
-    string name = cardboard.gaze.Object() == null ? "nothing" : cardboard.gaze.Object().name;
+    string name = cardboard.gaze.IsHeld() ? cardboard.gaze.Object().name : "nothing";
     float count = cardboard.gaze.SecondsHeld();
     Debug.Log("We've focused on "+name+" for "+count+" seconds.");
 
