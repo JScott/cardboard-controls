@@ -22,7 +22,7 @@ public class ExampleCharacterController : MonoBehaviour {
 
     // When the thing we're looking at changes, determined by a gaze
     // The gaze distance and layer mask are public as configurable in the inspector
-    cardboard.gaze.OnChange += CardboardFocus;
+    cardboard.gaze.OnChange += CardboardGazeChange;
 
     // When we rotate the device into portrait mode
     cardboard.box.OnTilt += CardboardMagnetReset;
@@ -62,12 +62,18 @@ public class ExampleCharacterController : MonoBehaviour {
     // If you need more raycast data from cardboard.gaze, the RaycastHit is exposed as gaze.Hit
   }
 
-  public void CardboardFocus(object sender) {
-    // For more event-driven code, you can grab the data from the sender
+  public void CardboardGazeChange(object sender) {
+    // You can grab the data from the sender instead of the CardboardControl object
     CardboardControlGaze gaze = sender as CardboardControlGaze;
+    // We can access to the object we're looking at
     // gaze.IsHeld will make sure the gaze.Object isn't null
     if (gaze.IsHeld() && gaze.Object().name.Contains("Cube")) {
       ChangeObjectColor(gaze.Object().name);
+    }
+    // We also can access to the last object we looked at
+    // gaze.WasHeld will make sure the gaze.PreviousObject isn't null
+    if (gaze.WasHeld() && gaze.PreviousObject().name.Contains("Cube")) {
+      ResetObjectColor(gaze.PreviousObject().name);
     }
   }
 
@@ -84,6 +90,10 @@ public class ExampleCharacterController : MonoBehaviour {
     GameObject obj = GameObject.Find(name);
     Color newColor = new Color(Random.value, Random.value, Random.value);
     obj.GetComponent<Renderer>().material.color = newColor;
+  }
+
+  public void ResetObjectColor(string name) {
+    GameObject.Find(name).GetComponent<Renderer>().material.color = Color.white;
   }
 
   public void ResetSpheres() {
@@ -121,6 +131,7 @@ public class ExampleCharacterController : MonoBehaviour {
     cardboard.trigger.OnDown -= CardboardDown;
     cardboard.trigger.OnUp -= CardboardUp;
     cardboard.trigger.OnClick -= CardboardClick;
-    cardboard.gaze.OnChange -= CardboardFocus;
+    cardboard.gaze.OnChange -= CardboardGazeChange;
+    cardboard.box.OnTilt -= CardboardMagnetReset;
   }
 }

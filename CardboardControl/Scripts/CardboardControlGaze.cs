@@ -9,11 +9,13 @@ using CardboardControlDelegates;
 public class CardboardControlGaze : MonoBehaviour {
   public float maxDistance = Mathf.Infinity;
   public LayerMask layerMask = Physics.DefaultRaycastLayers;
+  public bool useEventCooldowns = false;
   public bool vibrateOnChange = false;
   public bool vibrateOnStare = false;
   public float stareTimeThreshold = 2.0f;
 
-  private GameObject recentObject = null;
+  private GameObject previousObject = null;
+  private GameObject currentObject = null;
   private float gazeStartTime = 0f;
   private CardboardHead head;
   private RaycastHit hit;
@@ -38,7 +40,7 @@ public class CardboardControlGaze : MonoBehaviour {
   private void CheckGaze() {
     if (GazeChanged() && cardboard.EventReady("OnChange")) ReportGazeChange();
     if (!stared && Staring() && cardboard.EventReady("OnStare")) ReportStare();
-    recentObject = Object();
+    currentObject = Object();
   }
 
   private bool Staring() {
@@ -46,7 +48,11 @@ public class CardboardControlGaze : MonoBehaviour {
   }
 
   private bool GazeChanged() {
-    return recentObject != Object();
+    if (currentObject != Object()) {
+      previousObject = currentObject;
+      return true;
+    }
+    return false;
   }
 
   private void ReportGazeChange() {
@@ -65,6 +71,10 @@ public class CardboardControlGaze : MonoBehaviour {
     return isHeld;
   }
 
+  public bool WasHeld() {
+    return previousObject != null;
+  }
+
   public float SecondsHeld() {
     return Time.time - gazeStartTime;
   }
@@ -79,5 +89,9 @@ public class CardboardControlGaze : MonoBehaviour {
     } else {
       return null;
     }
+  }
+
+  public GameObject PreviousObject() {
+    return previousObject;
   }
 }

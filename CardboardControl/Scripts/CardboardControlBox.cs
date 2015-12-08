@@ -7,6 +7,7 @@ using CardboardControlDelegates;
 * Relies on Google Cardboard SDK API's
 */
 public class CardboardControlBox : MonoBehaviour {
+  public bool useEventCooldowns = true;
   public bool vibrateOnOrientationTilt = true;
   public KeyCode tiltKey = KeyCode.Tab;
 

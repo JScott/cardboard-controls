@@ -8,6 +8,7 @@ using CardboardControlDelegates;
 */
 public class CardboardControlTrigger : MonoBehaviour {
   public float clickSpeedThreshold = 0.4f;
+  public bool useEventCooldowns = true;
   public bool vibrateOnDown = false;
   public bool vibrateOnUp = false;
   public bool vibrateOnClick = true;
@@ -62,8 +63,8 @@ public class CardboardControlTrigger : MonoBehaviour {
   }
 
   private void CheckKey() {
-    if (KeyFor("down")) ReportDown();
-    if (KeyFor("up")) ReportUp();
+    if (KeyFor("down") && cardboard.EventReady("OnDown")) ReportDown();
+    if (KeyFor("up") && cardboard.EventReady("OnUp")) ReportUp();
   }
 
   private void CheckMagnet() {

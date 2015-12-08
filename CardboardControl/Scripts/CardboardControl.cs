@@ -43,10 +43,20 @@ public class CardboardControl : MonoBehaviour {
   }
 
   public bool EventReady(string name) {
-    if (cooldownCounter[name] <= 0f) {
+    if (!CooldownEnabledFor(name) || CooledDown(name)) {
       cooldownCounter[name] = eventCooldown;
       return true;
     }
     return false;
+  }
+
+  private bool CooldownEnabledFor(string name) {
+    if (name == "OnTilt") return box.useEventCooldowns;
+    if (name == "OnChange" || name == "OnStare") return gaze.useEventCooldowns;
+    return trigger.useEventCooldowns;
+  }
+
+  private bool CooledDown(string name) {
+    return cooldownCounter[name] <= 0;
   }
 }
