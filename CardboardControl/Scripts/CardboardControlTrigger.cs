@@ -22,7 +22,6 @@ public class CardboardControlTrigger : MonoBehaviour {
   private enum TriggerState { Up, Down }
   private TriggerState currentTriggerState = TriggerState.Up;
   private float clickStartTime = 0f;
-  private float eventCooldown = 0f;
 
   private int debugThrottle = 0;
   private int FRAMES_PER_DEBUG = 5;
