@@ -10,7 +10,7 @@ public class CardboardControlPointer : MonoBehaviour {
     pointer = Instantiate(pointerPrefab) as GameObject;
     GameObject head = GameObject.Find("CardboardMain/Head");
     SetPositionOn(head);
-    SetRotationOn(head);
+    // SetRotationOn(head);
     pointer.transform.parent = head.transform;
     pointer.layer = LayerMask.NameToLayer("Ignore Raycast");
 	}
