@@ -9,9 +9,25 @@ public class CardboardControlPointer : MonoBehaviour {
   void Start () {
     pointer = Instantiate(pointerPrefab) as GameObject;
     GameObject head = GameObject.Find("CardboardMain/Head");
+    SetPositionOn(head);
+    SetRotationOn(head);
     pointer.transform.parent = head.transform;
     pointer.layer = LayerMask.NameToLayer("Ignore Raycast");
 	}
+
+  void SetPositionOn(GameObject head) {
+    Vector3 newPosition = head.transform.position;
+    newPosition += head.transform.forward*20f;
+    pointer.transform.position = newPosition;
+  }
+
+  void SetRotationOn(GameObject head) {
+    // Not working yet. Try rotating the example character to see what I mean
+    // Needs to respect the rotation of the character AND the prefab
+    Vector3 newEulerAngles = pointer.transform.eulerAngles;
+    newEulerAngles += head.transform.eulerAngles;
+    pointer.transform.eulerAngles = newEulerAngles;
+  }
 
   // TODO: public bool startHidden = false;
   // TODO: void Hide()

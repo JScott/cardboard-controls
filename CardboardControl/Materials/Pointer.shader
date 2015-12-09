@@ -9,7 +9,6 @@
 		Tags {"Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent"}
 		LOD 100
 
-		ZWrite Off
 		ZTest Always
 		Blend SrcAlpha OneMinusSrcAlpha 
 
