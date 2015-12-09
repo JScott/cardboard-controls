@@ -12,6 +12,7 @@ GameObject:
   - 114: {fileID: 11455312}
   - 114: {fileID: 11474088}
   - 114: {fileID: 11481902}
+  - 114: {fileID: 11447888}
   m_Layer: 0
   m_Name: CardboardControlManager
   m_TagString: Untagged
@@ -31,6 +32,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &11447888
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 110264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e96b5b0d55c6dd48846315b5654102b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointerPrefab: {fileID: 178078, guid: 2b2a0223055544e4f8d0330728f3ebd3, type: 2}
+  raycastIgnoreLayer:
+    serializedVersion: 2
+    m_Bits: 4
 --- !u!114 &11455312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -46,7 +62,10 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 4294967291
+  useEventCooldowns: 0
   vibrateOnChange: 0
+  vibrateOnStare: 0
+  stareTimeThreshold: 2
 --- !u!114 &11457768
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -58,9 +77,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3656691e3c91d4acd8e3222098ce7eb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trigger: {fileID: 0}
-  gaze: {fileID: 0}
-  box: {fileID: 0}
+  trigger: {fileID: 11474088}
+  gaze: {fileID: 11455312}
+  box: {fileID: 11481902}
+  eventCooldown: .200000003
 --- !u!114 &11474088
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -73,9 +93,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clickSpeedThreshold: .400000006
+  useEventCooldowns: 1
   vibrateOnDown: 0
   vibrateOnUp: 0
   vibrateOnClick: 1
+  useMagnet: 1
+  useTouch: 1
   triggerKey: 32
   printDebugInfo: 0
 --- !u!114 &11481902
@@ -89,6 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaca247cf68604fd6aa483cfaba60152, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useEventCooldowns: 1
   vibrateOnOrientationTilt: 0
   tiltKey: 9
 --- !u!1001 &100100000
@@ -97,7 +121,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: pointerPrefab
+      value: 
+      objectReference: {fileID: 178078, guid: 2b2a0223055544e4f8d0330728f3ebd3, type: 2}
+    - target: {fileID: 0}
+      propertyPath: raycastIgnoreLayer.m_Bits
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 110264}
