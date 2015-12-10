@@ -70,7 +70,7 @@ public class ExampleCharacterController : MonoBehaviour {
     if (gaze.IsHeld() && gaze.Object().name.Contains("Cube")) {
       ChangeObjectColor(gaze.Object().name);
       // Highlighting can help identify which objects can be interacted with
-      cardboard.pointer.Highlight(RandomColor());
+      cardboard.pointer.Highlight(Color.red);
     }
     // We also can access to the last object we looked at
     // gaze.WasHeld will make sure the gaze.PreviousObject isn't null

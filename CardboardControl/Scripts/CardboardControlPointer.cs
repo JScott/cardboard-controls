@@ -11,7 +11,7 @@ public class CardboardControlPointer : MonoBehaviour {
 
   public GameObject pointerPrefab;
   public LayerMask raycastIgnoreLayer = 1 << Physics.IgnoreRaycastLayer;
-  public float fadeTime = 0.7f;
+  public float fadeTime = 0.6f;
 
   void Start () {
     pointer = Instantiate(pointerPrefab) as GameObject;
@@ -52,30 +52,23 @@ public class CardboardControlPointer : MonoBehaviour {
     targetColor = color;
   }
 
-  // private void ScaleTo(float scale) {
-  //   previousScale = targetScalet;
-  //   targetScale = scale;
-  // }
-
   public void Highlight(Color color) {
     if (fadeCounter <= 0f) {
       fadeCounter = fadeTime;
       FadeTo(color);
-      // ScaleTo(2f);
     }
   }
 
   public void ClearHighlight() {
-    if (fadeCounter <= 0f) {
-      fadeCounter = fadeTime;
-      FadeTo(Color.white);
-      // ScaleTo(0.5f);
-    }
+    targetColor = pointer.GetComponent<Renderer>().material.color;
+    fadeCounter = fadeTime;
+    FadeTo(Color.white);
   }
+
+  // TODO: Move Highlight, ClearHighlight, Hide, and Show to the pointer object itself
+  //          in order to allow custom pointers
 
   // TODO: public bool startHidden = false;
   // TODO: void Hide()
   // TODO: void Show()
-  // TODO: void ChangeColor(Color color)
-  // NOTE: Be sure to fade alpha/colors, never abruptly jump
 }
