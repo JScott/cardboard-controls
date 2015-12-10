@@ -76,7 +76,8 @@ public class ExampleCharacterController : MonoBehaviour {
     // gaze.WasHeld will make sure the gaze.PreviousObject isn't null
     if (gaze.WasHeld() && gaze.PreviousObject().name.Contains("Cube")) {
       ResetObjectColor(gaze.PreviousObject().name);
-      // You can clear highlighting when it's not longer needed
+      // Use these to undo pointer hiding and highlighting
+      cardboard.pointer.Show();
       cardboard.pointer.ClearHighlight();
     }
   }
@@ -84,6 +85,8 @@ public class ExampleCharacterController : MonoBehaviour {
   private void CardboardStare(object sender) {
     CardboardControlGaze gaze = sender as CardboardControlGaze;
     if (gaze.IsHeld() && gaze.Object().name.Contains("Cube")) {
+      // Be sure to hide the cursor when it's not needed
+      cardboard.pointer.Hide();
     }
   }
 
@@ -146,6 +149,7 @@ public class ExampleCharacterController : MonoBehaviour {
     cardboard.trigger.OnUp -= CardboardUp;
     cardboard.trigger.OnClick -= CardboardClick;
     cardboard.gaze.OnChange -= CardboardGazeChange;
+    cardboard.gaze.OnStare -= CardboardStare;
     cardboard.box.OnTilt -= CardboardMagnetReset;
   }
 }

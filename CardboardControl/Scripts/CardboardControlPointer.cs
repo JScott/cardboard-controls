@@ -5,8 +5,6 @@ public class CardboardControlPointer : MonoBehaviour {
 	private GameObject pointer;
   private Color targetColor = Color.white;
   private Color previousColor = Color.white;
-  private float targetScale = 1f;
-  private float previousScale = 1f;
   private float fadeCounter = 0f;
 
   public GameObject pointerPrefab;
@@ -52,6 +50,11 @@ public class CardboardControlPointer : MonoBehaviour {
     targetColor = color;
   }
 
+  private void InterruptFade() {
+    targetColor = pointer.GetComponent<Renderer>().material.color;
+    fadeCounter = fadeTime - fadeCounter;
+  }
+
   public void Highlight(Color color) {
     if (fadeCounter <= 0f) {
       fadeCounter = fadeTime;
@@ -60,16 +63,29 @@ public class CardboardControlPointer : MonoBehaviour {
   }
 
   public void ClearHighlight() {
-    targetColor = pointer.GetComponent<Renderer>().material.color;
-    fadeCounter = fadeTime - fadeCounter;
+    InterruptFade();
     FadeTo(Color.white);
   }
+
+  public void Hide() {
+    Color transparentColor = targetColor;
+    transparentColor.a = 0;
+    InterruptFade();
+    FadeTo(transparentColor);
+  }
+
+  public void Show() {
+    Color transparentColor = targetColor;
+    transparentColor.a = 1;
+    InterruptFade();
+    FadeTo(transparentColor);
+  }
+
+  // TODO: using both show and clearhighlight is abrupt. Change alpha independently
 
   // Create github issue:
   //   Move Highlight, ClearHighlight, Hide, and Show to the pointer object itself
   //   in order to allow custom pointers
 
   // TODO: public bool startHidden = false;
-  // TODO: void Hide()
-  // TODO: void Show()
 }
