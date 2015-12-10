@@ -10,6 +10,7 @@ public class CardboardControlPointer : MonoBehaviour {
   public GameObject pointerPrefab;
   public LayerMask raycastIgnoreLayer = 1 << Physics.IgnoreRaycastLayer;
   public float fadeTime = 0.6f;
+  public bool startHidden = false;
 
   void Start () {
     pointer = Instantiate(pointerPrefab) as GameObject;
@@ -19,6 +20,7 @@ public class CardboardControlPointer : MonoBehaviour {
     pointer.GetComponent<Renderer>().material.renderQueue = int.MaxValue;
     pointer.transform.parent = head.transform;
     pointer.layer = LayerMask.NameToLayer("Ignore Raycast");
+    if (startHidden) targetColor.a = 0;
 	}
 
   void Update() {
@@ -86,6 +88,4 @@ public class CardboardControlPointer : MonoBehaviour {
   // Create github issue:
   //   Move Highlight, ClearHighlight, Hide, and Show to the pointer object itself
   //   in order to allow custom pointers
-
-  // TODO: public bool startHidden = false;
 }
