@@ -50,6 +50,7 @@ public class CardboardControlGaze : MonoBehaviour {
   private bool GazeChanged() {
     if (currentObject != Object()) {
       previousObject = currentObject;
+      stared = false;
       return true;
     }
     return false;

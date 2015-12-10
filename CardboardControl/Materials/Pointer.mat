@@ -134,6 +134,18 @@ Material:
         first:
           name: _Metallic
         second: 0
+      data:
+        first:
+          name: _OuterRadius
+        second: .5
+      data:
+        first:
+          name: _InnerRadius
+        second: -.5
+      data:
+        first:
+          name: _Hardness
+        second: 1
     m_Colors:
       data:
         first:
@@ -143,3 +155,11 @@ Material:
         first:
           name: _Color
         second: {r: 0, g: 0, b: 0, a: 1}
+      data:
+        first:
+          name: _MainColor
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _Distort
+        second: {r: .5, g: .5, b: 1, a: 1}

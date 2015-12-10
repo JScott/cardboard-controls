@@ -172,6 +172,10 @@ Prefab:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 11455312, guid: 652814e1e9ffe134aa9b9c61f31fb762, type: 2}
+      propertyPath: stareTimeThreshold
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 652814e1e9ffe134aa9b9c61f31fb762, type: 2}
   m_IsPrefabParent: 0

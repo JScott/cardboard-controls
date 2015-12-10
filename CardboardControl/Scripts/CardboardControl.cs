@@ -17,6 +17,8 @@ public class CardboardControl : MonoBehaviour {
   public CardboardControlGaze gaze;
   [HideInInspector]
   public CardboardControlBox box;
+  [HideInInspector]
+  public CardboardControlPointer pointer;
 
   private const float TIME_TO_CALIBRATE = 1f;
   private Dictionary<string,float> cooldownCounter = new Dictionary<string,float>() {
@@ -33,6 +35,7 @@ public class CardboardControl : MonoBehaviour {
     trigger = gameObject.GetComponent<CardboardControlTrigger>();
     gaze = gameObject.GetComponent<CardboardControlGaze>();
     box = gameObject.GetComponent<CardboardControlBox>();
+    pointer = gameObject.GetComponent<CardboardControlPointer>();
   }
 
   public void Update() {

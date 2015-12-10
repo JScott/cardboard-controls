@@ -24,11 +24,11 @@ public class ExampleCharacterController : MonoBehaviour {
     // The gaze distance and layer mask are public as configurable in the inspector
     cardboard.gaze.OnChange += CardboardGazeChange;
 
+    // When we've been staring at an object
+    cardboard.gaze.OnStare += CardboardStare;
+
     // When we rotate the device into portrait mode
     cardboard.box.OnTilt += CardboardMagnetReset;
-
-    // We also can trigger when we've been staring at an object
-    // cardboard.gaze.OnStare += ...
   }
 
 
@@ -36,17 +36,17 @@ public class ExampleCharacterController : MonoBehaviour {
   /*
   * In this demo, we randomize object colours for triggered events
   */
-  public void CardboardDown(object sender) {
+  private void CardboardDown(object sender) {
     Debug.Log("Trigger went down");
     ChangeObjectColor("SphereDown");
   }
 
-  public void CardboardUp(object sender) {
+  private void CardboardUp(object sender) {
     Debug.Log("Trigger came up");
     ChangeObjectColor("SphereUp");
   }
 
-  public void CardboardClick(object sender) {
+  private void CardboardClick(object sender) {
     ChangeObjectColor("SphereClick");
 
     TextMesh textMesh = GameObject.Find("SphereClick/Counter").GetComponent<TextMesh>();
@@ -62,22 +62,32 @@ public class ExampleCharacterController : MonoBehaviour {
     // If you need more raycast data from cardboard.gaze, the RaycastHit is exposed as gaze.Hit
   }
 
-  public void CardboardGazeChange(object sender) {
+  private void CardboardGazeChange(object sender) {
     // You can grab the data from the sender instead of the CardboardControl object
     CardboardControlGaze gaze = sender as CardboardControlGaze;
     // We can access to the object we're looking at
     // gaze.IsHeld will make sure the gaze.Object isn't null
     if (gaze.IsHeld() && gaze.Object().name.Contains("Cube")) {
       ChangeObjectColor(gaze.Object().name);
+      // Highlighting can help identify which objects can be interacted with
+      cardboard.pointer.Highlight(RandomColor());
     }
     // We also can access to the last object we looked at
     // gaze.WasHeld will make sure the gaze.PreviousObject isn't null
     if (gaze.WasHeld() && gaze.PreviousObject().name.Contains("Cube")) {
       ResetObjectColor(gaze.PreviousObject().name);
+      // You can clear highlighting when it's not longer needed
+      cardboard.pointer.ClearHighlight();
     }
   }
 
-  public void CardboardMagnetReset(object sender) {
+  private void CardboardStare(object sender) {
+    CardboardControlGaze gaze = sender as CardboardControlGaze;
+    if (gaze.IsHeld() && gaze.Object().name.Contains("Cube")) {
+    }
+  }
+
+  private void CardboardMagnetReset(object sender) {
     // Resetting the magnet will reset the polarity if up and down are confused
     // This occasionally happens when the device is inserted into the enclosure
     // or if the magnetometer readings are weak enough to cut in and out
@@ -86,22 +96,26 @@ public class ExampleCharacterController : MonoBehaviour {
     ResetSpheres();
   }
 
-  public void ChangeObjectColor(string name) {
+  private void ChangeObjectColor(string name) {
     GameObject obj = GameObject.Find(name);
-    Color newColor = new Color(Random.value, Random.value, Random.value);
+    Color newColor = RandomColor();
     obj.GetComponent<Renderer>().material.color = newColor;
   }
 
-  public void ResetObjectColor(string name) {
+  private void ResetObjectColor(string name) {
     GameObject.Find(name).GetComponent<Renderer>().material.color = Color.white;
   }
 
-  public void ResetSpheres() {
+  private void ResetSpheres() {
     string[] spheres = { "SphereDown", "SphereUp", "SphereClick" };
     foreach (string sphere in spheres) {
       GameObject obj = GameObject.Find(sphere);
       obj.GetComponent<Renderer>().material.color = Color.white;
     }
+  }
+
+  private Color RandomColor() {
+    return new Color(Random.value, Random.value, Random.value);
   }
 
 
