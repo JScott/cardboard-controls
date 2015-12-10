@@ -61,12 +61,13 @@ public class CardboardControlPointer : MonoBehaviour {
 
   public void ClearHighlight() {
     targetColor = pointer.GetComponent<Renderer>().material.color;
-    fadeCounter = fadeTime;
+    fadeCounter = fadeTime - fadeCounter;
     FadeTo(Color.white);
   }
 
-  // TODO: Move Highlight, ClearHighlight, Hide, and Show to the pointer object itself
-  //          in order to allow custom pointers
+  // Create github issue:
+  //   Move Highlight, ClearHighlight, Hide, and Show to the pointer object itself
+  //   in order to allow custom pointers
 
   // TODO: public bool startHidden = false;
   // TODO: void Hide()
