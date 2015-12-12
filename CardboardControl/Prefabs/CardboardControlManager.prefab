@@ -47,6 +47,8 @@ MonoBehaviour:
   raycastIgnoreLayer:
     serializedVersion: 2
     m_Bits: 4
+  fadeTime: .600000024
+  startHidden: 1
 --- !u!114 &11455312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -80,6 +82,7 @@ MonoBehaviour:
   trigger: {fileID: 11474088}
   gaze: {fileID: 11455312}
   box: {fileID: 11481902}
+  pointer: {fileID: 0}
   eventCooldown: .200000003
 --- !u!114 &11474088
 MonoBehaviour:
@@ -145,6 +148,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: startHidden
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

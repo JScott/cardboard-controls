@@ -5,7 +5,7 @@ public class CardboardControlPointer : MonoBehaviour {
   public GameObject pointerPrefab;
   public LayerMask raycastIgnoreLayer = 1 << Physics.IgnoreRaycastLayer;
   public float fadeTime = 0.6f;
-  public bool startHidden = false;
+  public bool startHidden = true;
 
   private GameObject pointer;
   private ColorFade colorFade = new ColorFade();
