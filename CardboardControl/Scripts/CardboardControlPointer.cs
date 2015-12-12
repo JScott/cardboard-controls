@@ -5,7 +5,10 @@ public class CardboardControlPointer : MonoBehaviour {
 	private GameObject pointer;
   private Color targetColor = Color.white;
   private Color previousColor = Color.white;
-  private float fadeCounter = 0f;
+  private float fadeColorCounter = 0f;
+  private float targetAlpha = 1f;
+  private float previousAlpha = 1f;
+  private float fadeAlphaCounter = 0f;
 
   public GameObject pointerPrefab;
   public LayerMask raycastIgnoreLayer = 1 << Physics.IgnoreRaycastLayer;
@@ -20,18 +23,27 @@ public class CardboardControlPointer : MonoBehaviour {
     pointer.GetComponent<Renderer>().material.renderQueue = int.MaxValue;
     pointer.transform.parent = head.transform;
     pointer.layer = LayerMask.NameToLayer("Ignore Raycast");
-    if (startHidden) targetColor.a = 0;
+    if (startHidden) targetAlpha = 0f;
 	}
 
   void Update() {
-    if (fadeCounter > 0f) {
-      float percentage = (fadeTime - fadeCounter) / fadeTime;
-      Color newColor = Color.Lerp(previousColor, targetColor, percentage);
+    if (fadeColorCounter > 0f || fadeAlphaCounter > 0f) {
+      float colorPercentage = (fadeTime - fadeColorCounter) / fadeTime;
+      float alphaPercentage = (fadeTime - fadeAlphaCounter) / fadeTime;
+
+      Color newColor = Color.Lerp(previousColor, targetColor, colorPercentage);
+      newColor.a = Mathf.Lerp(previousAlpha, targetAlpha, alphaPercentage);
       pointer.GetComponent<Renderer>().material.color = newColor;
-      fadeCounter -= Time.deltaTime;
+
+      fadeColorCounter -= Time.deltaTime;
+      if (fadeColorCounter < 0f) fadeColorCounter = 0f;
+      fadeAlphaCounter -= Time.deltaTime;
+      if (fadeAlphaCounter < 0f) fadeAlphaCounter = 0f;
     }
     else {
-      pointer.GetComponent<Renderer>().material.color = targetColor;
+      Color newColor = targetColor;
+      newColor.a = targetAlpha;
+      pointer.GetComponent<Renderer>().material.color = newColor;
     }
   }
 
@@ -47,43 +59,45 @@ public class CardboardControlPointer : MonoBehaviour {
     pointer.transform.localEulerAngles -= oldRotation;
   }
 
-  private void FadeTo(Color color) {
+  private void FadeColorTo(Color color) {
     previousColor = targetColor;
     targetColor = color;
   }
 
-  private void InterruptFade() {
+  private void FadeAlphaTo(float alpha) {
+    previousAlpha = targetAlpha;
+    targetAlpha = alpha;
+  }
+
+  private void InterruptColorFade() {
     targetColor = pointer.GetComponent<Renderer>().material.color;
-    fadeCounter = fadeTime - fadeCounter;
+    fadeColorCounter = fadeTime - fadeColorCounter;
+  }
+
+  private void InterruptAlphaFade() {
+    targetColor.a = pointer.GetComponent<Renderer>().material.color.a;
+    fadeAlphaCounter = fadeTime - fadeAlphaCounter;
   }
 
   public void Highlight(Color color) {
-    if (fadeCounter <= 0f) {
-      fadeCounter = fadeTime;
-      FadeTo(color);
-    }
+    InterruptColorFade();
+    FadeColorTo(color);
   }
 
   public void ClearHighlight() {
-    InterruptFade();
-    FadeTo(Color.white);
+    InterruptColorFade();
+    FadeColorTo(Color.white);
   }
 
   public void Hide() {
-    Color transparentColor = targetColor;
-    transparentColor.a = 0;
-    InterruptFade();
-    FadeTo(transparentColor);
+    InterruptAlphaFade();
+    FadeAlphaTo(0f);
   }
 
   public void Show() {
-    Color transparentColor = targetColor;
-    transparentColor.a = 1;
-    InterruptFade();
-    FadeTo(transparentColor);
+    InterruptAlphaFade();
+    FadeAlphaTo(1f);
   }
-
-  // TODO: using both show and clearhighlight is abrupt. Change alpha independently
 
   // Create github issue:
   //   Move Highlight, ClearHighlight, Hide, and Show to the pointer object itself
