@@ -3,19 +3,59 @@ using System.Collections;
 
 public class CardboardControlPointer : MonoBehaviour {
 	private GameObject pointer;
-  private Color targetColor = Color.white;
-  private Color previousColor = Color.white;
-  private float fadeColorCounter = 0f;
-  private float targetAlpha = 1f;
-  private float previousAlpha = 1f;
-  private float fadeAlphaCounter = 0f;
-
   public GameObject pointerPrefab;
   public LayerMask raycastIgnoreLayer = 1 << Physics.IgnoreRaycastLayer;
   public float fadeTime = 0.6f;
   public bool startHidden = false;
 
-  void Start () {
+  private abstract class FadeState {
+    public float counter = 1f;
+    public float fadeTime;
+    public GameObject pointer;
+    public virtual Color CurrentColor() { return Color.white; }
+    public virtual float CurrentAlpha() { return 1f; }
+    public virtual void Interrupt() {}
+    public float PercentageFaded(float counter) {
+      return (fadeTime - counter) / fadeTime;
+    }
+    public void UpdateCounter(float fadeTime, GameObject pointer) {
+      this.fadeTime = fadeTime;
+      this.pointer = pointer;
+      counter -= Time.deltaTime;
+      if (counter < 0f) counter = 0f;
+    }
+    public void ResetCounter() {
+      counter = fadeTime - counter;
+    }
+  }
+  private class ColorFade : FadeState {
+    public Color target = Color.white;
+    public Color source = Color.white;
+    public override Color CurrentColor() {
+      return Color.Lerp(source, target, PercentageFaded(counter));
+    }
+    public override void Interrupt() {
+      target = pointer.GetComponent<Renderer>().material.color;
+      source = target;
+      ResetCounter();
+    }
+  }
+  private class AlphaFade : FadeState {
+    public float target = 1f;
+    public float source = 1f;
+    public override float CurrentAlpha() {
+      return Mathf.Lerp(source, target, PercentageFaded(counter));
+    }
+    public override void Interrupt() {
+      target = pointer.GetComponent<Renderer>().material.color.a;
+      source = target;
+      ResetCounter();
+    }
+  }
+  private ColorFade colorFade = new ColorFade();
+  private AlphaFade alphaFade = new AlphaFade();
+
+  void Start() {
     pointer = Instantiate(pointerPrefab) as GameObject;
     GameObject head = GameObject.Find("CardboardMain/Head");
     SetPositionOn(head);
@@ -23,26 +63,18 @@ public class CardboardControlPointer : MonoBehaviour {
     pointer.GetComponent<Renderer>().material.renderQueue = int.MaxValue;
     pointer.transform.parent = head.transform;
     pointer.layer = LayerMask.NameToLayer("Ignore Raycast");
-    if (startHidden) targetAlpha = 0f;
+    if (startHidden) {
+      alphaFade.target = 0f;
+      alphaFade.source = 0f;
+    }
 	}
 
   void Update() {
-    if (fadeColorCounter > 0f || fadeAlphaCounter > 0f) {
-      float colorPercentage = (fadeTime - fadeColorCounter) / fadeTime;
-      float alphaPercentage = (fadeTime - fadeAlphaCounter) / fadeTime;
-
-      Color newColor = Color.Lerp(previousColor, targetColor, colorPercentage);
-      newColor.a = Mathf.Lerp(previousAlpha, targetAlpha, alphaPercentage);
-      pointer.GetComponent<Renderer>().material.color = newColor;
-
-      fadeColorCounter -= Time.deltaTime;
-      if (fadeColorCounter < 0f) fadeColorCounter = 0f;
-      fadeAlphaCounter -= Time.deltaTime;
-      if (fadeAlphaCounter < 0f) fadeAlphaCounter = 0f;
-    }
-    else {
-      Color newColor = targetColor;
-      newColor.a = targetAlpha;
+    colorFade.UpdateCounter(fadeTime, pointer);
+    alphaFade.UpdateCounter(fadeTime, pointer);
+    if (colorFade.counter > 0f || alphaFade.counter > 0f) {
+      Color newColor = colorFade.CurrentColor();
+      newColor.a = alphaFade.CurrentAlpha();
       pointer.GetComponent<Renderer>().material.color = newColor;
     }
   }
@@ -59,44 +91,24 @@ public class CardboardControlPointer : MonoBehaviour {
     pointer.transform.localEulerAngles -= oldRotation;
   }
 
-  private void FadeColorTo(Color color) {
-    previousColor = targetColor;
-    targetColor = color;
-  }
-
-  private void FadeAlphaTo(float alpha) {
-    previousAlpha = targetAlpha;
-    targetAlpha = alpha;
-  }
-
-  private void InterruptColorFade() {
-    targetColor = pointer.GetComponent<Renderer>().material.color;
-    fadeColorCounter = fadeTime - fadeColorCounter;
-  }
-
-  private void InterruptAlphaFade() {
-    targetColor.a = pointer.GetComponent<Renderer>().material.color.a;
-    fadeAlphaCounter = fadeTime - fadeAlphaCounter;
-  }
-
   public void Highlight(Color color) {
-    InterruptColorFade();
-    FadeColorTo(color);
+    colorFade.Interrupt();
+    colorFade.target = color;
   }
 
   public void ClearHighlight() {
-    InterruptColorFade();
-    FadeColorTo(Color.white);
+    colorFade.Interrupt();
+    colorFade.target = Color.white;
   }
 
   public void Hide() {
-    InterruptAlphaFade();
-    FadeAlphaTo(0f);
+    alphaFade.Interrupt();
+    alphaFade.target = 0f;
   }
 
   public void Show() {
-    InterruptAlphaFade();
-    FadeAlphaTo(1f);
+    alphaFade.Interrupt();
+    alphaFade.target = 1f;
   }
 
   // Create github issue:
