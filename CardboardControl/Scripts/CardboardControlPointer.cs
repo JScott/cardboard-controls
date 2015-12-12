@@ -2,11 +2,14 @@
 using System.Collections;
 
 public class CardboardControlPointer : MonoBehaviour {
-	private GameObject pointer;
   public GameObject pointerPrefab;
   public LayerMask raycastIgnoreLayer = 1 << Physics.IgnoreRaycastLayer;
   public float fadeTime = 0.6f;
   public bool startHidden = false;
+
+  private GameObject pointer;
+  private ColorFade colorFade = new ColorFade();
+  private AlphaFade alphaFade = new AlphaFade();
 
   private abstract class FadeState {
     public float counter = 1f;
@@ -28,6 +31,7 @@ public class CardboardControlPointer : MonoBehaviour {
       counter = fadeTime - counter;
     }
   }
+
   private class ColorFade : FadeState {
     public Color target = Color.white;
     public Color source = Color.white;
@@ -40,6 +44,7 @@ public class CardboardControlPointer : MonoBehaviour {
       ResetCounter();
     }
   }
+
   private class AlphaFade : FadeState {
     public float target = 1f;
     public float source = 1f;
@@ -52,17 +57,9 @@ public class CardboardControlPointer : MonoBehaviour {
       ResetCounter();
     }
   }
-  private ColorFade colorFade = new ColorFade();
-  private AlphaFade alphaFade = new AlphaFade();
 
   void Start() {
-    pointer = Instantiate(pointerPrefab) as GameObject;
-    GameObject head = GameObject.Find("CardboardMain/Head");
-    SetPositionOn(head);
-    SetRotationOn(head);
-    pointer.GetComponent<Renderer>().material.renderQueue = int.MaxValue;
-    pointer.transform.parent = head.transform;
-    pointer.layer = LayerMask.NameToLayer("Ignore Raycast");
+    InitializePointerObject();
     if (startHidden) {
       alphaFade.target = 0f;
       alphaFade.source = 0f;
@@ -78,6 +75,17 @@ public class CardboardControlPointer : MonoBehaviour {
       pointer.GetComponent<Renderer>().material.color = newColor;
     }
   }
+
+  private void InitializePointerObject() {
+    pointer = Instantiate(pointerPrefab) as GameObject;
+    GameObject head = GameObject.Find("CardboardMain/Head");
+    SetPositionOn(head);
+    SetRotationOn(head);
+    pointer.GetComponent<Renderer>().material.renderQueue = int.MaxValue;
+    pointer.transform.parent = head.transform;
+    pointer.layer = LayerMask.NameToLayer("Ignore Raycast");
+  }
+
 
   private void SetPositionOn(GameObject head) {
     Vector3 newPosition = head.transform.position;
