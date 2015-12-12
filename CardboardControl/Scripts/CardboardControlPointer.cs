@@ -118,8 +118,4 @@ public class CardboardControlPointer : MonoBehaviour {
     alphaFade.Interrupt();
     alphaFade.target = 1f;
   }
-
-  // Create github issue:
-  //   Move Highlight, ClearHighlight, Hide, and Show to the pointer object itself
-  //   in order to allow custom pointers
 }
