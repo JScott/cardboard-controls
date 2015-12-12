@@ -8,36 +8,17 @@ Cardboard Controls+ is all you need to develop the best Cardboard games in Unity
 
 - Import [the latest unitypackage](https://github.com/JScott/cardboard-controls/releases/latest)
 - Add the `CardboardControlManager` prefab to the root of your scene
-- Use the [API](https://github.com/JScott/cardboard-controls/wiki/API) which is explained in [the DemoScene code](https://github.com/JScott/CardboardSDK-Unity/blob/master/CardboardControl/DemoScene/ExampleCharacterController.cs).
+- Use the [API](https://github.com/JScott/cardboard-controls/wiki/API) which is explained in [the DemoScene's code comments](https://github.com/JScott/CardboardSDK-Unity/blob/master/CardboardControl/DemoScene/ExampleCharacterController.cs).
 
 You may experience problems if you import the code manually without using the provided unitypackage file.
 
 ## What's added?
 
-Google's SDK only has one hook into the trigger: `bool CardboardTriggered`. It's available for one frame that you have to waste cycles polling for. Instead of limiting yourself to that, you can now utilize C# methods and delegates for:
+Cardboard Controls+ adds vital functionality to the barebones Cardboard SDK that expands your options and makes common things easy. There are C# methods and delegates for:
 
-- Trigger down
-- Trigger up
-- Trigger click
-- Boolean if the trigger is held
-- Seconds trigger held for
-
-This expands your opportunities, allowing interactions like holding the magnet to move and clicking to interact to provide a more natural experience.
-
-There are also methods and delegates for:
-
+- Treating trigger down and up as separate events from a click
+- Identifying the objects players are looking or staring at
 - Tilting the device, as used in the official Cardboard app to navigate menus
-- Gaze raycasting, capturing what you look at and for how long
+- Toggling and highlighting a pointer in the middle of the player's view
 
-These helpers let you focus on what makes your game cool instead of boilerplate code.
-
-## Prerequisites
-
-If you got this from the Asset Store then I've already packaged a version of the prerequisites for you.
-
-If not then you'll need to import the base Cardboard SDK if you haven't already:
-- [Download CardboardSDK.unitypackage](https://github.com/googlesamples/cardboard-unity/blob/master/CardboardSDKForUnity.unitypackage?raw=true) from [Google's repository](https://github.com/googlesamples/cardboard-unity).
-- Import it in your scene
-- Use the `CardboardMain` prefab for your camera
-
-If you're having any trouble getting Google's Cardboard SDK set up, read through their excellent [guide for getting started](https://developers.google.com/cardboard/unity/get-started). Cardboard Controls+ has been tested against v0.5.2.
+These expand your opportunities and save you from reimplementing boilerplate functionality. Instead of wasting time on that, Cardboard Controls+ helps you to focus on what makes your game cool.
