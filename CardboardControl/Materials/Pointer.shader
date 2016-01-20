@@ -4,6 +4,7 @@ Shader "CardboardControls/Pointer" {
     _MainTex ("Base (RGB)", 2D) = "white" {}
   }
   Category {
+    Blend SrcAlpha OneMinusSrcAlpha
     Lighting Off
     ZWrite Off
     ZTest Always
