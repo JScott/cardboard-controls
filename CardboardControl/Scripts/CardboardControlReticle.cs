@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections;
 
 public class CardboardControlReticle : MonoBehaviour {
-  public GameObject reticlePrefab;
   public float fadeTime = 0.6f;
   public bool startHidden = true;
+  public LayerMask reticleLayerMask = Physics.DefaultRaycastLayers;
 
   private GameObject reticle;
   private ColorFade colorFade = new ColorFade();
@@ -58,11 +59,12 @@ public class CardboardControlReticle : MonoBehaviour {
   }
 
   void Start() {
-    InitializereticleObject();
+    reticle = Camera.main.transform.Find("CardboardReticle").gameObject;
     if (startHidden) {
       alphaFade.target = 0f;
       alphaFade.source = 0f;
     }
+    Camera.main.gameObject.GetComponent<PhysicsRaycaster>().eventMask = reticleLayerMask;
 	}
 
   void Update() {
@@ -74,17 +76,6 @@ public class CardboardControlReticle : MonoBehaviour {
       reticle.GetComponent<Renderer>().material.color = newColor;
     }
   }
-
-  private void InitializereticleObject() {
-    reticle = Instantiate(reticlePrefab) as GameObject;
-    GameObject head = GameObject.Find("CardboardMain/Head");
-    SetPositionOn(head);
-    SetRotationOn(head);
-    reticle.GetComponent<Renderer>().material.renderQueue = int.MaxValue;
-    reticle.transform.parent = head.transform;
-    reticle.layer = LayerMask.NameToLayer("Ignore Raycast");
-  }
-
 
   private void SetPositionOn(GameObject head) {
     Vector3 newPosition = head.transform.position;
