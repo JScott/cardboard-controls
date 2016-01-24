@@ -71,6 +71,7 @@ public class CardboardControl : MonoBehaviour {
     GameObject reticlePrefab = Instantiate(Resources.Load("CardboardReticle")) as GameObject;
     reticlePrefab.transform.parent = Camera.main.transform;
     reticlePrefab.transform.localPosition = Vector3.zero;
+    reticlePrefab.transform.localEulerAngles = Vector3.zero;
     reticlePrefab.name = "CardboardReticle";
   }
 
