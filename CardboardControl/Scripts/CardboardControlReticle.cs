@@ -70,11 +70,9 @@ public class CardboardControlReticle : MonoBehaviour {
   void Update() {
     colorFade.UpdateCounter(fadeTime, reticle);
     alphaFade.UpdateCounter(fadeTime, reticle);
-    if (colorFade.counter > 0f || alphaFade.counter > 0f) {
-      Color newColor = colorFade.CurrentColor();
-      newColor.a = alphaFade.CurrentAlpha();
-      reticle.GetComponent<Renderer>().material.color = newColor;
-    }
+    Color newColor = colorFade.CurrentColor();
+    newColor.a = alphaFade.CurrentAlpha();
+    reticle.GetComponent<Renderer>().material.color = newColor;
   }
 
   private void SetPositionOn(GameObject head) {
