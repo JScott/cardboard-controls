@@ -37,8 +37,7 @@ public class CardboardControl : MonoBehaviour {
     gaze = gameObject.GetComponent<CardboardControlGaze>();
     box = gameObject.GetComponent<CardboardControlBox>();
     reticle = gameObject.GetComponent<CardboardControlReticle>();
-    FixBrokenBaseSDK();
-    QuestionableBaseSDKRequirements();
+    InstantiateCardboardSDKReticleObject();
   }
 
   public void Update() {
@@ -66,16 +65,15 @@ public class CardboardControl : MonoBehaviour {
     return cooldownCounter[name] <= 0;
   }
 
-  private void FixBrokenBaseSDK() {
+  private void InstantiateCardboardSDKReticleObject() {
+    // These allow the reticle to know when it has to focus
+    gameObject.AddComponent<GazeInputModule>();
     Camera.main.gameObject.AddComponent<PhysicsRaycaster>();
+    // The object itself
     GameObject reticlePrefab = Instantiate(Resources.Load("CardboardReticle")) as GameObject;
     reticlePrefab.transform.parent = Camera.main.transform;
     reticlePrefab.transform.localPosition = Vector3.zero;
     reticlePrefab.transform.localEulerAngles = Vector3.zero;
     reticlePrefab.name = "CardboardReticle";
-  }
-
-  private void QuestionableBaseSDKRequirements() {
-    gameObject.AddComponent<GazeInputModule>();
   }
 }
