@@ -37,7 +37,8 @@ public class CardboardControl : MonoBehaviour {
     gaze = gameObject.GetComponent<CardboardControlGaze>();
     box = gameObject.GetComponent<CardboardControlBox>();
     reticle = gameObject.GetComponent<CardboardControlReticle>();
-    FixBrokenSDK();
+    FixBrokenBaseSDK();
+    QuestionableBaseSDKRequirements();
   }
 
   public void Update() {
@@ -65,11 +66,15 @@ public class CardboardControl : MonoBehaviour {
     return cooldownCounter[name] <= 0;
   }
 
-  private void FixBrokenSDK() {
+  private void FixBrokenBaseSDK() {
     Camera.main.gameObject.AddComponent<PhysicsRaycaster>();
     GameObject reticlePrefab = Instantiate(Resources.Load("CardboardReticle")) as GameObject;
     reticlePrefab.transform.parent = Camera.main.transform;
     reticlePrefab.transform.localPosition = Vector3.zero;
     reticlePrefab.name = "CardboardReticle";
+  }
+
+  private void QuestionableBaseSDKRequirements() {
+    gameObject.AddComponent<GazeInputModule>();
   }
 }

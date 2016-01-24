@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections;
-
 public class CardboardControlReticle : MonoBehaviour {
   public float fadeTime = 0.6f;
   public bool startHidden = true;
