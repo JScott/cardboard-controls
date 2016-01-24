@@ -8,7 +8,7 @@ Cardboard Controls+ is all you need to develop the best Cardboard games in Unity
 
 - Import [the latest unitypackage](https://github.com/JScott/cardboard-controls/releases/latest)
 - Add the `CardboardControlManager` prefab to the root of your scene
-- Use the [API](API.md) which is explained in [the DemoScene's code comments](https://github.com/JScott/CardboardSDK-Unity/blob/master/CardboardControl/DemoScene/ExampleCharacterController.cs).
+- Use the [API](API.md) which is explained in [the DemoScene's code comments](CardboardControl/DemoScene/ExampleCharacterController.cs).
 
 You may experience problems if you import the code manually without using the provided unitypackage file.
 
