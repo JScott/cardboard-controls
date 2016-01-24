@@ -43,10 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e96b5b0d55c6dd48846315b5654102b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointerPrefab: {fileID: 178078, guid: 2b2a0223055544e4f8d0330728f3ebd3, type: 2}
-  raycastIgnoreLayer:
-    serializedVersion: 2
-    m_Bits: 4
+  reticlePrefab: {fileID: 100896, guid: 4e70f128821fbd44397a839b4080d103, type: 2}
   fadeTime: .600000024
   startHidden: 1
 --- !u!114 &11455312
@@ -82,7 +79,7 @@ MonoBehaviour:
   trigger: {fileID: 11474088}
   gaze: {fileID: 11455312}
   box: {fileID: 11481902}
-  pointer: {fileID: 0}
+  reticle: {fileID: 0}
   eventCooldown: .200000003
 --- !u!114 &11474088
 MonoBehaviour:
@@ -153,6 +150,14 @@ Prefab:
       propertyPath: startHidden
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: reticlePrefab
+      value: 
+      objectReference: {fileID: 100896, guid: 4e70f128821fbd44397a839b4080d103, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 110264}

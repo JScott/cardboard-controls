@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems; // Only for the SDK fix
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -18,7 +19,7 @@ public class CardboardControl : MonoBehaviour {
   [HideInInspector]
   public CardboardControlBox box;
   [HideInInspector]
-  public CardboardControlPointer pointer;
+  public CardboardControlReticle reticle;
 
   private const float TIME_TO_CALIBRATE = 1f;
   private Dictionary<string,float> cooldownCounter = new Dictionary<string,float>() {
@@ -35,7 +36,8 @@ public class CardboardControl : MonoBehaviour {
     trigger = gameObject.GetComponent<CardboardControlTrigger>();
     gaze = gameObject.GetComponent<CardboardControlGaze>();
     box = gameObject.GetComponent<CardboardControlBox>();
-    pointer = gameObject.GetComponent<CardboardControlPointer>();
+    reticle = gameObject.GetComponent<CardboardControlReticle>();
+    FixBrokenSDK();
   }
 
   public void Update() {
@@ -61,5 +63,12 @@ public class CardboardControl : MonoBehaviour {
 
   private bool CooledDown(string name) {
     return cooldownCounter[name] <= 0;
+  }
+
+  private void FixBrokenSDK() {
+    Camera.main.gameObject.AddComponent<PhysicsRaycaster>();
+    GameObject reticlePrefab = Instantiate(Resources.Load("CardboardReticle")) as GameObject;
+    reticlePrefab.transform.parent = Camera.main.transform;
+    reticlePrefab.transform.localPosition = Vector3.zero;
   }
 }
