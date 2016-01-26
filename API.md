@@ -34,5 +34,5 @@ CardboardControl.reticle.Show()
 CardboardControl.reticle.Hide()
 CardboardControl.reticle.startHidden
 CardboardControl.reticle.fadeTime
-CardboardControl.reticle.reticleLayerMask
+CardboardControl.reticle.layerMask
 ```

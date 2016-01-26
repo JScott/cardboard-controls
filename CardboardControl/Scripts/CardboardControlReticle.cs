@@ -4,7 +4,7 @@ using System.Collections;
 public class CardboardControlReticle : MonoBehaviour {
   public float fadeTime = 0.6f;
   public bool startHidden = true;
-  public LayerMask reticleLayerMask = Physics.DefaultRaycastLayers;
+  public LayerMask layerMask = Physics.DefaultRaycastLayers;
 
   private GameObject reticle;
   private ColorFade colorFade = new ColorFade();
@@ -63,7 +63,7 @@ public class CardboardControlReticle : MonoBehaviour {
       alphaFade.target = 0f;
       alphaFade.source = 0f;
     }
-    Camera.main.gameObject.GetComponent<PhysicsRaycaster>().eventMask = reticleLayerMask;
+    Camera.main.gameObject.GetComponent<PhysicsRaycaster>().eventMask = layerMask;
 	}
 
   void Update() {
