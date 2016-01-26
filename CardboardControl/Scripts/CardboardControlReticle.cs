@@ -63,8 +63,7 @@ public class CardboardControlReticle : MonoBehaviour {
       alphaFade.target = 0f;
       alphaFade.source = 0f;
     }
-    Camera.main.gameObject.GetComponent<PhysicsRaycaster>().eventMask = layerMask;
-	}
+  }
 
   void Update() {
     colorFade.UpdateCounter(fadeTime, reticle);
@@ -72,6 +71,7 @@ public class CardboardControlReticle : MonoBehaviour {
     Color newColor = colorFade.CurrentColor();
     newColor.a = alphaFade.CurrentAlpha();
     reticle.GetComponent<Renderer>().material.color = newColor;
+    Camera.main.gameObject.GetComponent<PhysicsRaycaster>().eventMask = layerMask;
   }
 
   private void SetPositionOn(GameObject head) {
