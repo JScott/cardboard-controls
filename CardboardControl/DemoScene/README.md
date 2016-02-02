@@ -1,1 +1,3 @@
-This stark demo shows off the various events and data that Cardboard Controls+ allows you to plug into. The code has extensive comments to explain how to use the API provided.
+ControlsDemo documents the Cardboard Controls+ API extensively through thorough documentation.
+
+MovingDemo shows you how to take that API and create an explorable first-person world with it.
