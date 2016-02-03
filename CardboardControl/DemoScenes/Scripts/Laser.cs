@@ -4,7 +4,7 @@ using System.Collections;
 public class Laser : MonoBehaviour {
 
   private float speed = 50f;
-  private float timeLeft = 4f;
+  private float timeLeft = 3f;
   private Vector3 direction;
 
   void Start() {

@@ -10,11 +10,14 @@ public class MovingCharacterController : MonoBehaviour {
   public GameObject laserPrefab;
 
   private static CardboardControl cardboard;
+  private bool moving = false;
   private float reticleTimer = 0f;
   private bool evenLaser = false;
 
   void Start() {
     cardboard = GameObject.Find("CardboardControlManager").GetComponent<CardboardControl>();
+    cardboard.trigger.OnDown += ToggleMove;
+    cardboard.trigger.OnUp += ToggleMove;
     cardboard.trigger.OnClick += Interact;
   }
 
@@ -23,10 +26,16 @@ public class MovingCharacterController : MonoBehaviour {
     reticleTimer = reticleMaxLength;
     FireLaser();
   }
+
+  void ToggleMove(object sender) {
+    GetComponent<AudioSource>().Play();
+    moving = !moving;
+  }
 	
 	void Update() {
-    // This is the key: moving forward when the trigger is held
-	  if (cardboard.trigger.IsHeld()) {
+    // If you don't need as much control over what happens when moving is toggled,
+    // you can replace this with cardboard.trigger.IsHeld() and remove ToggleMove()
+	  if (moving) {
       Vector3 movement = Camera.main.transform.forward;
       transform.position += movement * speed * Time.deltaTime;
     }
@@ -40,10 +49,6 @@ public class MovingCharacterController : MonoBehaviour {
       reticleTimer -= Time.deltaTime;
     }
 	}
-
-  // If you need more control around movement, create a ToggleMove() method
-  // which toggles a boolean that gets checked in Update instead of trigger.IsHeld()
-  // and then tie that method to both trigger.OnUp and trigger.OnDown
 
   void FireLaser() {
     Vector3 position = transform.position;
