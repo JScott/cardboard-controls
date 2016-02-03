@@ -95,4 +95,18 @@ public class CardboardControlGaze : MonoBehaviour {
   public GameObject PreviousObject() {
     return previousObject;
   }
+
+  public Vector3 Forward() {
+    return head.Gaze.direction.normalized;
+  }
+
+  public Vector3 Right() {
+    return Vector3.Cross(Forward(), Vector3.up);
+  }
+
+  public Quaternion Rotation() {
+    return Quaternion.LookRotation(Forward());
+  }
+
+  
 }

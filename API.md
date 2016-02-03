@@ -6,6 +6,9 @@ CardboardControl.gaze.Object()
 CardboardControl.gaze.WasHeld()
 CardboardControl.gaze.PreviousObject()
 CardboardControl.gaze.Hit()
+CardboardControl.gaze.Forward()
+CardboardControl.gaze.Right()
+CardboardControl.gaze.Rotation()
 CardboardControl.gaze.maxDistance
 CardboardControl.gaze.layerMask
 CardboardControl.gaze.OnChange

@@ -53,10 +53,10 @@ public class MovingCharacterController : MonoBehaviour {
   void FireLaser() {
     Vector3 position = transform.position;
     position -= Vector3.up * 0.5f;
-    Vector3 offset = Camera.main.transform.right * 2f;
+    Vector3 offset = cardboard.gaze.Right() * 2f;
     position += evenLaser ? offset : -offset;
     evenLaser = !evenLaser;
-    Vector3 rotation = Camera.main.transform.rotation.eulerAngles;
+    Vector3 rotation = cardboard.gaze.Rotation().eulerAngles;
     rotation.x += 90f;
     Instantiate(laserPrefab, position, Quaternion.Euler(rotation));
   }
