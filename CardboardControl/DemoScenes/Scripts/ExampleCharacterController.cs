@@ -17,11 +17,11 @@ public class ExampleCharacterController : MonoBehaviour {
     cardboard.trigger.OnUp += CardboardUp;      // When the trigger comes back up
 
     // When the magnet or touch goes down and up within the "click threshold" time
-    // That click speed threshold is configurable in the inspector
+    // That click speed threshold is configurable in the Inspector
     cardboard.trigger.OnClick += CardboardClick;
 
     // When the thing we're looking at changes, determined by a gaze
-    // The gaze distance and layer mask are public as configurable in the inspector
+    // The gaze distance and layer mask are public as configurable in the Inspector
     cardboard.gaze.OnChange += CardboardGazeChange;
 
     // When we've been staring at an object
@@ -59,24 +59,24 @@ public class ExampleCharacterController : MonoBehaviour {
     float count = cardboard.gaze.SecondsHeld();
     Debug.Log("We've focused on "+name+" for "+count+" seconds.");
 
-    // If you need more raycast data from cardboard.gaze, the RaycastHit is exposed as gaze.Hit
+    // If you need more raycast data from cardboard.gaze, the RaycastHit is exposed as gaze.Hit()
   }
 
   private void CardboardGazeChange(object sender) {
     // You can grab the data from the sender instead of the CardboardControl object
     CardboardControlGaze gaze = sender as CardboardControlGaze;
     // We can access to the object we're looking at
-    // gaze.IsHeld will make sure the gaze.Object isn't null
+    // gaze.IsHeld will make sure the gaze.Object() isn't null
     if (gaze.IsHeld() && gaze.Object().name.Contains("Cube")) {
       ChangeObjectColor(gaze.Object().name);
       if (gaze.Object().name == "HighlightCube") {
         // Highlighting can help identify which objects can be interacted with
-        // The reticle is hidden by default but we already toggled that in the inspector
+        // The reticle is hidden by default but we already toggled that in the Inspector
         cardboard.reticle.Highlight(Color.red);        
       }
     }
     // We also can access to the last object we looked at
-    // gaze.WasHeld will make sure the gaze.PreviousObject isn't null
+    // gaze.WasHeld() will make sure the gaze.PreviousObject() isn't null
     if (gaze.WasHeld() && gaze.PreviousObject().name.Contains("Cube")) {
       ResetObjectColor(gaze.PreviousObject().name);
       // Use these to undo reticle hiding and highlighting
@@ -86,6 +86,9 @@ public class ExampleCharacterController : MonoBehaviour {
 
     // Be sure to set the Reticle Layer Mask on the CardboardControlManager
     // to grow the reticle on the objects you want. The default is everything.
+
+    // Not used here are gaze.Forward(), gaze.Right(), and gaze.Rotation()
+    // which are useful for things like checking the view angle or shooting projectiles
   }
 
   private void CardboardStare(object sender) {
@@ -135,10 +138,10 @@ public class ExampleCharacterController : MonoBehaviour {
   void Update() {
     TextMesh textMesh = GameObject.Find("SphereDown/Counter").GetComponent<TextMesh>();
 
-    // trigger.IsHeld is true when the trigger has gone down but not back up yet
+    // trigger.IsHeld() is true when the trigger has gone down but not back up yet
     if (cardboard.trigger.IsHeld()) {
       textMesh.GetComponent<Renderer>().enabled = true;
-      // trigger.SecondsHeld is the number of seconds we've held the trigger down
+      // trigger.SecondsHeld() is the number of seconds we've held the trigger down
       textMesh.text = cardboard.trigger.SecondsHeld().ToString("#.##");
     }
     else {
