@@ -31,11 +31,11 @@ public class MovingCharacterController : MonoBehaviour {
     GetComponent<AudioSource>().Play();
     moving = !moving;
   }
-	
-	void Update() {
+  
+  void Update() {
     // If you don't need as much control over what happens when moving is toggled,
     // you can replace this with cardboard.trigger.IsHeld() and remove ToggleMove()
-	  if (moving) {
+    if (moving) {
       Vector3 movement = Camera.main.transform.forward;
       transform.position += movement * speed * Time.deltaTime;
     }
@@ -48,7 +48,7 @@ public class MovingCharacterController : MonoBehaviour {
     else if (reticleTimer > 0f) {
       reticleTimer -= Time.deltaTime;
     }
-	}
+  }
 
   void FireLaser() {
     Vector3 position = transform.position;
