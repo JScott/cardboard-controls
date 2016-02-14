@@ -9,7 +9,7 @@ Cardboard Controls+ is all you need to develop the best Cardboard games in Unity
 - Remove existing Cardboard Controls+ files to ensure that they get updated properly
 - Import [the latest unitypackage](https://github.com/JScott/cardboard-controls/releases/latest)
 - Add `CardboardControl/Prefabs/CardboardControlManager` to the root of your scene
-- Add `Cardboard/Prefabs/CardboardMain` as your scene's main camera
+- Replace your Camera with `Cardboard/Prefabs/CardboardMain`
 - Use the [API](API.md) which is explained in [the Demo Scene code comments](CardboardControl/DemoScenes/Scripts/ExampleCharacterController.cs).
 
 You may experience problems if you import the code manually without using the provided unitypackage file.
