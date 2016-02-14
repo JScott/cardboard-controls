@@ -28,7 +28,6 @@ public class MovingCharacterController : MonoBehaviour {
   }
 
   void ToggleMove(object sender) {
-    GetComponent<AudioSource>().Play();
     moving = !moving;
   }
   
@@ -51,6 +50,7 @@ public class MovingCharacterController : MonoBehaviour {
   }
 
   void FireLaser() {
+    GetComponent<AudioSource>().Play();
     Vector3 position = transform.position;
     position -= Vector3.up * 0.5f;
     Vector3 offset = cardboard.gaze.Right() * 2f;
