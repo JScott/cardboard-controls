@@ -33,7 +33,7 @@ public class CardboardControlGaze : MonoBehaviour {
   }
 
   public void Update() {
-    isHeld = Physics.Raycast(head.Gaze, out hit, maxDistance, layerMask);
+    isHeld = Physics.Raycast(Ray(), out hit, maxDistance, layerMask);
     CheckGaze();
   }
 
@@ -97,7 +97,7 @@ public class CardboardControlGaze : MonoBehaviour {
   }
 
   public Vector3 Forward() {
-    return head.Gaze.direction.normalized;
+    return Ray().direction.normalized;
   }
 
   public Vector3 Right() {
@@ -108,5 +108,7 @@ public class CardboardControlGaze : MonoBehaviour {
     return Quaternion.LookRotation(Forward());
   }
 
-  
+  public Ray Ray() {
+    return head.Gaze;
+  }
 }
