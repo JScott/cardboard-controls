@@ -43,9 +43,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e96b5b0d55c6dd48846315b5654102b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reticlePrefab: {fileID: 100896, guid: 4e70f128821fbd44397a839b4080d103, type: 2}
-  fadeTime: .600000024
+  fadeTime: 0.6
   startHidden: 1
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 4294967291
+  prefab: {fileID: 171526, guid: 60270cf52a5e94998a5a335989159738, type: 2}
 --- !u!114 &11455312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -80,7 +83,7 @@ MonoBehaviour:
   gaze: {fileID: 11455312}
   box: {fileID: 11481902}
   reticle: {fileID: 0}
-  eventCooldown: .200000003
+  eventCooldown: 0.2
 --- !u!114 &11474088
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -92,7 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff5c5b6d52fa37e48991bdffd4b620e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickSpeedThreshold: .400000006
+  clickSpeedThreshold: 0.4
   useEventCooldowns: 1
   vibrateOnDown: 0
   vibrateOnUp: 0
@@ -158,6 +161,10 @@ Prefab:
       propertyPath: reticlePrefab
       value: 
       objectReference: {fileID: 100896, guid: 4e70f128821fbd44397a839b4080d103, type: 2}
+    - target: {fileID: 0}
+      propertyPath: prefab
+      value: 
+      objectReference: {fileID: 171526, guid: 60270cf52a5e94998a5a335989159738, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 110264}

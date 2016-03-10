@@ -5,6 +5,7 @@ public class CardboardControlReticle : MonoBehaviour {
   public float fadeTime = 0.6f;
   public bool startHidden = true;
   public LayerMask layerMask = Physics.DefaultRaycastLayers;
+  public GameObject prefab;
 
   private GameObject reticle;
   private ColorFade colorFade = new ColorFade();

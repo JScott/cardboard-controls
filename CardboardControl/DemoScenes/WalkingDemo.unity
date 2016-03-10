@@ -200,6 +200,14 @@ Prefab:
       propertyPath: layerMask.m_Bits
       value: 256
       objectReference: {fileID: 0}
+    - target: {fileID: 11447888, guid: 652814e1e9ffe134aa9b9c61f31fb762, type: 2}
+      propertyPath: reticle
+      value: 
+      objectReference: {fileID: 171526, guid: 60270cf52a5e94998a5a335989159738, type: 2}
+    - target: {fileID: 11447888, guid: 652814e1e9ffe134aa9b9c61f31fb762, type: 2}
+      propertyPath: prefab
+      value: 
+      objectReference: {fileID: 171526, guid: 60270cf52a5e94998a5a335989159738, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 652814e1e9ffe134aa9b9c61f31fb762, type: 2}
   m_IsPrefabParent: 0

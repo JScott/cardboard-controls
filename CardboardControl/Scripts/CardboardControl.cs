@@ -70,7 +70,7 @@ public class CardboardControl : MonoBehaviour {
     gameObject.AddComponent<GazeInputModule>();
     Camera.main.gameObject.AddComponent<PhysicsRaycaster>();
     // The object itself
-    GameObject reticlePrefab = Instantiate(Resources.Load("CardboardReticle")) as GameObject;
+    GameObject reticlePrefab = Instantiate(reticle.prefab) as GameObject;
     reticlePrefab.transform.parent = Camera.main.transform;
     reticlePrefab.transform.localPosition = Vector3.zero;
     reticlePrefab.transform.localEulerAngles = Vector3.zero;
