@@ -7,10 +7,7 @@ using System.Collections;
 public class ParsedTouchData {
   private bool wasTouched = false;
 
-  public ParsedTouchData() {
-    Cardboard cardboard = CardboardGameObject().GetComponent<Cardboard>();
-    cardboard.TapIsTrigger = false;
-  }
+  public ParsedTouchData() {}
 
   private GameObject CardboardGameObject() {
     GameObject gameObject = Camera.main.gameObject;

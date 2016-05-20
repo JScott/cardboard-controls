@@ -19,5 +19,6 @@ sysinfo.txt
 **/*.meta
 /AssetStoreTools
 /Cardboard
+/GoogleVR
 /Plugins
 **/*.apk

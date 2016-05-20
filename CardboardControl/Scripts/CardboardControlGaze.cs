@@ -17,7 +17,7 @@ public class CardboardControlGaze : MonoBehaviour {
   private GameObject previousObject = null;
   private GameObject currentObject = null;
   private float gazeStartTime = 0f;
-  private CardboardHead head;
+  private GvrHead head;
   private RaycastHit hit;
   private bool isHeld;
   private bool stared = false;
