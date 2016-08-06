@@ -4,7 +4,7 @@ using CardboardControlDelegates;
 
 /**
 * Creating a vision raycast and handling the data from it
-* Relies on Google Cardboard SDK API's
+* Relies on Google VR's API
 */
 public class CardboardControlGaze : MonoBehaviour {
   public float maxDistance = Mathf.Infinity;

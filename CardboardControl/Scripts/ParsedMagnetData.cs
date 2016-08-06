@@ -28,7 +28,7 @@ public class ParsedMagnetData {
   #else
   private float MAGNET_RATIO_MIN_THRESHOLD = 0.03f;
   private float MAGNET_RATIO_MAX_THRESHOLD = 0.2f;
-  private float MAGNET_MAGNITUDE_THRESHOLD = 200.0f;
+  private float MAGNET_MAGNITUDE_THRESHOLD = 500.0f;
   #endif
   private float STABLE_RATIO_THRESHOLD = 0.001f;
   private float STABLE_DELTA_THRESHOLD = 2.0f;

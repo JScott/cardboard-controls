@@ -30,7 +30,7 @@ public class MovingCharacterController : MonoBehaviour {
   void ToggleMove(object sender) {
     moving = !moving;
   }
-  
+
   void Update() {
     // If you don't need as much control over what happens when moving is toggled,
     // you can replace this with cardboard.trigger.IsHeld() and remove ToggleMove()
