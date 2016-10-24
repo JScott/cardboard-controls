@@ -2,9 +2,9 @@
 
 Cardboard Controls+ is all you need to develop the best Cardboard games in Unity. These scripts enhance [the Google VR SDK for Unity](https://developers.google.com/vr/unity/) with event-driven improvements for discrete trigger control, orientation tilting, gaze raycasting, and reticle control. Stop limiting your creative options!
 
-See the [package directory](CardboardControl) for details.
+See the [package directory](Assets/CardboardControl) for details.
 
-See the [examples directory](CardboardControl/DemoScenes) for thorough documentation.
+See the [examples directory](Assets/CardboardControl/DemoScenes) for thorough documentation.
 
 ## [Support](http://u3d.as/aeV)
 

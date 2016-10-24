@@ -22,3 +22,5 @@ sysinfo.txt
 *.apk
 *.unitypackage
 *.zip
+/Screenshots
+*.png
