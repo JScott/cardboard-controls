@@ -16,9 +16,9 @@
 #Unity3D Generated File On Crash Reports
 sysinfo.txt
 
-**/*.meta
-/AssetStoreTools
-/Cardboard
-/GoogleVR
-/Plugins
-**/*.apk
+/Assets/AssetStoreTools*
+/Assets/GoogleVR*
+/Assets/Plugins*
+*.apk
+*.unitypackage
+*.zip
