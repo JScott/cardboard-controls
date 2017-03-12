@@ -67,7 +67,7 @@ public class CardboardControl : MonoBehaviour {
 
   private void InstantiateCardboardSDKReticleObject() {
     // These allow the reticle to know when it has to focus
-    gameObject.AddComponent<GazeInputModule>();
+    gameObject.AddComponent<GvrPointerInputModule>();
     Camera.main.gameObject.AddComponent<PhysicsRaycaster>();
     // The object itself
     GameObject reticlePrefab = Instantiate(reticle.prefab) as GameObject;
