@@ -17,5 +17,6 @@ Cardboard Controls+ adds vital functionality to the barebones Cardboard SDK that
 - Identifying the objects players are looking or staring at
 - Tilting the device, as used in official Cardboard apps to navigate menus
 - Toggling and highlighting a reticle in the middle of the player's view
+- Simple prefabs to quickly get you using GoogleVR
 
 These expand your opportunities and save you from reimplementing boilerplate functionality. Instead of wasting time on that, Cardboard Controls+ helps you to focus on what makes your game cool.

@@ -86,9 +86,8 @@ public class CardboardControlGaze : MonoBehaviour {
   public GameObject Object() {
     if (IsHeld()) {
       return hit.transform.gameObject;
-    } else {
-      return null;
     }
+    return null;
   }
 
   public GameObject PreviousObject() {

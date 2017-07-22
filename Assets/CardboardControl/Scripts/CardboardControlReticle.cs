@@ -11,7 +11,6 @@ public class CardboardControlReticle : MonoBehaviour {
   private AlphaFade alphaFade = new AlphaFade();
 
   void Start() {
-    // reticle = Camera.main.transform.Find("CardboardReticle").gameObject;
     reticle = Camera.main.gameObject.GetComponentInChildren<GvrReticlePointer>();
     if (startHidden) {
       alphaFade.target = 0f;
