@@ -639,6 +639,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 11447888, guid: 652814e1e9ffe134aa9b9c61f31fb762, type: 2}
+      propertyPath: startHidden
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 652814e1e9ffe134aa9b9c61f31fb762, type: 2}
   m_IsPrefabParent: 0
@@ -980,7 +984,7 @@ GameObject:
   - component: {fileID: 1136681186}
   - component: {fileID: 1136681187}
   m_Layer: 0
-  m_Name: ControlsDemoManager
+  m_Name: ControlsDemoManager <-- Read script code
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
