@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeTime: 0.6
-  startHidden: 0
+  startHidden: 1
   layerMask:
     serializedVersion: 2
     m_Bits: 4294967291

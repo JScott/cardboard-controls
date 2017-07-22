@@ -4,8 +4,7 @@
 
 - Remove existing Cardboard Controls+ files to ensure that they get updated properly
 - Import [the latest unitypackage](https://github.com/JScott/cardboard-controls/releases/latest)
-- Add `CardboardControl/Prefabs/CardboardControlManager` to the root of your scene
-- Replace your Camera with `GoogleVR/Prefabs/GvrMain`
+- Add `CardboardControl/Prefabs/CardboardControlManager` and `CardboardControl/Prefabs/Player` to the root of your scene
 - Use the [API](API.md) which is explained in [the Demo Scene code comments](DemoScenes/Scripts/ExampleCharacterController.cs).
 
 You may experience problems if you import the code manually without using the provided unitypackage file.

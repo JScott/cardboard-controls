@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class MovingCharacterController : MonoBehaviour {
-  // For a full explanation of the API, look at ExampleCharacterController.cs
+  // For a full explanation of the API, look at ControlsDemoManager.cs
   // This example will assume knowledge of the API to code a moving first-person character
 
   public float speed = 17f;
