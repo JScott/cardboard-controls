@@ -14,10 +14,10 @@ public class CardboardControlGaze : MonoBehaviour {
   public bool vibrateOnStare = false;
   public float stareTimeThreshold = 2.0f;
 
+  private Transform camera;
   private GameObject previousObject = null;
   private GameObject currentObject = null;
   private float gazeStartTime = 0f;
-  private GvrHead head;
   private RaycastHit hit;
   private bool isHeld;
   private bool stared = false;
@@ -28,8 +28,7 @@ public class CardboardControlGaze : MonoBehaviour {
 
   public void Start() {
     cardboard = gameObject.GetComponent<CardboardControl>();
-    StereoController stereoController = Camera.main.GetComponent<StereoController>();
-    head = stereoController.Head;
+    camera = Camera.main.transform;
   }
 
   public void Update() {
@@ -109,6 +108,6 @@ public class CardboardControlGaze : MonoBehaviour {
   }
 
   public Ray Ray() {
-    return head.Gaze;
+    return new Ray(camera.position, camera.forward);
   }
 }

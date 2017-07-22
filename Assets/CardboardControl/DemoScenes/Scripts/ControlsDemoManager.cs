@@ -1,18 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ExampleCharacterController : MonoBehaviour {
-  private static CardboardControl cardboard;
+public class ControlsDemoManager : MonoBehaviour {
+  /*
+  * Start by capturing the helper script on CardboardControlManager
+  */
+  public CardboardControl cardboard;
 
+  /*
+  * CardboardControl has access to all the controls and their Delegates
+  * Unity provides a good primer on delegates here:
+  * http://unity3d.com/learn/tutorials/modules/intermediate/scripting/delegates
+  */
   void Start () {
-    /*
-    * Start by capturing the helper script on CardboardControlManager
-    * This script has access to all the controls and their delegates
-    *
-    * Unity provides a good primer on delegates here:
-    * http://unity3d.com/learn/tutorials/modules/intermediate/scripting/delegates
-    */
-    cardboard = GameObject.Find("CardboardControlManager").GetComponent<CardboardControl>();
     cardboard.trigger.OnDown += CardboardDown;  // When the trigger goes down
     cardboard.trigger.OnUp += CardboardUp;      // When the trigger comes back up
 
@@ -72,7 +72,7 @@ public class ExampleCharacterController : MonoBehaviour {
       if (gaze.Object().name == "HighlightCube") {
         // Highlighting can help identify which objects can be interacted with
         // The reticle is hidden by default but we already toggled that in the Inspector
-        cardboard.reticle.Highlight(Color.red);        
+        cardboard.reticle.Highlight(Color.red);
       }
     }
     // We also can access to the last object we looked at
@@ -148,6 +148,8 @@ public class ExampleCharacterController : MonoBehaviour {
       textMesh.GetComponent<Renderer>().enabled = Time.time % 1 < 0.5;
     }
   }
+
+
 
   /*
   * Be sure to unsubscribe before this object is destroyed
